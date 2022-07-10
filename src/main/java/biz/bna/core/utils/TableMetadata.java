@@ -1,13 +1,7 @@
 package biz.bna.core.utils;
-import org.reflections.Reflections;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 //TODO описать класс, заполняющий метаданные таблицы. Метаданные = поля, описанные ниже
 public class TableMetadata {
@@ -20,16 +14,36 @@ public class TableMetadata {
     private Field idField;
     //Поля таблицы
     private List<ColumnMetadata> fields;
-    //методы get и set
-    private Map<String, List<Method>> methods;
 
-    public static void fillTableMetadata(){
-        Set<Class<?>> tableClasses = new Reflections("biz.bna.core").getTypesAnnotatedWith(Table.class);
-        tableClasses.forEach(aClass -> {
-            Field[] fields = aClass.getFields();
-            for(Field field: fields){
-                field.isAnnotationPresent(Id.class);
-            }
-        });
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public Class getModelClass() {
+        return modelClass;
+    }
+
+    public void setModelClass(Class modelClass) {
+        this.modelClass = modelClass;
+    }
+
+    public Field getIdField() {
+        return idField;
+    }
+
+    public void setIdField(Field idField) {
+        this.idField = idField;
+    }
+
+    public List<ColumnMetadata> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<ColumnMetadata> fields) {
+        this.fields = fields;
     }
 }

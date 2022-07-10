@@ -1,6 +1,7 @@
 package biz.bna.core.config;
 
 import biz.bna.core.MainApplication;
+import biz.bna.core.utils.OrmUtils;
 import biz.bna.core.utils.TableMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,6 @@ public class InitApp implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Init app ... run");
         MainApplication.setApplicationContext(applicationContext);
-        TableMetadata.fillTableMetadata();
+        OrmUtils.fillTableMetadata();
     }
 }
