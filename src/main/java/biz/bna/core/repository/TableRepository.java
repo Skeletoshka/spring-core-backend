@@ -13,7 +13,9 @@ import java.util.Map;
 
 @Transactional(propagation = Propagation.REQUIRED)
 public interface TableRepository<T> {
+    //TODO Решить какие методы нужны для реализации
 
+    //Заполняется при запуске приложения. См. config/InitApp
     Map<String, TableMetadata> metaDataMap = new HashMap<>();
 
     default List<T> getAll(){
