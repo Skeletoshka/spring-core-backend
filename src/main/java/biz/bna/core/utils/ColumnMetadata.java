@@ -8,9 +8,8 @@ public class ColumnMetadata {
     private String columnName;
     private boolean nullable;
     private String nullableMessage;
-    private String description;
     private Integer textSize;
-    private Integer textSizeMessage;
+    private String textSizeMessage;
     private Method getMethod;
     private Method setMethod;
 
@@ -38,14 +37,6 @@ public class ColumnMetadata {
         this.nullableMessage = nullableMessage;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getTextSize() {
         return textSize;
     }
@@ -54,11 +45,11 @@ public class ColumnMetadata {
         this.textSize = textSize;
     }
 
-    public Integer getTextSizeMessage() {
+    public String getTextSizeMessage() {
         return textSizeMessage;
     }
 
-    public void setTextSizeMessage(Integer textSizeMessage) {
+    public void setTextSizeMessage(String textSizeMessage) {
         this.textSizeMessage = textSizeMessage;
     }
 
