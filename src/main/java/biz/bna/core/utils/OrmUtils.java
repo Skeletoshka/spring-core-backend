@@ -83,6 +83,7 @@ public class OrmUtils {
             columnMetadata.setSetMethod(Arrays.stream(cls.getDeclaredMethods())
                     .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + field.getName().toLowerCase(Locale.ROOT)))
                     .findAny().orElseThrow());
+            columnMetadata.setVarName(field.getName());
             return columnMetadata;
         }).collect(Collectors.toList());
     }

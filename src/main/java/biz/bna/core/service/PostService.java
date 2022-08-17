@@ -26,4 +26,8 @@ public class PostService extends BaseService<Post>{
         });
         return postViews;
     }
+
+    public void save(Post post){
+        postRepository.insert(post);
+    }
 }

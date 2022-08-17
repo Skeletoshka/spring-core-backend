@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 public class ColumnMetadata {
 
     private String columnName;
+    private String varName;
     private boolean nullable;
     private String nullableMessage;
     private Integer textSize;
@@ -67,5 +68,13 @@ public class ColumnMetadata {
 
     public void setSetMethod(Method setMethod) {
         this.setMethod = setMethod;
+    }
+
+    public String getVarName() {
+        return varName;
+    }
+
+    public void setVarName(String varName) {
+        this.varName = varName;
     }
 }
