@@ -16,8 +16,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/post",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+        consumes = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8",
+        produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 public class PostController {
 
     @Autowired
@@ -28,10 +28,9 @@ public class PostController {
         return postService.getAll();
     }
 
-    //TODO найти как десериализовать объект String в Int
     @RequestMapping(value = "/get", method = RequestMethod.POST)
-    public PostDTO get(@RequestBody(required = false) Integer id){
-        if(id == null){
+    public PostDTO get(@RequestBody(required = false) int id){
+        if(id == 0){
             return new PostDTO();
         } else {
             PostView view = postService.getOne(id);
