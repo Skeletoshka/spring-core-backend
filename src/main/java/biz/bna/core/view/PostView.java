@@ -1,8 +1,13 @@
 package biz.bna.core.view;
 
+import javax.persistence.Column;
+
 public class PostView {
+
+    @Column(name = "post_id")
     private Integer postId;
 
+    @Column(name = "post_name")
     private String postName;
 
     public PostView() {

@@ -2,7 +2,6 @@ package biz.bna.core.config;
 
 import biz.bna.core.MainApplication;
 import biz.bna.core.utils.OrmUtils;
-import biz.bna.core.utils.TableMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +24,6 @@ public class InitApp implements ApplicationRunner {
         logger.info("Init app ... run");
         MainApplication.setApplicationContext(applicationContext);
         OrmUtils.fillTableMetadata();
+        logger.info("Init app ... complete");
     }
 }
