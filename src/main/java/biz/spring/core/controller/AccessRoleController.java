@@ -1,6 +1,7 @@
 package biz.spring.core.controller;
 
 import biz.spring.core.annotations.CheckAdminRole;
+import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.AccessRoleDTO;
 import biz.spring.core.service.AccessRoleService;
 import biz.spring.core.view.AccessRoleView;
@@ -34,6 +35,7 @@ public class AccessRoleController {
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @Tag(value = "Метод для получения объекта \"Роль\" по его идентификатору")
+    @CheckAnyRole
     public AccessRoleDTO get(@RequestBody(required = false) int id){
         if(id == 0){
             return new AccessRoleDTO();

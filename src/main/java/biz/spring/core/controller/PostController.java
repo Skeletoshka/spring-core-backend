@@ -1,6 +1,7 @@
 package biz.spring.core.controller;
 
 import biz.spring.core.annotations.CheckAdminRole;
+import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.PostDTO;
 import biz.spring.core.model.Post;
 import biz.spring.core.service.PostService;
@@ -37,6 +38,7 @@ public class PostController {
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @Tag(value = "Метод для получения объекта \"Должность\" по его идентификатору")
+    @CheckAnyRole
     public PostDTO get(@RequestBody(required = false) int id){
         if(id == 0){
             return new PostDTO();

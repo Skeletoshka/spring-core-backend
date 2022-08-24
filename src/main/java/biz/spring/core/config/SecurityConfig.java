@@ -1,13 +1,16 @@
 package biz.spring.core.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -23,16 +26,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user")
                 .password("user")
                 .authorities("ROLE_USER")
+                .roles("USER")
                 .and()
                 .withUser("admin")
                 .password("admin")
-                .authorities("ROLE_ADMIN");
+                .authorities("ROLE_ADMIN")
+                .roles("SYSDBA");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/post/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/**").permitAll()
                 .and().httpBasic()
                 .and().csrf().disable();
