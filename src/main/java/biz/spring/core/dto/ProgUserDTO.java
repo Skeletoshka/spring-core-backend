@@ -1,6 +1,9 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.view.AccessRoleView;
+
 import javax.persistence.Column;
+import java.util.List;
 
 public class ProgUserDTO {
 
@@ -15,6 +18,8 @@ public class ProgUserDTO {
     private Integer progUserActive;
 
     private Integer workerId;
+
+    private List<AccessRoleView> accessRoleViews;
 
     public ProgUserDTO() {
     }
@@ -79,5 +84,13 @@ public class ProgUserDTO {
 
     public void setWorkerId(Integer workerId) {
         this.workerId = workerId;
+    }
+
+    public List<AccessRoleView> getAccessRoleViews() {
+        return accessRoleViews;
+    }
+
+    public void setAccessRoleViews(List<AccessRoleView> accessRoleViews) {
+        this.accessRoleViews = accessRoleViews;
     }
 }

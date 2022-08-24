@@ -76,4 +76,12 @@ public interface TableRepository<T> {
         OrmUtils.loggerSql(sql);
         return jdbc.queryForObject(sql, Map.of("seqName", seqName), Integer.class);
     }
+
+    default List<T> findWhere(String wherePlaceholder, Map<String, Object> params){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        String sql = "SELECT * FROM " + OrmUtils.getTableName(this.getClass()) + " WHERE " + wherePlaceholder;
+        RowMapForEntity rowMapper = new RowMapForEntity(metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT)).getModelClass());
+        OrmUtils.loggerSql(sql);
+        return (List<T>) jdbc.query(sql, params, rowMapper);
+    }
 }
