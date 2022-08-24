@@ -1,5 +1,6 @@
 package biz.spring.core.controller;
 
+import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.dto.PostDTO;
 import biz.spring.core.model.Post;
 import biz.spring.core.service.PostService;
@@ -7,6 +8,7 @@ import biz.spring.core.view.PostView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,7 @@ public class PostController {
     private PostService postService;
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
+    @CheckAdminRole
     public List<PostView> getList(){
         return postService.getAll();
     }
