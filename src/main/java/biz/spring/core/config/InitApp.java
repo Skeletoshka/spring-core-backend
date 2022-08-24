@@ -2,6 +2,7 @@ package biz.spring.core.config;
 
 import biz.spring.core.MainApplication;
 import biz.spring.core.utils.OrmUtils;
+import biz.spring.core.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,10 @@ public class InitApp implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Init app ... run");
         MainApplication.setApplicationContext(applicationContext);
-        OrmUtils.fillTableMetadata();
+        //Заполняем метаданные таблиц
+        OrmUtils.fillTableMetadata("biz.spring.core");
+        //Заполняем таблицу в бд с контроллируемыми объектами
+        SecurityUtils.fillControlObject("biz.spring.core");
         logger.info("Init app ... complete");
     }
 }

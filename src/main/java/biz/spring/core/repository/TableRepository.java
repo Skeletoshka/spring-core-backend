@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,13 +51,29 @@ public interface TableRepository<T> {
         Arrays.stream(obj.getClass().getDeclaredFields())
                 .peek(field -> {
                     try {
-                        params.put(field.getName(), Arrays.stream(obj.getClass().getDeclaredMethods())
+                        params.put(field.getName(), field.getAnnotationsByType(Id.class).length>0?
+                                nextValue(tableMetadata.getTableName() + "_"
+                                        + tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
+                                        + "_seq"):
+                                Arrays.stream(obj.getClass().getDeclaredMethods())
                                 .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
                                 .findFirst().orElseThrow().invoke(obj, null));
                     } catch (Exception e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }).collect(Collectors.toList());
+        OrmUtils.loggerSql(sql);
         jdbc.execute(sql, params, PreparedStatement::execute);
+    }
+
+    default void insert(List<T> objects){
+        objects.forEach(this::insert);
+    }
+
+    default int nextValue(String seqName){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        String sql = "SELECT NEXTVAL(:seqName) ";
+        OrmUtils.loggerSql(sql);
+        return jdbc.queryForObject(sql, Map.of("seqName", seqName), Integer.class);
     }
 }

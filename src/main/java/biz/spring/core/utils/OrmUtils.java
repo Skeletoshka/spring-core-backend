@@ -42,8 +42,8 @@ public class OrmUtils {
      * Считывает все классы с аннотацией Table
      * Ключ - имя таблицы
      * */
-    public static void fillTableMetadata(){
-        Set<Class<?>> tableClasses = new Reflections("biz.spring.core").getTypesAnnotatedWith(Table.class);
+    public static void fillTableMetadata(String packagePrefix){
+        Set<Class<?>> tableClasses = new Reflections(packagePrefix).getTypesAnnotatedWith(Table.class);
         tableClasses.forEach(aClass -> {
             TableMetadata tableMetadata = new TableMetadata();
             //Ставим в поле первичного ключа поле с аннотацией @Id

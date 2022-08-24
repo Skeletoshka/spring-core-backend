@@ -15,11 +15,11 @@ public class PostService extends BaseService<Post>{
     @Autowired
     private PostRepository postRepository;
 
-    private String mainSql = "" +
+    private final String mainSql = "" +
             "SELECT * " +
             "FROM post";
 
-    private String mainSqlForOne = "" +
+    private final String mainSqlForOne = "" +
             "SELECT * " +
             "FROM post " +
             "WHERE post_id = :id";
