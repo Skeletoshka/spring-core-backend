@@ -8,8 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 public class PostControllerTest extends IntegratedTest{
 
@@ -28,9 +31,11 @@ public class PostControllerTest extends IntegratedTest{
     @Transactional
     public void getTest() throws Exception{
         this.mockMvc.perform(post("/api/post/get")
+                        .header("Authorization", "Bearer b94fbd5d-0d8b-4e56-834b-5c940ef5a193")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andDo(print());
+                .andDo(print())
+                .andExpect(content().string(containsString("\"id\":1")));
     }
 }
