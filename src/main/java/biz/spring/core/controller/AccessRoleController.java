@@ -27,7 +27,7 @@ public class AccessRoleController {
     private AccessRoleService accessRoleService;
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
-    @CheckAdminRole
+    @CheckAnyRole
     @Tag(value = "Метод для получения списка объектов \"Роль\"")
     public List<AccessRoleView> getList(){
         return accessRoleService.getAll();

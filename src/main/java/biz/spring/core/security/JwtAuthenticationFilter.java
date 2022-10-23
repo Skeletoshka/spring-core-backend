@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -39,7 +40,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((UserDetails) authResult.getPrincipal()).getUsername();
 
         List<String> authorities = authResult.getAuthorities().stream()
-                .map(role -> role.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("authorities", authorities);
 
@@ -53,18 +54,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getParameter("email"), request.getParameter("pass")));
-    }
-
-    // or
-
-    @Override
-    protected String obtainUsername(HttpServletRequest request) {
-        return request.getParameter("email");
-    }
-
-    @Override
-    protected String obtainPassword(HttpServletRequest request) {
-        return request.getParameter("pass");
+                new UsernamePasswordAuthenticationToken(request.getParameter("username"), request.getParameter("password")));
     }
 }

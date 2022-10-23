@@ -30,7 +30,7 @@ public class RowMapForEntity implements RowMapper<Object> {
     //основной компонент для преобразования
     @Override
     public Object mapRow(ResultSet resultSet, int i) {
-        Object obj = null;
+        Object obj;
         try {
             obj = defaultConstructor.newInstance(null);
             Field[] fields = obj.getClass().getDeclaredFields();

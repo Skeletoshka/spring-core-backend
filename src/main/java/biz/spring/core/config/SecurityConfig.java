@@ -26,23 +26,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
     @Autowired
-    private PasswordEncoderConfig passwordEncoderConfig;
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private UserDetailsImpl userDetails;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetails)/*.passwordEncoder(passwordEncoderConfig)*/;
+        auth.userDetailsService(userDetails).passwordEncoder(passwordEncoder);
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .ignoringAntMatchers("/**")
+        http
+                .csrf().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                .authorizeRequests()
+                .antMatchers("/signup**").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/logout/**").permitAll()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManagerBean()))
-                .addFilter(new JwtAuthorizationFilter(this.authenticationManagerBean()));
+                .authorizeRequests()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .and()
+                .formLogin()
+                .usernameParameter("username")
+            .passwordParameter("password")
+        ;
     }
 
 }

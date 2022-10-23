@@ -1,6 +1,7 @@
 package biz.spring.core.repository;
 
 import biz.spring.core.rowmapper.RowMapForEntity;
+import biz.spring.core.rowmapper.RowMapForObject;
 import biz.spring.core.utils.OrmUtils;
 import biz.spring.core.utils.TableMetadata;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -83,5 +84,12 @@ public interface TableRepository<T> {
         RowMapForEntity rowMapper = new RowMapForEntity(metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT)).getModelClass());
         OrmUtils.loggerSql(sql);
         return (List<T>) jdbc.query(sql, params, rowMapper);
+    }
+
+    default List<T> findListForObject(String sql, Map<String, Object> params, Class<T> cls){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        RowMapForObject rowMapper = new RowMapForObject(cls);
+        OrmUtils.loggerSql(sql);
+        return (List<T>)jdbc.query(sql, params, rowMapper);
     }
 }
