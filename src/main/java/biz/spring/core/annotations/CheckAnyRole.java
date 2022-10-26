@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAnyRole('USER', 'SYSDBA')")
+@PreAuthorize("hasAnyAuthority('USER', 'SYSDBA', 'ROLE_USER', 'ROLE_SYSDBA')")
 public @interface CheckAnyRole {
 }
