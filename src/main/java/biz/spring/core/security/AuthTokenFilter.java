@@ -1,5 +1,7 @@
 package biz.spring.core.security;
 
+import biz.spring.core.model.ControlObject;
+import biz.spring.core.repository.ControlObjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.util.List;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private ControlObjectRepository controlObjectRepository;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -28,11 +35,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        boolean findControlObject = true;
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
+                String uri = request.getRequestURI();
+                List<ControlObject> co= controlObjectRepository.getAccessControlObject(username);
 
+                findControlObject = controlObjectRepository.getAccessControlObject(username)
+                        .stream()
+                        .anyMatch(controlObject -> controlObject.getControlObjectUrl().equals(request.getRequestURI()));
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());
@@ -44,7 +57,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             logger.error("Cannot set user authentication: {}", e);
         }
 
-        filterChain.doFilter(request, response);
+        if (findControlObject) {
+            filterChain.doFilter(request, response);
+        }else {
+            throw new AccessDeniedException("Доступ запрещен");
+        }
     }
 
     private String parseJwt(HttpServletRequest request) {

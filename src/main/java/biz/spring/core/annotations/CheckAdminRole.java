@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('SYSDBA')")
+@PreAuthorize("hasAuthority('SYSDBA')")
 public @interface CheckAdminRole {
 }
