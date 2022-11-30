@@ -7,6 +7,7 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.persistence.Column;
@@ -27,6 +28,12 @@ public class OrmUtils {
         ApplicationContext context = MainApplication.getApplicationContext();
         DataSource dataSource = context.getBean(DatabaseConfig.class).dataSource();
         return new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public static JdbcTemplate getJDBCTemplate(){
+        ApplicationContext context = MainApplication.getApplicationContext();
+        DataSource dataSource = context.getBean(DatabaseConfig.class).dataSource();
+        return new NamedParameterJdbcTemplate(dataSource).getJdbcTemplate();
     }
 
     /**Метод, возвращающий класс дженерика

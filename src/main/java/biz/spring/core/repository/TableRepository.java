@@ -4,6 +4,7 @@ import biz.spring.core.rowmapper.RowMapForEntity;
 import biz.spring.core.rowmapper.RowMapForObject;
 import biz.spring.core.utils.OrmUtils;
 import biz.spring.core.utils.TableMetadata;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,4 +93,26 @@ public interface TableRepository<T> {
         OrmUtils.loggerSql(sql);
         return (List<T>)jdbc.query(sql, params, rowMapper);
     }
+
+    default void executeSql(String sql){
+        JdbcTemplate jdbc = OrmUtils.getJDBCTemplate();
+        OrmUtils.loggerSql(sql);
+        jdbc.execute(sql);
+    }
+
+    abstract public void create();
+
+    default void drop(String[] tables){
+        Arrays.stream(tables).forEach(this::drop);
+    }
+    default void drop(String tableName){
+        String sql = "DROP TABLE IF EXISTS %s";
+        executeSql(String.format(sql, tableName));
+        sql = "DROP SEQUENCE IF EXISTS %s_id_gen";
+        executeSql(String.format(sql, tableName));
+    }
+
+    abstract public void drop();
+
+    abstract public void load();
 }

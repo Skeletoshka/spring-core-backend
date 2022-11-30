@@ -1,13 +1,52 @@
 package biz.spring.core.repository;
 
+import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ControlObject;
+import biz.spring.core.utils.DatabaseUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class ControlObjectRepository implements TableRepository<ControlObject> {
+
+    private static Logger logger = LoggerFactory.getLogger(ControlObjectRepository.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void create(){
+        Resource resource = new ClassPathResource("sql/100300-controlobject.sql");
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
+        databasePopulator.setSqlScriptEncoding("UTF-8");
+        databasePopulator.execute(jdbcTemplate.getDataSource());
+        logger.info("controlobject created");
+    }
+
+    @Override
+    public void drop(){
+        String[] tables = {"controlobject", "controlobjectrole"};
+        drop(tables);
+    }
+
+    @Override
+    public void load(){
+        ControlObject[] controlObjects = {
+                /*Загрузка происходит в InitApp*/
+        };
+        insert(Arrays.asList(controlObjects));
+        DatabaseUtils.setSequenceValue("controlobject_id_gen", controlObjects.length+1);
+    }
 
     public List<ControlObject> getAccessControlObject(String proguserName){
         String sql = String.join("\n",

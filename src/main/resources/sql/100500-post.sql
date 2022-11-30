@@ -1,0 +1,6 @@
+CREATE TABLE post (
+    post_id serial4 NOT NULL,
+    post_name varchar(20) NOT NULL,
+    CONSTRAINT post_pk PRIMARY KEY (post_id)
+);
+CREATE SEQUENCE post_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;

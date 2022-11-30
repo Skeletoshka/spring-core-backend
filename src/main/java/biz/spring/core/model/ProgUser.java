@@ -26,7 +26,7 @@ public class ProgUser {
     @NotNull(message = "Поле \"Полное наименование пользователя\" не может быть null")
     private String progUserFullName;
 
-    @Column(name = "proguser_webpassword", nullable = false)
+    @Column(name = "proguser_password", nullable = false)
     @Size(max = 255, message = "Поле \"Пароль пользователя\" не может быть более {max} символов")
     @NotNull(message = "Поле \"Пароль пользователя\" не может быть null")
     private String progUserWebPassword;
