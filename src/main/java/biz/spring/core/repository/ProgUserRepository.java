@@ -64,8 +64,12 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
     public ProgUserDTO findByLogin(String login){
         ProgUser progUser = getAll().stream().filter(pu -> pu.getProgUserName().equals(login)).findFirst().orElse(null);
         ProgUserDTO dto = new ProgUserDTO();
-        BeanUtils.copyProperties(progUser, dto);
-        dto.setAccessRoleViews(accessRoleRepository.getRolesForProguserId(dto.getProgUserId()));
-        return dto;
+        if(progUser != null) {
+            BeanUtils.copyProperties(progUser, dto);
+            dto.setAccessRoleViews(accessRoleRepository.getRolesForProguserId(dto.getProgUserId()));
+            return dto;
+        }else{
+            throw new RuntimeException("Пользователь не найден");
+        }
     }
 }
