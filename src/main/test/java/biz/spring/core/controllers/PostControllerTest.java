@@ -35,7 +35,7 @@ public class PostControllerTest extends IntegratedTest{
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(content().string(containsString("\"id\":1")));
     }
 }
