@@ -22,8 +22,8 @@ public class PostControllerTest extends IntegratedTest{
     public void getListTest() throws Exception{
         this.mockMvc.perform(post("/api/post/getlist")
                 .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print());
+                );
+                //.andDo(print());
     }
 
     @Test
