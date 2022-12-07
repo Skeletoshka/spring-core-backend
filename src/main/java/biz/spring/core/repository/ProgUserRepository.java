@@ -35,12 +35,14 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void bindWithRoles(List<AccessRoleView> views){
-        accessRoleRepository.insert(views.stream().map(view -> {
-            AccessRole role = new AccessRole();
-            BeanUtils.copyProperties(view, role);
-            return role;
-        }).collect(Collectors.toList()));
+    public void bindWithRoles(List<AccessRoleView> views, Integer proguserId){
+        String sql = "INSERT INTO proguserrole VALUES (:proguserrole_id, :proguser_id, :accessrole_id)";
+        views.forEach(view -> {
+            executeSql(sql, Map.of(
+                    "proguserrole_id", DatabaseUtils.getSequenceNextValue("proguserrole_id_gen"),
+                    "proguser_id", proguserId,
+                    "accessrole_id", view.getAccessRoleId()));
+        });
     }
 
     @Override

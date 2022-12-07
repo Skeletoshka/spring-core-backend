@@ -43,7 +43,7 @@ public interface TableRepository<T> {
         return jdbc.queryForObject(sql, (Map<String, ?>) null, Integer.class);
     }
 
-    default void insert(T obj){
+    default Integer insert(T obj){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
         String columnsName = tableMetadata.getFields().stream()
@@ -70,6 +70,7 @@ public interface TableRepository<T> {
                 }).collect(Collectors.toList());
         OrmUtils.loggerSql(sql);
         jdbc.execute(sql, params, PreparedStatement::execute);
+        return (Integer)params.get(tableMetadata.getIdField().getName());
     }
 
     default void insert(List<T> objects){
@@ -102,6 +103,12 @@ public interface TableRepository<T> {
         JdbcTemplate jdbc = OrmUtils.getJDBCTemplate();
         OrmUtils.loggerSql(sql);
         jdbc.execute(sql);
+    }
+
+    default void executeSql(String sql, Map<String, Object> params){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        OrmUtils.loggerSql(sql);
+        jdbc.execute(sql, params, PreparedStatement::execute);
     }
 
     abstract public void create();

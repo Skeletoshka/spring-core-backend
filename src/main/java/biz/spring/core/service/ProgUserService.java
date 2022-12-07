@@ -55,7 +55,7 @@ public class ProgUserService extends BaseService<ProgUser>{
     }
 
     public void saveUser(ProgUserDTO progUserDTO){
-        progUserRepository.insert(progUserDTO.toEntity());
-        progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews());
+        progUserDTO.setProgUserId(progUserRepository.insert(progUserDTO.toEntity()));
+        progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews(), progUserDTO.getProgUserId());
     }
 }
