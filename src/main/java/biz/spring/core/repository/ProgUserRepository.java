@@ -1,10 +1,12 @@
 package biz.spring.core.repository;
 
 import biz.spring.core.dto.ProgUserDTO;
+import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ControlObject;
 import biz.spring.core.model.Post;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.utils.DatabaseUtils;
+import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProgUserRepository implements TableRepository<ProgUser> {
@@ -31,6 +34,14 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void bindWithRoles(List<AccessRoleView> views){
+        accessRoleRepository.insert(views.stream().map(view -> {
+            AccessRole role = new AccessRole();
+            BeanUtils.copyProperties(view, role);
+            return role;
+        }).collect(Collectors.toList()));
+    }
 
     @Override
     public void create(){
@@ -69,7 +80,7 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
             dto.setAccessRoleViews(accessRoleRepository.getRolesForProguserId(dto.getProgUserId()));
             return dto;
         }else{
-            throw new RuntimeException("Пользователь не найден");
+            return null;
         }
     }
 }

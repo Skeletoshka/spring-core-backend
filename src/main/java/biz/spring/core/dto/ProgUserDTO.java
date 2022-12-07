@@ -1,5 +1,6 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.ProgUser;
 import biz.spring.core.view.AccessRoleView;
 
 import javax.persistence.Column;
@@ -92,5 +93,19 @@ public class ProgUserDTO {
 
     public void setAccessRoleViews(List<AccessRoleView> accessRoleViews) {
         this.accessRoleViews = accessRoleViews;
+    }
+
+    public ProgUser toEntity(){
+        return toEntity(new ProgUser());
+    }
+
+    public ProgUser toEntity(ProgUser entity){
+        entity.setProgUserId(this.progUserId);
+        entity.setProgUserName(this.progUserName);
+        entity.setProgUserFullName(this.progUserFullName);
+        entity.setWorkerId(this.workerId);
+        entity.setProgUserWebPassword(this.progUserWebPassword);
+        entity.setProgUserActive(this.progUserActive);
+        return entity;
     }
 }

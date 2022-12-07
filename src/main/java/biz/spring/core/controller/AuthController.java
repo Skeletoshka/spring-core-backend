@@ -9,7 +9,9 @@ import biz.spring.core.repository.AccessRoleRepository;
 import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.security.JwtUtils;
 import biz.spring.core.security.UserDetailsImpl;
+import biz.spring.core.service.ProgUserService;
 import biz.spring.core.view.AccessRoleView;
+import org.checkerframework.checker.units.qual.Acceleration;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,6 +41,9 @@ public class AuthController {
 
     @Autowired
     ProgUserRepository progUserRepository;
+
+    @Autowired
+    ProgUserService progUserService;
 
     @Autowired
     AccessRoleRepository accessRoleRepository;
@@ -74,7 +79,7 @@ public class AuthController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @Tag(value = "Метод для регистрации нового пользователя")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (progUserRepository.findByLogin(signUpRequest.getUsername()) == null) {
+        if (progUserRepository.findByLogin(signUpRequest.getUsername()) != null) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
@@ -90,7 +95,8 @@ public class AuthController {
         List<AccessRoleView> strRoles = signUpRequest.getRole();
 
         progUserDTO.setAccessRoleViews(strRoles);
-        //progUserRepository.save(user);
+        progUserService.saveUser(progUserDTO);
+
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

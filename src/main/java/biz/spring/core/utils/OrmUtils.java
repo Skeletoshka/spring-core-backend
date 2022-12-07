@@ -56,6 +56,9 @@ public class OrmUtils {
             //Ставим в поле первичного ключа поле с аннотацией @Id
             tableMetadata.setIdField(Arrays.stream(aClass.getDeclaredFields()).filter(field ->
                     field.getAnnotationsByType(Id.class).length>0).findAny().orElseThrow());
+            //Ставим в поле первичного ключа поле с аннотацией @Id
+            tableMetadata.setIdField(Arrays.stream(aClass.getDeclaredFields()).filter(field ->
+                    field.getAnnotationsByType(Id.class).length>0).findAny().orElseThrow());
             //Класс сущности
             tableMetadata.setModelClass(aClass);
             //Наименование таблицы в бд

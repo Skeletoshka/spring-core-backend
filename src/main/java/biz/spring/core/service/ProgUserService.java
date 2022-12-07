@@ -1,5 +1,6 @@
 package biz.spring.core.service;
 
+import biz.spring.core.dto.ProgUserDTO;
 import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.AccessRoleRepository;
@@ -51,5 +52,10 @@ public class ProgUserService extends BaseService<ProgUser>{
                     "INNER JOIN accessrole ar ON pur.accessrole_id = pur.accessrole_id " +
                 "WHERE pur.proguser_id = :progUserId";
         return (List<AccessRoleView>) findQuery(sql, Map.of("progUserId", userId), AccessRoleView.class);
+    }
+
+    public void saveUser(ProgUserDTO progUserDTO){
+        progUserRepository.insert(progUserDTO.toEntity());
+        progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews());
     }
 }

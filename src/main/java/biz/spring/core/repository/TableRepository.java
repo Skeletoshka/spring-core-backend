@@ -32,6 +32,10 @@ public interface TableRepository<T> {
         return (List<T>) jdbc.query(sql, rowMapper);
     }
 
+    default T get(Integer id){
+        return findWhere(OrmUtils.getTableName(this.getClass()) + "_id = :id", Map.of("id", id)).get(0);
+    }
+
     default Integer count(){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         String sql = "SELECT COUNT(*) FROM " + OrmUtils.getTableName(this.getClass());
