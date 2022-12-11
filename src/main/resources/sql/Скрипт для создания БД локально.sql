@@ -43,6 +43,9 @@ CREATE TABLE accessrole (
     CONSTRAINT accessrole_pk PRIMARY KEY (accessrole_id)
 );
 CREATE SEQUENCE accessrole_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
+INSERT INTO accessrole (accessrole_id,accessrole_name,accessrole_fullname) VALUES
+	 (1,'SYSDBA','Системный администратор');
+
 
 CREATE TABLE proguserrole (
     proguserrole_id INTEGER NOT NULL,
@@ -53,6 +56,9 @@ CREATE TABLE proguserrole (
     CONSTRAINT proguserrole_fk_1 FOREIGN KEY (accessrole_id) REFERENCES accessrole(accessrole_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE SEQUENCE proguserrole_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
+INSERT INTO proguserrole (proguserrole_id,proguser_id,accessrole_id) VALUES
+	 (1,0,1);
+
 
 CREATE TABLE sqlaction (
     sqlaction_id INTEGER NOT NULL,
