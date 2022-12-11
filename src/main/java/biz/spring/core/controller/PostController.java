@@ -31,14 +31,12 @@ public class PostController {
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
     @Tag(value = "Метод для получения списка объектов \"Должность\"")
-    @CheckAdminRole
     public List<PostView> getList(){
         return postService.getAll();
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @Tag(value = "Метод для получения объекта \"Должность\" по его идентификатору")
-    @CheckAnyRole
     public PostDTO get(@RequestBody(required = false) int id){
         if(id == 0){
             return new PostDTO();

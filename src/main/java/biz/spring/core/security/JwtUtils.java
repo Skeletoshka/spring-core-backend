@@ -1,41 +1,40 @@
 package biz.spring.core.security;
 
+import biz.spring.core.repository.ProgUserRepository;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${biz.spring.core.jwtSecret}")
-    private String jwtSecret;
+    @Autowired
+    private ProgUserRepository progUserRepository;
 
-    @Value("${biz.spring.core.jwtExpirationMs}")
-    private int jwtExpirationMs;
-
-    public String generateJwtToken(Authentication authentication) {
-
+    public String getToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        return progUserRepository.getTokenByUsername(userPrincipal.getUsername());
+    }
 
-        return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
+    public static String createToken() {
+        return UUID.randomUUID().toString();
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+        return progUserRepository.getUsernameByToken(token);
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-            return true;
+            return getUserNameFromJwtToken(authToken) != null;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {

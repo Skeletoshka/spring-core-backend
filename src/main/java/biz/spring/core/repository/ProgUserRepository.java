@@ -5,6 +5,7 @@ import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ControlObject;
 import biz.spring.core.model.Post;
 import biz.spring.core.model.ProgUser;
+import biz.spring.core.payload.response.JwtResponse;
 import biz.spring.core.utils.DatabaseUtils;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
@@ -18,10 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -35,12 +33,43 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void bindWithRoles(List<AccessRoleView> views){
-        accessRoleRepository.insert(views.stream().map(view -> {
-            AccessRole role = new AccessRole();
-            BeanUtils.copyProperties(view, role);
-            return role;
-        }).collect(Collectors.toList()));
+    public void bindWithRoles(List<AccessRoleView> views, Integer proguserId){
+        String sql = "INSERT INTO proguserrole VALUES (:proguserrole_id, :proguser_id, :accessrole_id)";
+        views.forEach(view -> {
+            executeSql(sql, Map.of(
+                    "proguserrole_id", DatabaseUtils.getSequenceNextValue("proguserrole_id_gen"),
+                    "proguser_id", proguserId,
+                    "accessrole_id", view.getAccessRoleId()));
+        });
+    }
+
+    public void createToken(Integer progUserId, String token){
+        String sql = "INSERT INTO proguserauth VALUES (:proguserauth_id, :proguserauth_create, :proguserauth_token, :proguser_id)";
+        Map<String, Object> params = Map.of(
+                "proguserauth_id", DatabaseUtils.getSequenceNextValue("proguserauth_id_gen"),
+                "proguserauth_create", new Date(),
+                "proguserauth_token", token,
+                "proguser_id", progUserId);
+        executeSql(sql, params);
+    }
+
+
+    public String getUsernameByToken(String token){
+        String sql = "" +
+                "SELECT PU.proguser_name " +
+                "FROM proguserauth PUA " +
+                "INNER JOIN proguser PU ON PUA.proguser_id = PU.proguser_id " +
+                "WHERE PUA.proguserauth_token = :token";
+        return findForObject(sql, Map.of("token", token), ProgUserView.class).getProgUserName();
+    }
+
+    public String getTokenByUsername(String username){
+        String sql = "" +
+                "SELECT PUA.proguserauth_token " +
+                "FROM proguserauth PUA " +
+                "INNER JOIN proguser PU ON PUA.proguser_id = PU.proguser_id " +
+                "WHERE PU.proguser_name = :username";
+        return findForObject(sql, Map.of("username", username), JwtResponse.class).getToken();
     }
 
     @Override
@@ -54,18 +83,16 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
 
     @Override
     public void drop(){
-        String[] tables = {"proguser", "proguserrole", "sqlaction"};
+        String[] tables = {"proguser", "proguserrole", "sqlaction", "proguserauth"};
         drop(tables);
     }
 
     @Override
     public void load(){
         ProgUser[] progUsers = {
-                new ProgUser(1, "SYSDBA", "Системный администратор",
-                        "$2a$10$JtM6dcdfqqBAO1Gscq.JP.SliEMX3.tY.7PvSNh1NJmFb.kQipye2", 1, 1),
-                new ProgUser(1, "Director", "Директор",
+                new ProgUser(2, "Director", "Директор",
                         "$2a$10$JtM6dcdfqqBAO1Gscq.JP.SliEMX3.tY.7PvSNh1NJmFb.kQipye2", 1, 2),
-                new ProgUser(1, "Metodist", "Методист",
+                new ProgUser(3, "Metodist", "Методист",
                         "$2a$10$JtM6dcdfqqBAO1Gscq.JP.SliEMX3.tY.7PvSNh1NJmFb.kQipye2", 1, 3)
         };
         insert(Arrays.asList(progUsers));

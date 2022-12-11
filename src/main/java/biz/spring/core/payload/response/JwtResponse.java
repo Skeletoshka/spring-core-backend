@@ -1,14 +1,20 @@
 package biz.spring.core.payload.response;
 
+import javax.persistence.Column;
 import java.util.List;
 
 public class JwtResponse {
+
+	@Column(name = "proguserauth_token")
 	private String token;
 	private String type = "Bearer";
 	private Integer id;
 	private String username;
 	private String email;
 	private List<String> roles;
+
+	public JwtResponse() {
+	}
 
 	public JwtResponse(String accessToken, Integer id, String username, String email, List<String> roles) {
 		this.token = accessToken;
@@ -18,11 +24,11 @@ public class JwtResponse {
 		this.roles = roles;
 	}
 
-	public String getAccessToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setAccessToken(String accessToken) {
+	public void setToken(String accessToken) {
 		this.token = accessToken;
 	}
 

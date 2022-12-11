@@ -1,5 +1,5 @@
 CREATE TABLE worker (
-    worker_id serial4 NOT NULL,
+    worker_id INTEGER NOT NULL,
     worker_lastname varchar(20) NOT NULL,
     worker_name varchar(20) NOT NULL,
     worker_middlename varchar(20) NOT NULL,

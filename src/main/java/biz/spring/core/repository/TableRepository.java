@@ -43,7 +43,7 @@ public interface TableRepository<T> {
         return jdbc.queryForObject(sql, (Map<String, ?>) null, Integer.class);
     }
 
-    default void insert(T obj){
+    default Integer insert(T obj){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
         String columnsName = tableMetadata.getFields().stream()
@@ -58,9 +58,8 @@ public interface TableRepository<T> {
                 .peek(field -> {
                     try {
                         params.put(field.getName(), field.getAnnotationsByType(Id.class).length>0?
-                                nextValue(tableMetadata.getTableName() + "_"
-                                        + tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
-                                        + "_seq"):
+                                nextValue(tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
+                                        + "_gen"):
                                 Arrays.stream(obj.getClass().getDeclaredMethods())
                                 .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
                                 .findFirst().orElseThrow().invoke(obj, null));
@@ -70,6 +69,7 @@ public interface TableRepository<T> {
                 }).collect(Collectors.toList());
         OrmUtils.loggerSql(sql);
         jdbc.execute(sql, params, PreparedStatement::execute);
+        return (Integer)params.get(tableMetadata.getIdField().getName());
     }
 
     default void insert(List<T> objects){
@@ -98,10 +98,23 @@ public interface TableRepository<T> {
         return (List<T>)jdbc.query(sql, params, rowMapper);
     }
 
+    default <T> T findForObject(String sql, Map<String, Object> params, Class<T> cls){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        RowMapForObject rowMapper = new RowMapForObject(cls);
+        OrmUtils.loggerSql(sql);
+        return ((List<T>)jdbc.query(sql, params, rowMapper)).get(0);
+    }
+
     default void executeSql(String sql){
         JdbcTemplate jdbc = OrmUtils.getJDBCTemplate();
         OrmUtils.loggerSql(sql);
         jdbc.execute(sql);
+    }
+
+    default void executeSql(String sql, Map<String, Object> params){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        OrmUtils.loggerSql(sql);
+        jdbc.execute(sql, params, PreparedStatement::execute);
     }
 
     abstract public void create();
