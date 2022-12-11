@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +26,9 @@ public class AccessRoleController {
     private AccessRoleService accessRoleService;
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
-    @CheckAnyRole
     @Tag(value = "Метод для получения списка объектов \"Роль\"")
-    public List<AccessRoleView> getList(){
+    @CrossOrigin
+    public List<AccessRoleView> getList(String id){
         return accessRoleService.getAll();
     }
 

@@ -36,17 +36,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         boolean findControlObject = true;
+        UserDetails userDetails = null;
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                String uri = request.getRequestURI();
-                List<ControlObject> co= controlObjectRepository.getAccessControlObject(username);
 
                 findControlObject = controlObjectRepository.getAccessControlObject(username)
                         .stream()
                         .anyMatch(controlObject -> controlObject.getControlObjectUrl().equals(request.getRequestURI()));
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -57,7 +56,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             logger.error("Cannot set user authentication: {}", e);
         }
 
-        if (findControlObject) {
+        if (findControlObject || (userDetails != null && userDetails.getUsername().equals("SYSDBA"))) {
             filterChain.doFilter(request, response);
         }else {
             throw new AccessDeniedException("Доступ запрещен");

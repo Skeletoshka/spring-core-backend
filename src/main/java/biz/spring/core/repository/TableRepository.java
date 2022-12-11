@@ -58,9 +58,8 @@ public interface TableRepository<T> {
                 .peek(field -> {
                     try {
                         params.put(field.getName(), field.getAnnotationsByType(Id.class).length>0?
-                                nextValue(tableMetadata.getTableName() + "_"
-                                        + tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
-                                        + "_seq"):
+                                nextValue(tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
+                                        + "_gen"):
                                 Arrays.stream(obj.getClass().getDeclaredMethods())
                                 .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
                                 .findFirst().orElseThrow().invoke(obj, null));
@@ -97,6 +96,13 @@ public interface TableRepository<T> {
         RowMapForObject rowMapper = new RowMapForObject(cls);
         OrmUtils.loggerSql(sql);
         return (List<T>)jdbc.query(sql, params, rowMapper);
+    }
+
+    default <T> T findForObject(String sql, Map<String, Object> params, Class<T> cls){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        RowMapForObject rowMapper = new RowMapForObject(cls);
+        OrmUtils.loggerSql(sql);
+        return ((List<T>)jdbc.query(sql, params, rowMapper)).get(0);
     }
 
     default void executeSql(String sql){

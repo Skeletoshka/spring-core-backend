@@ -1,5 +1,5 @@
 CREATE TABLE post (
-    post_id serial4 NOT NULL,
+    post_id INTEGER NOT NULL,
     post_name varchar(20) NOT NULL,
     CONSTRAINT post_pk PRIMARY KEY (post_id)
 );

@@ -5,6 +5,7 @@ import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.AccessRoleRepository;
 import biz.spring.core.repository.ProgUserRepository;
+import biz.spring.core.security.JwtUtils;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
@@ -57,5 +58,6 @@ public class ProgUserService extends BaseService<ProgUser>{
     public void saveUser(ProgUserDTO progUserDTO){
         progUserDTO.setProgUserId(progUserRepository.insert(progUserDTO.toEntity()));
         progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews(), progUserDTO.getProgUserId());
+        progUserRepository.createToken(progUserDTO.getProgUserId(), JwtUtils.createToken());
     }
 }

@@ -25,7 +25,7 @@ public class InitApp implements ApplicationRunner {
     @Autowired
     RecreateDatabase recreateDatabase;
 
-    @Value("${sprin.core.run-as-test:false}")
+    @Value("${spring.core.run-as-test:false}")
     private boolean runAsTest;
 
     @Override
@@ -34,10 +34,12 @@ public class InitApp implements ApplicationRunner {
         //Заполняем метаданные таблиц
         OrmUtils.fillTableMetadata("biz.spring.core");
         MainApplication.setApplicationContext(applicationContext);
-        //Пересоздаем таблицы
-        logger.info("Recreate database started.");
-        recreateDatabase.recreate();
-        logger.info("Recreate database ended.");
+        if(runAsTest) {
+            //Пересоздаем таблицы
+            logger.info("Recreate database started.");
+            recreateDatabase.recreate();
+            logger.info("Recreate database ended.");
+        }
         //Заполняем таблицу в бд с контроллируемыми объектами
         SecurityUtils.fillControlObject("biz.spring.core");
         logger.info("Init app ... complete");

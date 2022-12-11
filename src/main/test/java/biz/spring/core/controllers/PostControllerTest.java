@@ -1,5 +1,8 @@
 package biz.spring.core.controllers;
 
+import biz.spring.core.payload.request.LoginRequest;
+import biz.spring.core.payload.response.JwtResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class PostControllerTest extends IntegratedTest{
 
@@ -20,10 +25,14 @@ public class PostControllerTest extends IntegratedTest{
     @Rollback
     @Transactional
     public void getListTest() throws Exception{
+
         this.mockMvc.perform(post("/api/post/getlist")
-                .contentType(MediaType.APPLICATION_JSON)
-                );
-                //.andDo(print());
+                        .content("1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"postId\":1")));
     }
 
     @Test
@@ -31,11 +40,11 @@ public class PostControllerTest extends IntegratedTest{
     @Transactional
     public void getTest() throws Exception{
         this.mockMvc.perform(post("/api/post/get")
-                        .header("Authorization", "Bearer b94fbd5d-0d8b-4e56-834b-5c940ef5a193")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
-                //.andDo(print())
-                .andExpect(content().string(containsString("\"id\":1")));
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"postId\":1")));
     }
 }
