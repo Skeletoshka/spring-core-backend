@@ -21,7 +21,7 @@ CREATE TABLE proguserrole (
     CONSTRAINT proguserrole_fk_1 FOREIGN KEY (accessrole_id) REFERENCES accessrole(accessrole_id) ON DELETE CASCADE ON UPDATE CASCADE*/
 );
 CREATE SEQUENCE proguserrole_id_gen INCREMENT BY 1 MINVALUE 2 MAXVALUE 2147483647 START 2 CACHE 1 NO CYCLE;
-INSERT INTO proguserrole VALUES (1, 1, 1);
+INSERT INTO proguserrole VALUES (1, 0, 1);
 
 CREATE TABLE sqlaction (
     sqlaction_id INTEGER NOT NULL,
