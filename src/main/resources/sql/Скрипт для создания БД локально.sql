@@ -3,7 +3,7 @@ CREATE TABLE post (
     post_name varchar(20) NOT NULL,
     CONSTRAINT post_pk PRIMARY KEY (post_id)
 );
-CREATE SEQUENCE proguser_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
+CREATE SEQUENCE post_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 
 CREATE TABLE worker (
     worker_id INTEGER NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE worker (
     CONSTRAINT worker_un UNIQUE (worker_password),
     CONSTRAINT worker_fk FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE SEQUENCE proguser_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
+CREATE SEQUENCE worker_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 
 CREATE TABLE proguser (
     proguser_id INTEGER NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE proguser (
 );
 CREATE SEQUENCE proguser_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 INSERT INTO proguser VALUES (0, 'SYSDBA', 'Системный администратор',
-                                                     '$2a$10$JtM6dcdfqqBAO1Gscq.JP.SliEMX3.tY.7PvSNh1NJmFb.kQipye2', 1, 1);
+                                                     '$2a$10$JtM6dcdfqqBAO1Gscq.JP.SliEMX3.tY.7PvSNh1NJmFb.kQipye2', 1, null);
 
 CREATE TABLE accessrole (
     accessrole_id INTEGER NOT NULL,
