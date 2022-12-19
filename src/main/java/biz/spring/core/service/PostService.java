@@ -15,6 +15,7 @@ public class PostService extends BaseService<Post>{
     @Autowired
     private PostRepository postRepository;
 
+    // Тут был Тимур
     private final String mainSql = "" +
             "SELECT * " +
             "FROM post";
