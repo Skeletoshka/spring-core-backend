@@ -96,7 +96,7 @@ CREATE TABLE proguserauth (
 	proguser_id INTEGER NOT NULL,
 	CONSTRAINT proguserauth_pk PRIMARY KEY (proguserauth_id),
 	CONSTRAINT proguserauth_un UNIQUE (proguser_id),
-	CONSTRAINT proguserauth_fk FOREIGN KEY (proguser_id) REFERENCES dbo.proguser(proguser_id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT proguserauth_fk FOREIGN KEY (proguser_id) REFERENCES proguser(proguser_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE SEQUENCE proguserauth_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 INSERT INTO proguserauth (proguserauth_id,proguserauth_create,proguserauth_token,proguser_id) VALUES
