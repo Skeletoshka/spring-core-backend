@@ -1,5 +1,5 @@
 package biz.spring.core.security;
-
+//комментарий
 import biz.spring.core.model.ControlObject;
 import biz.spring.core.repository.ControlObjectRepository;
 import org.slf4j.Logger;
