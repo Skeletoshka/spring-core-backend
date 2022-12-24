@@ -103,7 +103,7 @@ CREATE TABLE direction (
 	CONSTRAINT direction_pk PRIMARY KEY (direction_id)
 );
 
-CREATE SEQUENCE dbo.direction_id_gen
+CREATE SEQUENCE direction_id_gen
 	INCREMENT BY 1
 	MINVALUE 1
 	MAXVALUE 9223372036854775807
