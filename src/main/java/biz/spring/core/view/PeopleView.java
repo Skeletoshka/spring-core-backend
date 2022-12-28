@@ -1,73 +1,55 @@
-package biz.spring.core.model;
+package biz.spring.core.view;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "people")
-public class People {
+public class PeopleView {
 
-    @Id
-    @Column(name = "people_id", nullable = false)
-    @NotNull(message = "Поле \"ID пользователя\" не может быть NULL")
+    @Column(name = "people_id")
     private Integer peopleId;
 
-    @Column(name = "people_name", nullable = false)
-    @NotNull(message = "Поле \"Имя\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Имя\" не может иметь более {max} символов")
+    @Column(name = "people_name")
     private String peopleName;
-    
-    @Column(name = "people_lastname", nullable = false)
-    @NotNull(message = "Поле \"Фамиоия\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+
+    @Column(name = "people_lastname")
     private String peopleLastName;
-    
-    @Column(name = "people_middlename", nullable = false)
-    @NotNull(message = "Поле \"Отчество\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Отчество\" не может иметь более {max} символов")
+
+    @Column(name = "people_middlename")
     private String peopleMiddleName;
-    
-    @Column(name = "people_datebirth", nullable = false)
-    @NotNull(message = "Поле \"Дата рождения\" не может быть NULL")
+
+    @Column(name = "people_datebirth")
     private Date peopleDatebirth;
-    
-    @Column(name = "capclass_id", nullable = false)
-    @NotNull(message = "Поле \"ID класса\" не может быть NULL")
+
+    @Column(name = "capclass_id")
     private Integer capclassId;
-    
-    @Column(name = "people_email", nullable = false)
-    @NotNull(message = "Поле \"Email\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+
+    @Column(name = "people_email")
     private String peopleEmail;
-    
-    @Column(name = "people_phone", nullable = false)
-    @Size(max = 14, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+
+    @Column(name = "people_phone")
     private String peoplePhone;
-    
-    @Column(name = "people_deleteflag", nullable = false)
+
+    @Column(name = "people_deleteflag")
     private Integer peopleDeleteFlag;
-    
-    @Column(name = "people_datedelete", nullable = false)
+
+    @Column(name = "people_datedelete")
     private Date peopleDateDelete;
 
-    public People() {
+    public PeopleView() {
     }
 
-    public People(Integer peopleId,
-                      String peopleName,
-                      String peopleLastName,
-                      String peopleMiddleName,
-                      Date peopleDatebirth,
-                      Integer capclassId,
-                      String peopleEmail,
-                      String peoplePhone,
-                      Integer peopleDeleteFlag,
-                      Date peopleDateDelete
-                      ) {
+    public PeopleView(Integer peopleId,
+                  String peopleName,
+                  String peopleLastName,
+                  String peopleMiddleName,
+                  Date peopleDatebirth,
+                  Integer capclassId,
+                  String peopleEmail,
+                  String peoplePhone,
+                  Integer peopleDeleteFlag,
+                  Date peopleDateDelete
+    ) {
         this.peopleId = peopleId;
         this.peopleName= peopleName;
         this.peopleLastName = peopleLastName;
@@ -78,7 +60,7 @@ public class People {
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
         this.peopleDateDelete = peopleDateDelete;
-        
+
     }
 
     public Integer getPeopleId() {
@@ -144,7 +126,7 @@ public class People {
     public void setPeopleDeleteFlag(Integer peopleDeleteFlag) {
         this.peopleDeleteFlag = peopleDeleteFlag;
     }
-     public Date getPeopleDateDelete() {
+    public Date getPeopleDateDelete() {
         return peopleDateDelete;
     }
 
@@ -152,3 +134,4 @@ public class People {
         this.peopleDateDelete = peopleDateDelete;
     }
 }
+
