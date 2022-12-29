@@ -1,8 +1,8 @@
 package biz.spring.core.repository;
 
-import biz.spring.core.model.AccessRole;
+import biz.spring.core.model.People;
 import biz.spring.core.utils.DatabaseUtils;
-import biz.spring.core.view.AccessRoleView;
+import biz.spring.core.view.PeopleView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -56,11 +56,11 @@ public class PeopleRepository implements TableRepository<People>{
         String sql = "" +
                 "SELECT AR.* " +
                 "FROM people AR " +
-                "INNER JOIN proguserrole PUR ON AR.accessrole_id = PUR.accessrole_id " +
+                "INNER JOIN proguserrole PUR ON AR.people_id = PUR.people_id " +
                 "WHERE PUR.proguser_id = :proguserId";
-        return findListForObject(sql, Map.of("proguserId", proguserId), AccessRole.class)
+        return findListForObject(sql, Map.of("proguserId", proguserId), People.class)
                 .stream().map(ar -> {
-                    AccessRoleView view = new AccessRoleView();
+                    PeopleView view = new PeopleView();
                     BeanUtils.copyProperties(ar, view);
                     return view;
                 }).collect(Collectors.toList());

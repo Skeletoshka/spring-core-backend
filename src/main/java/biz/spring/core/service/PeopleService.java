@@ -1,9 +1,9 @@
 package biz.spring.core.service;
 
-import biz.spring.core.model.AccessRole;
-import biz.spring.core.repository.AccessRoleRepository;
+import biz.spring.core.model.People;
+import biz.spring.core.repository.PeopleRepository;
 import biz.spring.core.utils.Query;
-import biz.spring.core.view.AccessRoleView;
+import biz.spring.core.view.PeopleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +17,26 @@ public class PeopleService extends BaseService<People> {
 
     private final String mainSql = "" +
             "SELECT * " +
-            "FROM accessrole";
+            "FROM people";
 
     private final String mainSqlForOne = "" +
             "SELECT * " +
-            "FROM accessrole " +
-            "WHERE accessrole_id = :id";
+            "FROM people " +
+            "WHERE people_id = :id";
 
-    public List<AccessRoleView> getAll(){
-        return new Query<AccessRoleView>(mainSql)
-                .forClass(AccessRoleView.class)
+    public List<PeopleView> getAll(){
+        return new Query<PeopleView>(mainSql)
+                .forClass(People.class)
                 .execute();
     }
 
-    public AccessRoleView getOne(Integer id){
-        return new Query<AccessRoleView>(mainSqlForOne)
-                .forClass(AccessRoleView.class)
+    public PeopleView getOne(Integer id){
+        return new Query<PeopleView>(mainSqlForOne)
+                .forClass(PeopleView.class)
                 .executeOne(id);
     }
 
-    public void save(AccessRole accessRole){
-        accessRoleRepository.insert(accessRole);
+    public void save(People people){
+        peopleRepository.insert(people);
     }
 }
