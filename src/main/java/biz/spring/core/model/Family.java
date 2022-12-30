@@ -25,14 +25,14 @@ public class Family {
     @Column(name = "child_id", nullable = false)
     @NotNull(message = "Поле \"ID ребенка\" не может быть NULL")
     @Size(max = 5, message = "Поле \"Наименование роли\" не может иметь более {max} символов")
-    private Integer childI;
+    private Integer childId;
 
     public Family() {
     }
 
     public Family(Integer familyId, Integer parentId, Integer childId) {
         this.familyId = familyId;
-        this.parentIde = parentId;
+        this.parentId = parentId;
         this.childId = childId;
     }
 
@@ -51,11 +51,12 @@ public class Family {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
-    public Integer getParentId() {
-        return parentId;
+
+    public Integer getChildId() {
+        return childId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setChildId(Integer childId) {
+        this.childId = childId;
     }
 }

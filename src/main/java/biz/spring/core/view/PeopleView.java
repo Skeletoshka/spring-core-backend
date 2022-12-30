@@ -3,6 +3,7 @@ package biz.spring.core.view;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 public class PeopleView {
 
