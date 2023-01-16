@@ -35,8 +35,10 @@ public class TestService extends BaseService<Test>{
                 .forClass(TestView.class)
                 .executeOne(id);
     }
-
+/*
     public void save(Test test){
         testRepository.insert(test);
     }
+    
+ */
 }

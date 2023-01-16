@@ -50,7 +50,7 @@ public class AnswerController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @Tag(value = "Метод для сохранения объекта \"Тест\"")
-    public List<TestView> save(@RequestBody TestDTO testDTO){
+    public List<AnswerView> save(@RequestBody AnswerDTO answerDTO){
         answerService.save(answerDTO.toEntity());
         return answerService.getAll();
     }

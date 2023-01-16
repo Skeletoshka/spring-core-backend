@@ -38,8 +38,10 @@ public class PeopleTestService extends BaseService<PeopleTest>{
                 .forClass(PeopleTestView.class)
                 .executeOne(id);
     }
-
+/*
     public void save(PeopleTest peopleTest){
         peopleTestRepository.insert(peopleTest);
+
+ */
     }
-}
+

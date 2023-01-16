@@ -1,6 +1,7 @@
 package biz.spring.core.dto;
 
 
+import biz.spring.core.model.Test;
 import biz.spring.core.model.TestQuestion;
 
 public class TestQuestionDTO {
@@ -54,4 +55,7 @@ public class TestQuestionDTO {
         return testQuestion;
     }
 
+    public TestQuestion toEntity(){
+        return toEntity(new TestQuestion());
+    }
 }

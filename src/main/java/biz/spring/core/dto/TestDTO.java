@@ -1,5 +1,6 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.PeopleTest;
 import biz.spring.core.model.Test;
 
 public class TestDTO {
@@ -38,5 +39,8 @@ public class TestDTO {
         test.setTestName(this.testName);
         test.setTestDesc(this.testDesc);
         return test;
+    }
+    public Test toEntity(){
+        return toEntity(new Test());
     }
 }

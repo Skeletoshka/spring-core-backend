@@ -2,14 +2,9 @@ package biz.spring.core.controller;
 
 import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
-import biz.spring.core.dto.PostDTO;
-import biz.spring.core.model.PeopleTest;
-import biz.spring.core.model.Post;
-import biz.spring.core.service.PostService;
-import biz.spring.core.view.AnswerView;
+import biz.spring.core.dto.PeopleTestDTO;
+import biz.spring.core.service.PeopleTestService;
 import biz.spring.core.view.PeopleTestView;
-import biz.spring.core.view.PostView;
-import biz.spring.core.view.TestView;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

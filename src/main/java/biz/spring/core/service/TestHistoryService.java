@@ -38,8 +38,10 @@ public class TestHistoryService extends BaseService<TestHistory>{
                 .forClass(TestHistoryView.class)
                 .executeOne(id);
     }
-
+/*
     public void save(TestHistory testHistory){
         testHistoryRepository.insert(testHistory);
     }
+
+ */
 }

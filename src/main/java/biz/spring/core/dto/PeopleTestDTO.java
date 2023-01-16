@@ -1,5 +1,6 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.PeopleTest;
 
 public class PeopleTestDTO {
@@ -38,5 +39,8 @@ public class PeopleTestDTO {
         peopleTest.setPeopleId(this.peopleId);
         peopleTest.setTestId(this.testId);
         return peopleTest;
+    }
+    public PeopleTest toEntity(){
+        return toEntity(new PeopleTest());
     }
 }

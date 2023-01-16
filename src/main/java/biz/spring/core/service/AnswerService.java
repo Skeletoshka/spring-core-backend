@@ -37,8 +37,10 @@ public class AnswerService extends BaseService<Answer>{
                 .forClass(AnswerView.class)
                 .executeOne(id);
     }
-
+    /*
     public void save(Answer answer){
         answerRepository.insert(answer);
     }
+
+     */
 }

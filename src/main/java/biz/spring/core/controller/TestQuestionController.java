@@ -3,9 +3,10 @@ package biz.spring.core.controller;
 import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.PostDTO;
+import biz.spring.core.dto.TestQuestionDTO;
 import biz.spring.core.model.PeopleTest;
 import biz.spring.core.model.Post;
-import biz.spring.core.service.PostService;
+import biz.spring.core.service.TestQuestionService;
 import biz.spring.core.view.*;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
@@ -31,7 +32,7 @@ public class TestQuestionController {
     @Tag(value = "Метод для получения списка объектов \"Вопрос теста\"")
     @CrossOrigin
     public List<TestQuestionView> getList(String id){
-        return peopleTestService.getAll();
+        return testQuestionService.getAll();
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
@@ -51,7 +52,7 @@ public class TestQuestionController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @Tag(value = "Метод для сохранения объекта \"Вопрос теста\"")
     public List<TestQuestionView> save(@RequestBody TestQuestionDTO testQuestionDTO){
-        peopleTestService.save(peopleTestDTO.toEntity());
-        return peopleTestService.getAll();
+        testQuestionService.save(testQuestionDTO.toEntity());
+        return testQuestionService.getAll();
     }
 }

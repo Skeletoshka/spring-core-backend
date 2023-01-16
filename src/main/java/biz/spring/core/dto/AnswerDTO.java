@@ -1,5 +1,6 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.Answer;
 
 public class AnswerDTO {
@@ -56,5 +57,8 @@ public class AnswerDTO {
         answer.setAnswerText(this.answerText);
         answer.setAnswerRight(this.answerRight);
         return answer;
+    }
+    public Answer toEntity(){
+        return toEntity(new Answer());
     }
 }
