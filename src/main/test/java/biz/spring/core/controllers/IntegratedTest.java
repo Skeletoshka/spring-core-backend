@@ -44,7 +44,7 @@ public class IntegratedTest {
                 .webAppContextSetup(webApplicationContext)
                 .defaultRequest(post("/")
                         .header("Authorization","Bearer b70cd02a-7933-11ed-a1eb-0242ac120002")
-                        .header("Content-Type", "charset=utf-8"))
+                        .header("Content-Type", "application/json;charset=UTF-8"))
                 .apply(springSecurity())
                 .build();
         if(!start) {

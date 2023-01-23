@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,6 +75,38 @@ public interface TableRepository<T> {
 
     default void insert(List<T> objects){
         objects.forEach(this::insert);
+    }
+
+    default void update(T object){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
+        String sql = "UPDATE " + tableMetadata.getTableName() + " SET ";
+        Map<String, Object> params = new HashMap<>();
+        sql = sql + tableMetadata.getFields().stream()
+                .filter(field -> !field.getVarName().equals(tableMetadata.getIdField().getName()))
+                .map(field -> {
+                    String columnName = field.getColumnName();
+                    try {
+                        params.put(columnName, Arrays.stream(object.getClass().getDeclaredMethods())
+                                .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getVarName().toLowerCase(Locale.ROOT)))
+                                .findFirst().orElseThrow().invoke(object, null));
+                        return columnName + " = :" + columnName;
+                    } catch (Exception e) {
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                }).collect(Collectors.joining(" "));
+        String idFieldName = tableMetadata.getIdField().getAnnotationsByType(Column.class)[0].name();
+        try {
+            params.put(idFieldName, Arrays.stream(object.getClass().getDeclaredMethods())
+                    .filter(method -> method.getName().toLowerCase(Locale.ROOT)
+                            .equals("get" + tableMetadata.getIdField().getName().toLowerCase(Locale.ROOT)))
+                    .findFirst().orElseThrow().invoke(object, null));
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        sql += " WHERE " + idFieldName + " = :" + idFieldName;
+        OrmUtils.loggerSql(sql);
+        jdbc.update(sql, params);
     }
 
     default int nextValue(String seqName){
