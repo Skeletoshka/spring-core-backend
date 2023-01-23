@@ -1,6 +1,5 @@
 package biz.spring.core.repository;
 
-import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.Post;
 import biz.spring.core.utils.DatabaseUtils;
 import org.slf4j.Logger;
