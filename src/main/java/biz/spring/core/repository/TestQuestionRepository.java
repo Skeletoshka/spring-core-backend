@@ -36,7 +36,7 @@ public class TestQuestionRepository implements TableRepository<TestQuestion> {
 
     @Override
     public void drop() {
-        String[] tables = { "testquestion","test"};
+        String[] tables = {"test", "testhistory", "testquestion", "answer"};
         drop(tables);
     }
 

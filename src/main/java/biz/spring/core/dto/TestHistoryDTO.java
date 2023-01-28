@@ -2,6 +2,7 @@ package biz.spring.core.dto;
 
 
 import biz.spring.core.model.Answer;
+import biz.spring.core.model.Test;
 import biz.spring.core.model.TestHistory;
 
 public class TestHistoryDTO {
@@ -63,5 +64,9 @@ public class TestHistoryDTO {
         testHistory.setTestQuestionId(this.testQuestionId);
         testHistory.setAnswerId(this.answerId);
         return testHistory;
+    }
+
+    public TestHistory toEntity(){
+        return toEntity(new TestHistory());
     }
 }

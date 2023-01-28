@@ -37,7 +37,7 @@ public class TestHistoryRepository implements TableRepository<TestHistory> {
 
     @Override
     public void drop() {
-        String[] tables = {"testhistory", "answer"};
+        String[] tables = {"test", "testhistory", "testquestion", "answer"};
         drop(tables);
     }
 
@@ -48,7 +48,7 @@ public class TestHistoryRepository implements TableRepository<TestHistory> {
                 new TestHistory(2,1,2,2),
                 new TestHistory(3,2,1,4),
         };
-        //insert(Arrays.asList(testHistories));
+        insert(Arrays.asList(testHistories));
         DatabaseUtils.setSequenceValue("testhistory_id_gen", testHistories.length+1);
     }
 

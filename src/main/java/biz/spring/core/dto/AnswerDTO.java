@@ -2,6 +2,9 @@ package biz.spring.core.dto;
 
 import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.Answer;
+import biz.spring.core.model.TestHistory;
+
+import java.util.List;
 
 public class AnswerDTO {
 
@@ -12,6 +15,16 @@ public class AnswerDTO {
     private String answerText;
 
     private Integer answerRight;
+
+    private List<TestHistoryDTO> testHistories;
+
+    public List<TestHistoryDTO> getTestHistories() {
+        return testHistories;
+    }
+
+    public void setTestHistories(List<TestHistoryDTO> testHistories) {
+        this.testHistories = testHistories;
+    }
 
     public AnswerDTO() {
     }

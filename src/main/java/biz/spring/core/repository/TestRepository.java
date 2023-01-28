@@ -36,7 +36,7 @@ public class TestRepository implements TableRepository<Test> {
 
     @Override
     public void drop() {
-        String[] tables = {"test"};
+        String[] tables = {"test", "testhistory", "testquestion", "answer"};
         drop(tables);
     }
 
@@ -47,7 +47,7 @@ public class TestRepository implements TableRepository<Test> {
                 new Test(2,"Президенты","выбрать верного президента страны"),
                 new Test(3,"Программирование","найти ошибку в коде")
         };
-        //insert(Arrays.asList(test));
+        insert(Arrays.asList(tests));
         DatabaseUtils.setSequenceValue("test_id_gen", tests.length+1);
     }
 

@@ -1,4 +1,4 @@
-CREATE TABLE public.test (
+CREATE TABLE test (
 	test_id int4 NOT NULL,
 	test_name varchar(100) NOT NULL,
 	test_desc varchar(300) NULL,

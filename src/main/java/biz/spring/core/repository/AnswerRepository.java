@@ -35,7 +35,7 @@ public class AnswerRepository implements TableRepository<Answer> {
 
     @Override
     public void drop() {
-        String[] tables = {"answer", "testquestion"};
+        String[] tables = {"test", "testhistory", "testquestion", "answer"};
         drop(tables);
     }
 
@@ -46,7 +46,7 @@ public class AnswerRepository implements TableRepository<Answer> {
                 new Answer(2,1,"World",1),
                 new Answer(3,2,"Ped",2)
         };
-        //insert(Arrays.asList(answers));
+        insert(Arrays.asList(answers));
         DatabaseUtils.setSequenceValue("answer_id_gen", answers.length+1);
     }
 

@@ -3,6 +3,9 @@ package biz.spring.core.dto;
 
 import biz.spring.core.model.Test;
 import biz.spring.core.model.TestQuestion;
+import biz.spring.core.view.AnswerView;
+
+import java.util.List;
 
 public class TestQuestionDTO {
 
@@ -12,6 +15,25 @@ public class TestQuestionDTO {
 
     private Integer testId;
 
+    private List<AnswerDTO> Answers;
+
+    public List<AnswerDTO> getAnswers() {
+        return Answers;
+    }
+
+    public void setAnswers(List<AnswerDTO> answers) {
+        Answers = answers;
+    }
+
+    private List<TestHistoryDTO> testHistories;
+
+    public List<TestHistoryDTO> getTestHistories() {
+        return testHistories;
+    }
+
+    public void setTestHistories(List<TestHistoryDTO> testHistories) {
+        this.testHistories = testHistories;
+    }
 
     public TestQuestionDTO() {
     }

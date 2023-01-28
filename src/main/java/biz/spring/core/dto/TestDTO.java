@@ -1,6 +1,9 @@
 package biz.spring.core.dto;
 
 import biz.spring.core.model.Test;
+import biz.spring.core.model.TestQuestion;
+
+import java.util.List;
 
 public class TestDTO {
 
@@ -9,6 +12,16 @@ public class TestDTO {
     private String testName;
 
     private String testDesc;
+
+    private List<TestQuestionDTO> testQuestions;
+
+    public List<TestQuestionDTO> getTestQuestions() {
+        return testQuestions;
+    }
+
+    public void setTestQuestions(List<TestQuestionDTO> testQuestions) {
+        this.testQuestions = testQuestions;
+    }
 
     public TestDTO() {
     }
