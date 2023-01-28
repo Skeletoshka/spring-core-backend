@@ -2,6 +2,7 @@ package biz.spring.core.controllers;
 
 import biz.spring.core.payload.request.LoginRequest;
 import biz.spring.core.payload.response.JwtResponse;
+import biz.spring.core.utils.GridDataOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,8 +27,13 @@ public class PostControllerTest extends IntegratedTest{
     @Transactional
     public void getListTest() throws Exception{
 
+        GridDataOption gridDataOption = new GridDataOption("");
+        gridDataOption.getParams().put("postId", 1);
+        gridDataOption.setPage(1);
+        gridDataOption.setRowCount(10);
+
         this.mockMvc.perform(post("/api/post/getlist")
-                        .content("1")
+                        .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())

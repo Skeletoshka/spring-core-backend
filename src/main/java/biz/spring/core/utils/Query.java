@@ -12,6 +12,9 @@ public class Query<T> {
     private Class cls;
     private String sql;
     private Map<String, Object> params = new HashMap<>();
+    private Map<String, String> replace = new HashMap<>();
+
+    private String orderBy;
 
     public Query(){}
 
@@ -34,9 +37,38 @@ public class Query<T> {
         return this;
     }
 
+    /**
+     * Для выполнения сортировки в запросе должен быть ORDERBY_PLACEHOLDER
+     * @param orderBy */
+    public Query<T> setOrderBy(String orderBy){
+        this.orderBy = orderBy;
+        this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " + orderBy);
+        return this;
+    }
+
+    public Query<T> setLimit(String limitPlaceholder){
+        this.replace.put("/*LIMIT_PLACEHOLDER*/", limitPlaceholder);
+        return this;
+    }
+
+    public Query<T> injectSql(String placeholder, String sql){
+        this.replace.put(placeholder, sql);
+        return this;
+    }
+
+    public Query<T> injectSqlIf(boolean condition, String placeholder, String sql){
+        if(condition){
+            injectSql(placeholder, sql);
+        }
+        return this;
+    }
+
     public List<T> execute(){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         RowMapForObject rowMapper = new RowMapForObject(cls);
+        replace.forEach((key, val) -> {
+            sql = sql.replaceAll(key, val);
+        });
         OrmUtils.loggerSql(sql);
         if (params != null) {
             return (List<T>) jdbc.query(sql, params, rowMapper);
