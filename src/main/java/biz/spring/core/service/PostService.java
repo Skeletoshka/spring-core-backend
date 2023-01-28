@@ -19,7 +19,7 @@ public class PostService extends BaseService<Post>{
 
     private final String mainSql = "" +
             "SELECT * " +
-            "FROM post" +
+            "FROM post " +
             "WHERE 1=1 " +
             "/*POST_PLACEHOLDER*/";
 
