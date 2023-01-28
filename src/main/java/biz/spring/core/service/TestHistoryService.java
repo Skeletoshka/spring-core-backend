@@ -1,11 +1,8 @@
 package biz.spring.core.service;
 
-import biz.spring.core.model.PeopleTest;
 import biz.spring.core.model.TestHistory;
-import biz.spring.core.repository.PeopleTestRepository;
 import biz.spring.core.repository.TestHistoryRepository;
 import biz.spring.core.utils.Query;
-import biz.spring.core.view.PeopleTestView;
 import biz.spring.core.view.TestHistoryView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +35,10 @@ public class TestHistoryService extends BaseService<TestHistory>{
                 .forClass(TestHistoryView.class)
                 .executeOne(id);
     }
-/*
+
     public void save(TestHistory testHistory){
         testHistoryRepository.insert(testHistory);
     }
 
- */
+
 }

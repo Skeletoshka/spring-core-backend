@@ -1,11 +1,8 @@
 package biz.spring.core.service;
 
-import biz.spring.core.model.PeopleTest;
 import biz.spring.core.model.TestQuestion;
-import biz.spring.core.repository.PeopleTestRepository;
 import biz.spring.core.repository.TestQuestionRepository;
 import biz.spring.core.utils.Query;
-import biz.spring.core.view.PeopleTestView;
 import biz.spring.core.view.TestQuestionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +35,10 @@ public class TestQuestionService extends BaseService<TestQuestion>{
                 .forClass(TestQuestionView.class)
                 .executeOne(id);
     }
-/*
+
     public void save(TestQuestion testQuestion){
         testQuestionRepository.insert(testQuestion);
     }
 
- */
+
 }

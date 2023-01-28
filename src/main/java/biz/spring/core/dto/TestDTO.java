@@ -1,6 +1,5 @@
 package biz.spring.core.dto;
 
-import biz.spring.core.model.PeopleTest;
 import biz.spring.core.model.Test;
 
 public class TestDTO {

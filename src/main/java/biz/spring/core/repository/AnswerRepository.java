@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class AnswerRepository implements TableRepository<AnswerRepository> {
+public class AnswerRepository implements TableRepository<Answer> {
 
     private static Logger logger = LoggerFactory.getLogger(AnswerRepository.class);
 

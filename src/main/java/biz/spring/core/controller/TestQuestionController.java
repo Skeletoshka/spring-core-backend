@@ -1,18 +1,13 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
-import biz.spring.core.dto.PostDTO;
 import biz.spring.core.dto.TestQuestionDTO;
-import biz.spring.core.model.PeopleTest;
-import biz.spring.core.model.Post;
 import biz.spring.core.service.TestQuestionService;
 import biz.spring.core.view.*;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

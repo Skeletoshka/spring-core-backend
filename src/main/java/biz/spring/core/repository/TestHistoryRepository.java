@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TestHistoryRepository implements TableRepository<TestHistoryRepository> {
+public class TestHistoryRepository implements TableRepository<TestHistory> {
 
     private static Logger logger = LoggerFactory.getLogger(TestHistoryRepository.class);
 
@@ -45,8 +45,8 @@ public class TestHistoryRepository implements TableRepository<TestHistoryReposit
     public void load(){
         TestHistory[] testHistories = {
                 new TestHistory(1,1,1,1),
-                new TestHistory(1,1,2,2),
-                new TestHistory(2,1,1,4),
+                new TestHistory(2,1,2,2),
+                new TestHistory(3,2,1,4),
         };
         //insert(Arrays.asList(testHistories));
         DatabaseUtils.setSequenceValue("testhistory_id_gen", testHistories.length+1);

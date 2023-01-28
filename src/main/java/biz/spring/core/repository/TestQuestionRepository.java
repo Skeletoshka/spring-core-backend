@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TestQuestionRepository implements TableRepository<TestQuestionRepository> {
+public class TestQuestionRepository implements TableRepository<TestQuestion> {
 
     private static Logger logger = LoggerFactory.getLogger(TestQuestionRepository.class);
 
@@ -47,7 +47,7 @@ public class TestQuestionRepository implements TableRepository<TestQuestionRepos
                 new TestQuestion(2,"Президент России",1),
                 new TestQuestion(3,"Часовой пояс Китая",2)
         };
-        //insert(Arrays.asList(testQuestions));
+        insert(Arrays.asList(testQuestions));
         DatabaseUtils.setSequenceValue("testquestion_id_gen", testQuestions.length+1);
     }
 

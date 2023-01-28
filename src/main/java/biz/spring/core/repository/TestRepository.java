@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TestRepository implements TableRepository<TestRepository> {
+public class TestRepository implements TableRepository<Test> {
 
-    private static Logger logger = LoggerFactory.getLogger(TestRepository.class);
+    private static Logger logger = LoggerFactory.getLogger(Test.class);
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
