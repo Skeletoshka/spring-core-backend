@@ -19,7 +19,9 @@ public class PostService extends BaseService<Post>{
 
     private final String mainSql = "" +
             "SELECT * " +
-            "FROM post";
+            "FROM post" +
+            "WHERE 1=1 " +
+            "/*POST_PLACEHOLDER*/";
 
     private final String mainSqlForOne = "" +
             "SELECT * " +
@@ -32,7 +34,7 @@ public class PostService extends BaseService<Post>{
         return new Query<PostView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy("post_id")
-                .injectSqlIf(findPost, "/*POST_PLACEHOLDER*/", "post_id = :postId")
+                .injectSqlIf(findPost, "/*POST_PLACEHOLDER*/", " AND post_id = :postId")
                 .forClass(PostView.class)
                 .execute();
     }
