@@ -34,6 +34,7 @@ public class PeopleControllerTest extends IntegratedTest{
                 .andExpect(content().string(containsString("\"postId\":1")));
     }
     @Test
+
     @Rollback
     @Transactional
     public void getTest() throws Exception{
