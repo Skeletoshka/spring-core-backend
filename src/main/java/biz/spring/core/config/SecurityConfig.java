@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
@@ -75,5 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         jsonConverter.getObjectMapper().registerModule(module);
         jsonConverter.getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return jsonConverter;
+    }
+
+    @Override
+    public void configure(final WebSecurity webSecurity) {
+        webSecurity.ignoring()
+                .antMatchers("/*","/security/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**");
     }
 }

@@ -28,7 +28,12 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return progUserRepository.getUsernameByToken(token);
+        String userName = progUserRepository.getUsernameByToken(token);
+        if(userName != null){
+            return userName;
+        }else{
+            throw new RuntimeException("Пользователь не найден");
+        }
     }
 
     public boolean validateJwtToken(String authToken) {
