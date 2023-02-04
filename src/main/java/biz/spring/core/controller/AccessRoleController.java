@@ -30,6 +30,7 @@ public class AccessRoleController {
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
     @CrossOrigin
+    @Tag(value = "Возвращает список объектов \"Роль\"")
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     public List<AccessRoleView> getList(String id){
