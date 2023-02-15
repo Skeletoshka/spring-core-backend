@@ -26,7 +26,7 @@ public class SecurityUtils {
             return Arrays.asList(controllerClass.getDeclaredMethods()).stream().map(method -> {
                 ControlObject controlObject = new ControlObject();
                 controlObject.setControlObjectUrl(urlController + method.getDeclaredAnnotation(RequestMapping.class).value()[0]);
-                controlObject.setControlObjectName(method.getDeclaredAnnotation(Tag.class).value());
+                controlObject.setControlObjectName(method.getDeclaredAnnotation(Tag.class)==null?"":method.getDeclaredAnnotation(Tag.class).value());
                 return controlObject;
             }).collect(Collectors.toList());
         }).flatMap(List::stream).collect(Collectors.toList());
