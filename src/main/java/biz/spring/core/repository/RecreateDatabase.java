@@ -16,6 +16,8 @@ public class RecreateDatabase {
     private ProgUserRepository progUserRepsitory;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private TestRepository testRepository;
 
 
     public void recreate(){
@@ -24,7 +26,8 @@ public class RecreateDatabase {
                 accessRoleRepository,
                 progUserRepsitory,
                 accessRoleRepository,
-                controlObjectRepository
+                controlObjectRepository,
+                testRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

@@ -3,6 +3,8 @@ package biz.spring.core.dto;
 import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.People;
 
+import java.util.Date;
+
 public class PeopleDTO {
 
     private Integer peopleId;
@@ -102,6 +104,9 @@ public class PeopleDTO {
         this.peopleDateDelete = peopleDateDelete;
     }
 
+    public People toEntity(){
+        return toEntity(new People());
+    }
     public People toEntity(People people){
         people.setPeopleId(this.peopleId);
         people.setPeopleName(this.peopleName);

@@ -5,12 +5,14 @@ import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.AccessRoleDTO;
 import biz.spring.core.service.AccessRoleService;
 import biz.spring.core.view.AccessRoleView;
+import io.swagger.v3.oas.annotations.Operation;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +22,17 @@ import java.util.List;
 @RequestMapping(value = "/api/accessrole",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
+@Transactional
 public class AccessRoleController {
 
     @Autowired
     private AccessRoleService accessRoleService;
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
-    @Tag(value = "Метод для получения списка объектов \"Роль\"")
     @CrossOrigin
+    @Tag(value = "Возвращает список объектов \"Роль\"")
+    @Operation(summary = "Возвращает список объектов \"Роль\"",
+                    description = "Вовзращает список объектов согласно переданным фильтрам")
     public List<AccessRoleView> getList(String id){
         return accessRoleService.getAll();
     }

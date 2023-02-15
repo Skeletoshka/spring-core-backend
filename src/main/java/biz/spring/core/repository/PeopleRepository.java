@@ -43,13 +43,13 @@ public class PeopleRepository implements TableRepository<People>{
 
     @Override
     public void load(){
-        People[] people = {
+        /*People[] people = {
                 new People(1, "SYSDBA", "Системный администратор"),
                 new People(2, "TEST1", "Тестовый пользователь 1"),
                 new People(3, "Test2", "Тестовый пользователь 2")
         };
-        insert(Arrays.asList(peoples));
-        DatabaseUtils.setSequenceValue("people_id_gen", peoples.length+1);
+        insert(Arrays.asList(people));
+        DatabaseUtils.setSequenceValue("people_id_gen", people.length+1);*/
     }
 
     public List<PeopleView> getRolesForProguserId(Integer proguserId){

@@ -4,7 +4,7 @@ import biz.spring.core.model.Family;
 
 public class FamilyDTO {
 
-    private Integer familyIdd;
+    private Integer familyId;
 
     private Integer parentId;
 
@@ -39,7 +39,7 @@ public class FamilyDTO {
     }
 
     public void setChildId(Integer childId) {
-        this.cjildId = childId;
+        this.childId = childId;
     }
 
     public Family toEntity(Family family){

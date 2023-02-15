@@ -1,7 +1,9 @@
 package biz.spring.core.service;
 
+import biz.spring.core.controller.PostController;
 import biz.spring.core.model.Post;
 import biz.spring.core.repository.PostRepository;
+import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.PostView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +17,24 @@ public class PostService extends BaseService<Post>{
     @Autowired
     private PostRepository postRepository;
 
-    // Тут был Тимур
     private final String mainSql = "" +
             "SELECT * " +
-            "FROM post";
+            "FROM post " +
+            "WHERE 1=1 " +
+            "/*POST_PLACEHOLDER*/";
 
     private final String mainSqlForOne = "" +
             "SELECT * " +
             "FROM post " +
             "WHERE post_id = :id";
 
-    public List<PostView> getAll(){
+    public List<PostView> getAll(GridDataOption gridDataOption){
+        boolean findPost = gridDataOption.getParams().get("postId") != null
+                && !gridDataOption.getParams().get("postId").equals(-1);
         return new Query<PostView>(mainSql)
+                .setLimit(gridDataOption.buildPageRequest())
+                .setOrderBy("post_id")
+                .injectSqlIf(findPost, "/*POST_PLACEHOLDER*/", " AND post_id = :postId")
                 .forClass(PostView.class)
                 .execute();
     }
@@ -37,7 +45,4 @@ public class PostService extends BaseService<Post>{
                 .executeOne(id);
     }
 
-    public void save(Post post){
-        postRepository.insert(post);
-    }
 }

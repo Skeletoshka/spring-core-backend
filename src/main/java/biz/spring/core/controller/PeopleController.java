@@ -2,9 +2,9 @@ package biz.spring.core.controller;
 
 import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
-import biz.spring.core.dto.AccessRoleDTO;
-import biz.spring.core.service.AccessRoleService;
-import biz.spring.core.view.AccessRoleView;
+import biz.spring.core.dto.PeopleDTO;
+import biz.spring.core.service.PeopleService;
+import biz.spring.core.view.PeopleView;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

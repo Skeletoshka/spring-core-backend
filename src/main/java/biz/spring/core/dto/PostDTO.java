@@ -1,5 +1,7 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.Post;
+
 public class PostDTO {
 
     private Integer postId;
@@ -12,6 +14,16 @@ public class PostDTO {
     public PostDTO(Integer postId, String postName) {
         this.postId = postId;
         this.postName = postName;
+    }
+
+    public Post toEntity(){
+        return toEntity(new Post());
+    }
+
+    public Post toEntity(Post post){
+        post.setPostId(this.postId);
+        post.setPostName(this.postName);
+        return post;
     }
 
     public Integer getPostId() {
