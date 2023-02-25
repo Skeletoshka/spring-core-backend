@@ -38,6 +38,7 @@ public class StudyProgramController {
     static class GridDataOptionStudyProgram extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
+                    "<li>studyProgramId - ИД должности" +
                 "<ul>")
         public String getNamedFilters(){
             return super.getNamedFilters();
