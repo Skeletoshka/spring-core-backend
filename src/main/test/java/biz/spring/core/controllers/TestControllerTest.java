@@ -1,18 +1,10 @@
 package biz.spring.core.controllers;
 
-import biz.spring.core.dto.TestDTO;
-import biz.spring.core.payload.request.LoginRequest;
-import biz.spring.core.payload.response.JwtResponse;
+import biz.spring.core.dto.dnk.TestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.containsString;

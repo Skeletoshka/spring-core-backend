@@ -23,10 +23,9 @@ public class PeopleControllerTest extends IntegratedTest{
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"postId\":1")));
+                .andExpect(content().string(containsString("\"peopleId\":1")));
     }
     @Test
-
     @Rollback
     @Transactional
     public void getTest() throws Exception{
@@ -36,6 +35,6 @@ public class PeopleControllerTest extends IntegratedTest{
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"postId\":1")));
+                .andExpect(content().string(containsString("\"peopleId\":1")));
     }
 }
