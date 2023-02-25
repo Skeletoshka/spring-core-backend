@@ -4,13 +4,15 @@ import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.AccessRoleDTO;
 import biz.spring.core.service.AccessRoleService;
 import biz.spring.core.view.AccessRoleView;
-import io.swagger.annotations.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

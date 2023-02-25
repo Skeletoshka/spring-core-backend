@@ -1,13 +1,17 @@
 package biz.spring.core.view;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 
 public class PostView {
 
     @Column(name = "post_id")
+    @Schema(description = "ИД должности")
     private Integer postId;
 
     @Column(name = "post_name")
+    @Schema(description = "Наименование должности")
     private String postName;
 
     public PostView() {

@@ -11,10 +11,6 @@ public class GridDataOption {
     private String orderBy;
     private String from;
 
-    public GridDataOption(String namedFilters){
-        this.namedFilters = namedFilters;
-    }
-
     public String getNamedFilters() {
         return namedFilters;
     }
