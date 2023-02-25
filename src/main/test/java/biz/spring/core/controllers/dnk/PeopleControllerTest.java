@@ -1,7 +1,6 @@
-package biz.spring.core.controllers;
+package biz.spring.core.controllers.dnk;
 
-import biz.spring.core.utils.GridDataOption;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import biz.spring.core.controllers.IntegratedTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
@@ -13,37 +12,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class StudyProgramControllerTest extends IntegratedTest{
+public class PeopleControllerTest extends IntegratedTest {
     @Test
     @Rollback
     @Transactional
-    public void getListTest() throws Exception {
-
-        GridDataOption gridDataOption = new GridDataOption("");
-        gridDataOption.getParams().put("studyProgramId", 1);
-        gridDataOption.setPage(1);
-        gridDataOption.setRowCount(10);
-
-        this.mockMvc.perform(post("/api/studyprogram/getlist")
-                        .content(new ObjectMapper().writeValueAsString(gridDataOption))
-                        .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"studyProgramId\":1")));
-    }
-
-    @Test
-    @Rollback
-    @Transactional
-    public void getTest() throws Exception {
-        this.mockMvc.perform(post("/api/studyprogram/get")
+    public void getListTest() throws Exception{
+        String id = "1";
+        this.mockMvc.perform(post("/api/people/getlist")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"studyProgramId\":1")));
+                .andExpect(content().string(containsString("\"peopleId\":1")));
+    }
+    @Test
+    @Rollback
+    @Transactional
+    public void getTest() throws Exception{
+        this.mockMvc.perform(post("/api/people/get")
+                        .content("1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"peopleId\":1")));
     }
 }
-

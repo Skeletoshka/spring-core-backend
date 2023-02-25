@@ -1,5 +1,6 @@
-package biz.spring.core.controllers;
+package biz.spring.core.controllers.dnk;
 
+import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.dto.dnk.TestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-public class TestControllerTest extends IntegratedTest{
+public class TestControllerTest extends IntegratedTest {
 
     @Test
     @Rollback
