@@ -18,7 +18,7 @@ public class ProgUserDTO {
 
     private Integer progUserActive;
 
-    private Integer workerId;
+    private Integer peopleId;
 
     private List<AccessRoleView> accessRoleViews;
 
@@ -30,13 +30,13 @@ public class ProgUserDTO {
                         String progUserFullName,
                         String progUserWebPassword,
                         Integer progUserActive,
-                        Integer workerId) {
+                        Integer peopleId) {
         this.progUserId = progUserId;
         this.progUserName = progUserName;
         this.progUserFullName = progUserFullName;
         this.progUserWebPassword = progUserWebPassword;
         this.progUserActive = progUserActive;
-        this.workerId = workerId;
+        this.peopleId = peopleId;
     }
 
     public Integer getProgUserId() {
@@ -79,12 +79,12 @@ public class ProgUserDTO {
         this.progUserActive = progUserActive;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Integer getPeopleId() {
+        return peopleId;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setPeopleId(Integer workerId) {
+        this.peopleId = peopleId;
     }
 
     public List<AccessRoleView> getAccessRoleViews() {
@@ -103,7 +103,7 @@ public class ProgUserDTO {
         entity.setProgUserId(this.progUserId);
         entity.setProgUserName(this.progUserName);
         entity.setProgUserFullName(this.progUserFullName);
-        entity.setWorkerId(this.workerId);
+        entity.setPeopleId(this.peopleId);
         entity.setProgUserWebPassword(this.progUserWebPassword);
         entity.setProgUserActive(this.progUserActive);
         return entity;

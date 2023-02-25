@@ -4,9 +4,8 @@ CREATE TABLE proguser (
     proguser_fullname varchar(100) NULL,
     proguser_password varchar(255) NOT NULL,
     proguser_active INTEGER NOT NULL,
-    worker_id INTEGER NULL,
+    people_id INTEGER NULL,
     CONSTRAINT proguser_pk PRIMARY KEY (proguser_id)
-    /*CONSTRAINT proguser_fk FOREIGN KEY (worker_id) REFERENCES worker(worker_id) ON DELETE CASCADE ON UPDATE CASCADE*/
 );
 CREATE SEQUENCE proguser_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 INSERT INTO proguser VALUES (0, 'SYSDBA', 'Системный администратор',
@@ -17,8 +16,6 @@ CREATE TABLE proguserrole (
     proguser_id INTEGER NOT NULL,
     accessrole_id INTEGER NOT NULL,
     CONSTRAINT proguserrole_pk PRIMARY KEY (proguserrole_id)
-    /*CONSTRAINT proguserrole_fk FOREIGN KEY (proguser_id) REFERENCES proguser(proguser_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT proguserrole_fk_1 FOREIGN KEY (accessrole_id) REFERENCES accessrole(accessrole_id) ON DELETE CASCADE ON UPDATE CASCADE*/
 );
 CREATE SEQUENCE proguserrole_id_gen INCREMENT BY 1 MINVALUE 2 MAXVALUE 2147483647 START 2 CACHE 1 NO CYCLE;
 INSERT INTO proguserrole VALUES (1, 0, 1);
@@ -38,7 +35,6 @@ CREATE TABLE proguserauth (
 	proguser_id INTEGER NOT NULL,
 	CONSTRAINT proguserauth_pk PRIMARY KEY (proguserauth_id),
 	CONSTRAINT proguserauth_un UNIQUE (proguser_id)
-	/*CONSTRAINT proguserauth_fk FOREIGN KEY (proguser_id) REFERENCES dbo.proguser(proguser_id) ON DELETE CASCADE ON UPDATE CASCADE*/
 );
 CREATE SEQUENCE proguserauth_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;
 INSERT INTO proguserauth (proguserauth_id,proguserauth_create,proguserauth_token,proguser_id) VALUES
