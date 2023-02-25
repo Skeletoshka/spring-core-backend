@@ -1,16 +1,21 @@
 package biz.spring.core.view;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 
 public class ControlObjectView {
 
     @Column(name = "controlobject_id")
+    @Schema(description = "ИД контроллируемого объекта")
     private Integer controlObjectId;
 
     @Column(name = "controlobject_url")
+    @Schema(description = "URL контроллируемого объекта")
     private String controlObjectUrl;
 
     @Column(name = "controlobject_name")
+    @Schema(description = "Наименование контроллируемого объекта")
     private String controlObjectName;
 
     public ControlObjectView() {

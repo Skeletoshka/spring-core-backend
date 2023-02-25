@@ -2,24 +2,32 @@ package biz.spring.core.dto;
 
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.view.AccessRoleView;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.Column;
 import java.util.List;
 
 public class ProgUserDTO {
 
+    @Schema(description = "ИД пользователя")
     private Integer progUserId;
 
+    @Schema(description = "Наименование пользователя")
     private String progUserName;
 
+    @Schema(description = "Полное наименование пользователя")
     private String progUserFullName;
 
+    @Schema(description = "Пароль пользователя")
     private String progUserWebPassword;
 
+    @Schema(description = "Флаг активности пользователя")
     private Integer progUserActive;
 
+    @Schema(description = "ИД человека")
     private Integer peopleId;
 
+    @Schema(description = "Список ролей пользователя")
     private List<AccessRoleView> accessRoleViews;
 
     public ProgUserDTO() {

@@ -1,13 +1,17 @@
 package biz.spring.core.dto;
 
 import biz.spring.core.model.AccessRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class AccessRoleDTO {
 
+    @Schema(description = "ИД роли")
     private Integer accessRoleId;
 
+    @Schema(description = "Наименование роли")
     private String accessRoleName;
 
+    @Schema(description = "Полное наименование роли")
     private String accessRoleFullName;
 
     public AccessRoleDTO() {
