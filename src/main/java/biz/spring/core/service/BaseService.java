@@ -10,6 +10,8 @@ import java.util.Map;
 
 //TODO Решить какие методы нужны для реализации
 public class BaseService<T> {
+
+    //todo добавить методы add, delete?, edit
     protected Object findQuery(String sql, Map<String, Object> params, Class cls){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         RowMapForEntity rowMapper = new RowMapForEntity(cls);

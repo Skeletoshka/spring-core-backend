@@ -1,16 +1,21 @@
 package biz.spring.core.view;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 
 public class AccessRoleView {
 
     @Column(name = "accessrole_id")
+    @Schema(description = "ИД роли")
     private Integer accessRoleId;
 
     @Column(name = "accessrole_name")
+    @Schema(description = "Наименование роли")
     private String accessRoleName;
 
     @Column(name = "accessrole_fullname")
+    @Schema(description = "Полное наименование роли")
     private String accessRoleFullName;
 
     public AccessRoleView() {

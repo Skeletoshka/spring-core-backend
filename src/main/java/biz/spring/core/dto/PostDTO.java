@@ -1,11 +1,14 @@
 package biz.spring.core.dto;
 
 import biz.spring.core.model.Post;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class PostDTO {
 
+    @Schema(description = "ИД должности")
     private Integer postId;
 
+    @Schema(description = "Наименование должности")
     private String postName;
 
     public PostDTO() {

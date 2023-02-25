@@ -1,5 +1,6 @@
 package biz.spring.core.controllers;
 
+import biz.spring.core.config.Config;
 import biz.spring.core.payload.request.LoginRequest;
 import biz.spring.core.payload.response.JwtResponse;
 import biz.spring.core.utils.GridDataOption;
@@ -27,12 +28,12 @@ public class PostControllerTest extends IntegratedTest{
     @Transactional
     public void getListTest() throws Exception{
 
-        GridDataOption gridDataOption = new GridDataOption("");
+        GridDataOption gridDataOption = new GridDataOption();
         gridDataOption.getParams().put("postId", 1);
         gridDataOption.setPage(1);
         gridDataOption.setRowCount(10);
 
-        this.mockMvc.perform(post("/api/post/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/post/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -45,7 +46,7 @@ public class PostControllerTest extends IntegratedTest{
     @Rollback
     @Transactional
     public void getTest() throws Exception{
-        this.mockMvc.perform(post("/api/post/get")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/post/get")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )

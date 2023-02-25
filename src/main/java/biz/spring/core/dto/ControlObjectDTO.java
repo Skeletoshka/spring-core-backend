@@ -1,11 +1,16 @@
 package biz.spring.core.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class ControlObjectDTO {
 
+    @Schema(description = "ИД контроллируемого объекта")
     private Integer controlObjectId;
 
+    @Schema(description = "URL контроллируемого объекта")
     private String controlObjectUrl;
 
+    @Schema(description = "Наименование контроллируемого объекта")
     private String controlObjectName;
 
     public ControlObjectDTO() {
