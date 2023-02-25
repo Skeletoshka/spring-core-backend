@@ -20,7 +20,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
     @Transactional
     public void getListTest() throws Exception {
 
-        GridDataOption gridDataOption = new GridDataOption("");
+        GridDataOption gridDataOption = new GridDataOption();
         gridDataOption.getParams().put("studyProgramId", 1);
         gridDataOption.setPage(1);
         gridDataOption.setRowCount(10);

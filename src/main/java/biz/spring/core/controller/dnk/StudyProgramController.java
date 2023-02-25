@@ -8,6 +8,7 @@ import biz.spring.core.repository.dnk.StudyProgramRepository;
 import biz.spring.core.service.dnk.StudyProgramService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.dnk.StudyProgramView;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.junit.jupiter.api.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,11 @@ public class StudyProgramController {
     private StudyProgramRepository studyProgramRepository;
 
     static class GridDataOptionStudyProgram extends GridDataOption {
-        public GridDataOptionStudyProgram(){
-            super("" +
-                    "studyProgramId - ИД должности");
+        @Schema(description = "" +
+                "<ul>" +
+                "<ul>")
+        public String getNamedFilters(){
+            return super.getNamedFilters();
         }
     }
 
