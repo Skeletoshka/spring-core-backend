@@ -35,9 +35,9 @@ public class ProgUser {
     @NotNull(message = "Поле \"Активный пользователь\" не может быть null")
     private Integer progUserActive;
 
-    @Column(name = "worker_id", nullable = false)
-    @NotNull(message = "Поле \"ИД сотрудника\" не может быть null")
-    private Integer workerId;
+    @Column(name = "people_id", nullable = false)
+    @NotNull(message = "Поле \"ИД человека\" не может быть null")
+    private Integer peopleId;
 
     public ProgUser() {
     }
@@ -47,13 +47,13 @@ public class ProgUser {
                     String progUserFullName,
                     String progUserWebPassword,
                     Integer progUserActive,
-                    Integer workerId) {
+                    Integer peopleId) {
         this.progUserId = progUserId;
         this.progUserName = progUserName;
         this.progUserFullName = progUserFullName;
         this.progUserWebPassword = progUserWebPassword;
         this.progUserActive = progUserActive;
-        this.workerId = workerId;
+        this.peopleId = peopleId;
     }
 
     public Integer getProgUserId() {
@@ -96,11 +96,11 @@ public class ProgUser {
         this.progUserActive = progUserActive;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Integer getPeopleId() {
+        return peopleId;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setPeopleId(Integer peopleId) {
+        this.peopleId = peopleId;
     }
 }
