@@ -14,22 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @Tag(name = "Контроллер для ролей", description = "Контроллер для получения ролей, доступ только админу")
-@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/refbooks",
+@RequestMapping(value = "/api",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Transactional
 public class AccessRoleController {
 
-    static class GridDataOptionPost extends GridDataOption {
+    static class GridDataOptionAccessRole extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
                 "<ul>")
@@ -44,7 +41,9 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    public List<AccessRoleView> getList(String id){
+    @CrossOrigin
+    public List<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
+        //todo избавиться от crossorigin
         return accessRoleService.getAll();
     }
 
