@@ -40,7 +40,7 @@ public class StudyProgramController {
                 "<ul>" +
                     "<li>studyProgramId - ИД должности" +
                 "<ul>")
-        public String getNamedFilters(){
+        public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
         }
     }
@@ -49,9 +49,10 @@ public class StudyProgramController {
     @Tag(value = "Метод для получения списка объектов \"Программа обучения\"")
     @CheckAdminRole
     public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOptionStudyProgram){
-        boolean findStudyProgram = gridDataOptionStudyProgram.getParams().get("studyProgramId") != null;
+        boolean findStudyProgram = gridDataOptionStudyProgram.getNamedFilters().stream()
+                .anyMatch(nf ->"studyProgramId".equals(nf.getName()));
         if(!findStudyProgram){
-            gridDataOptionStudyProgram.getParams().put("studyProgramId", -1);
+            gridDataOptionStudyProgram.getNamedFilters().add(new GridDataOption.NamedFilter("studyProgramId", -1));
         }
         return studyProgramService.getAll(gridDataOptionStudyProgram);
     }

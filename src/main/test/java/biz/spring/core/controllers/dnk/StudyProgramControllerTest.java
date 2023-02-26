@@ -20,10 +20,12 @@ public class StudyProgramControllerTest extends IntegratedTest {
     @Transactional
     public void getListTest() throws Exception {
 
-        GridDataOption gridDataOption = new GridDataOption();
-        gridDataOption.getParams().put("studyProgramId", 1);
-        gridDataOption.setPage(1);
-        gridDataOption.setRowCount(10);
+        GridDataOption gridDataOption = new GridDataOption.Builder()
+                .setRowCount(10)
+                .setPage(1)
+                .setParam("studyProgramId", 1)
+                .setOrderBy("studyProgramId")
+                .build();
 
         this.mockMvc.perform(post("/api/studyprogram/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))

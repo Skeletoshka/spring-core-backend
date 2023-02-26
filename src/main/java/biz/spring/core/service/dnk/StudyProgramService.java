@@ -28,8 +28,8 @@ public class StudyProgramService extends BaseService<StudyProgram> {
 
 
     public List<StudyProgramView> getAll(GridDataOption gridDataOption) {
-        boolean findStudyProgram = gridDataOption.getParams().get("studyProgramId") != null
-                && !gridDataOption.getParams().get("studyProgramId").equals(-1);
+        boolean findStudyProgram = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf ->"studyProgramId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<StudyProgramView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy("studyprogram_id")
