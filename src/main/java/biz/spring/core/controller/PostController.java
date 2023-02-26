@@ -42,7 +42,7 @@ public class PostController {
                 "<ul>" +
                     "<li>postId - ИД должности" +
                 "<ul>")
-        public String getNamedFilters(){
+        public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
         }
     }
@@ -52,9 +52,9 @@ public class PostController {
             "\"Должность\" согласно переданным параметрам")
     @CheckAdminRole
     public List<PostView> getList(@RequestBody GridDataOptionPost gridDataOptionPost){
-        boolean findPost = gridDataOptionPost.getParams().get("postId") != null;
+        boolean findPost = gridDataOptionPost.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()));
         if(!findPost){
-            gridDataOptionPost.getParams().put("postId", -1);
+            gridDataOptionPost.getNamedFilters().add(new GridDataOption.NamedFilter("postId", -1));
         }
         return postService.getAll(gridDataOptionPost);
     }

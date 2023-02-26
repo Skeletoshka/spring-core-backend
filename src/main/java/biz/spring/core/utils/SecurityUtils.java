@@ -23,7 +23,8 @@ public class SecurityUtils {
         Set<Class<?>> controllerClasses = new Reflections(packagePrefix).getTypesAnnotatedWith(RestController.class);
         List<ControlObject> controlObjectApplication = controllerClasses.stream().map(controllerClass -> {
             String urlController = controllerClass.getAnnotation(RequestMapping.class).value()[0];
-            return Arrays.asList(controllerClass.getDeclaredMethods()).stream().map(method -> {
+            return Arrays.asList(controllerClass.getDeclaredMethods()).stream()
+                    .filter(co -> co.getDeclaredAnnotation(RequestMapping.class)!=null).map(method -> {
                 ControlObject controlObject = new ControlObject();
                 controlObject.setControlObjectUrl(urlController + method.getDeclaredAnnotation(RequestMapping.class).value()[0]);
                 controlObject.setControlObjectName(method.getDeclaredAnnotation(Tag.class)==null?"":method.getDeclaredAnnotation(Tag.class).value());

@@ -28,10 +28,11 @@ public class PostControllerTest extends IntegratedTest{
     @Transactional
     public void getListTest() throws Exception{
 
-        GridDataOption gridDataOption = new GridDataOption();
-        gridDataOption.getParams().put("postId", 1);
-        gridDataOption.setPage(1);
-        gridDataOption.setRowCount(10);
+        GridDataOption gridDataOption = new GridDataOption.Builder()
+                .setOrderBy("postId")
+                .setParam("postId", 1)
+                .setRowCount(10)
+                .build();
 
         this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/post/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
