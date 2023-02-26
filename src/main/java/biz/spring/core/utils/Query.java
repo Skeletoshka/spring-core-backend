@@ -28,7 +28,7 @@ public class Query<T> {
     }
 
     public Query<T> setParams(Map<String, Object> params){
-        this.params = params;
+        this.params.putAll(params);
         return this;
     }
 

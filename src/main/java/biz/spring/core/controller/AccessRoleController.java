@@ -33,7 +33,7 @@ public class AccessRoleController {
         @Schema(description = "" +
                 "<ul>" +
                 "<ul>")
-        public String getNamedFilters(){
+        public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
         }
     }

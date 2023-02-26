@@ -29,8 +29,7 @@ public class PostService extends BaseService<Post>{
             "WHERE post_id = :id";
 
     public List<PostView> getAll(GridDataOption gridDataOption){
-        boolean findPost = gridDataOption.getParams().get("postId") != null
-                && !gridDataOption.getParams().get("postId").equals(-1);
+        boolean findPost = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<PostView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy("post_id")
