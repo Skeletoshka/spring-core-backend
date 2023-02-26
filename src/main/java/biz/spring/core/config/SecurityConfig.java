@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -60,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll().and()
+                .authorizeRequests().antMatchers("/v" + Config.CURRENT_VERSION + "/apps/auth/**").permitAll().and()
                 .authorizeRequests().antMatchers("/api/accessrole/getlist").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
@@ -81,6 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(final WebSecurity webSecurity) {
         webSecurity.ignoring()
-                .antMatchers("/*","/security/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**");
+                .antMatchers("/*","/security/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**", "/api/accessrole/**");
     }
 }
