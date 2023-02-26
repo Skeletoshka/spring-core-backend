@@ -1,0 +1,360 @@
+@startuml
+page 2x2
+' Скрыть круг перед названием entity
+hide circle
+
+' Ломанные линии соединения
+skinparam linetype ortho
+
+' Разделение на 4 страницы
+page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+
+entity people{
+    people_id:int4 <<PK>>
+    capclass_id: int4 <<FK>>
+    --
+    people_name: varchar
+    people_lastname: varchar
+    people_middlename: varchar
+    people_datebirth: date
+    people_email: varchar
+    people_phone: varchar
+    people_deleteflag: int4
+    people_datedelete: date
+    ==
+    Люди
+}
+entity family{
+    family_id: int4 <<PK>>
+    parent_id: int4 <<FK>>
+    child_id: int4 <<FK>>
+    --
+    ==
+    Семья
+}
+entity direction{
+    direction_id: int4 <<PK>>
+    --
+    direction_name: varchar
+    direction_desc: varchar
+    ==
+    Направление
+}
+entity workgroup{
+    workgroup_id: int4 <<PK>>
+    direction_id: int4 <<FK>>
+    --
+    workgroup_name: varchar
+    ==
+    Группа учащихся
+}
+entity peoplegroup{
+    peoplegroup_id: int4 <<PK>>
+    people_id: int4 <<FK>>
+    workgroup_id: int4 <<FK>>
+    --
+    ==
+    Связь группы и учащегося
+}
+entity course{
+    course_id: int4 <<PK>>
+    direction_id: int4 <<FK>>
+    teacher_id:int4 <<FK>>
+    assistant_id:int4 <<FK>>
+    --
+    course_name: varchar
+    ==
+    Программы обучения
+}
+entity case{
+    case_id: int4 <<PK>>
+    course_id: int4 <<FK>>
+    --
+    case_name:varchar
+    case_desc: varchar
+    case_num: int4
+    case_visible: int4
+    ==
+    Кейс программы обучения
+}
+entity block{
+    block_id: int4 <<PK>>
+    case_id: int4 <<FK>>
+    capclass_id: int4 <<FK>>
+    --
+    block_name: varchar
+    block_desc: varchar
+    block_num: int4
+    block_visible: int4
+    ==
+    Блок кейса
+}
+entity appendix{
+    appendix_id: int4 <<PK>>
+    document_id: int4 <<FK>>
+    --
+    appendix_name: varchar
+    appendix_path: varchar
+    ==
+    Вложение
+}
+entity document{
+    document_id: int4 <<PK>>
+    proguser_id: int4 <<FK>>
+    --
+    document_name: varchar
+    document_date: date
+    ==
+    Документы
+}
+entity proguser {
+    proguser_id: int4 <<PK>>
+    people_id: int4 <<FK>>
+    --
+    proguser_name: varchar
+    proguser_fullname: varchar
+    proguser_webpassword: varchar
+    proguser_blockflag: int4
+    proguser_deleteflag: int4
+    proguser_datedelete: date
+    ==
+    Пользователь
+}
+entity proguserrole{
+    proguserrole_id: int4 <<PK>>
+    proguser_id: int4 <<FK>>
+    accessrole_id: int4 <<FK>>
+    --
+    ==
+    Роль пользователя
+}
+entity accessrole{
+    accessrole_id: int4 <<PK>>
+    --
+    accessrole_name: varchar
+    accessrole_desc: varchar
+    ==
+    Роль доступа
+}
+entity controlobjectrole{
+    controlobjectrole_id: int4 <<PK>>
+    accessrole_id: int4 <<FK>>
+    controlobject_id: int4 <<FK>>
+    sqlaction_id: int4 <<FK>>
+    --
+    ==
+    Доступ на контроллируемый объект
+}
+entity controlobject{
+    controlobject_id: int4 <<PK>>
+    --
+    controlobject_url: varchar
+    controlobject_desc: varchar
+    ==
+    Контроллируемый объект (метод)
+}
+entity sqlaction {
+    sqlaction_id: int4 <<PK>>
+    --
+    sqlaction_sql: varchar
+    sqlaction_desc: varchar
+    ==
+    Действие к\nконтроллируемому объекту
+}
+entity shedule{
+    shedule_id: int4 <<PK>>
+    course_id: int4 <<FK>>
+    workgroup_id: int4 <<FK>>
+    --
+    shedule_date: date
+    shedule_place: varchar
+    ==
+    Расписание
+}
+entity attendance{
+    attendance_id: int4 <<PK>>
+    shedule_id: int4 <<FK>>
+    people_id: int4 <<FK>>
+    --
+    attendance_persenceflag: int4
+    ==
+    Посещаемость
+}
+entity material{
+    material_id: int4 <<PK>>
+    block_id: int4 <<FK>>
+    document_id: int4 <<FK>>
+    --
+    ==
+    Материалы в блоке
+}
+entity street{
+    street_id: int4 <<PK>>
+    --
+    street_name: varchar <<FK>>
+    ==
+    Улица
+}
+entity town{
+    town_id: int4 <<PK>>
+    capclass_id: int4 <<FK>>
+    --
+    town_name: varchar
+    ==
+    Населенный пункт
+}
+entity address{
+    address_id: int4 <<PK>>
+    town_id: int4 <<FK>>
+    street_id: int4 <<FK>>
+    --
+    address_house: varchar
+    address_litera: varchar
+    address_corpus: varchar
+    ==
+    Адрес
+}
+entity event{
+    event_id: int4 <<PK>>
+    address_id: int4 <<FK>>
+    direction_id: int4 <<FK>>
+    company_id: int4 <<FK>>
+    capclass_id: int4 <<FK>>
+    --
+    event_name: varchar
+    event_date: date
+    ==
+    Мероприятия
+}
+entity capclass{
+    capclass_id: int4 <<PK>>
+    capcode_id: int4 <<FK>>
+    --
+    capclass_name: varchar
+    capclass_desc: varchar
+    ==
+    Классификатор
+}
+entity capcode{
+    capcode_id: int4 <<PK>>
+    --
+    capcode_name: varchar
+    capcode_desc: varchar
+    ==
+    Кодификатор классификатора
+}
+entity company{
+    company_id: int4 <<PK>>
+    proguser_id: int4 <<FK>>
+    address_id: int4 <<FK>>
+    --
+    company_name: varchar
+    company_telephone: varchar
+    company_email: varchar
+    ==
+    Компании
+}
+entity request{
+    request_id: int4 <<PK>> <<FK>>
+    --
+    request_name: varchar
+    request_applyflag: int4
+    ==
+    Заявка
+}
+entity requestpos{
+    requestpos_id: int4 <<PK>>
+    request_id: int4 <<FK>>
+    service_id: int4 <<FK>>
+    --
+    requestpos_text: varchar
+    ==
+    Позиция заявки
+}
+entity service{
+    service_id: int4 <<PK>>
+    --
+    service_name: varchar
+    service_desc: varchar
+    ==
+    Услуги
+}
+entity progusertesthistory{
+    progusertesthistory_id: int4 <<PK>>
+    proguser_id: int4 <<FK>>
+    answer_id: int4 <<FK>>
+    --
+    progusertesthistory_score
+    ==
+    История ответов на тест
+}
+entity test{
+    test_id: int4 <<PK>>
+    --
+    test_name: varchar
+    test_desc: varchar
+    ==
+    Тест
+}
+entity testquestion{
+    testquestion_id: int4 <<PK>>
+    test_id: int4 <<FK>>
+    --
+    testquestion_text: varchar
+    ==
+    Вопрос
+}
+entity answer{
+    answer_id: int4 <<PK>>
+    testquestion_id: int4 <<FK>>
+    --
+    answer_text: varchar
+    ==
+    Ответ
+}
+people--o{family
+people--o{family
+direction----o{workgroup
+workgroup--o{peoplegroup
+people--o{peoplegroup
+direction--o{course
+course--o{case
+case--o{block
+document--{appendix
+proguser--o{document
+people---o{proguser
+proguser--o{proguserrole
+accessrole--o{proguserrole
+accessrole----o{controlobjectrole
+controlobject--o{controlobjectrole
+sqlaction--o{controlobjectrole
+workgroup---o{shedule
+course--o{shedule
+people--o{shedule
+shedule--o{attendance
+people--o{attendance
+block--o{material
+document--o{material
+street--o{address
+town--o{address
+address--o{event
+direction--o{event
+capcode--o{capclass
+capclass-o{event
+capclass--o{people
+capclass-o{block
+capclass--o{town
+proguser-o{company
+address--o{company
+document--o{request
+request--o{requestpos
+service--o{requestpos
+test-o{testquestion
+testquestion-o{answer
+proguser--o{progusertesthistory
+progusertesthistory----o{answer
+@enduml
