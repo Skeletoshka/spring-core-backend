@@ -59,10 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                //.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/v" + Config.CURRENT_VERSION + "/apps/auth/**").permitAll().and()
-                .authorizeRequests().antMatchers("/api/accessrole/getlist").permitAll()
+                .authorizeRequests().antMatchers("/security/v" + Config.CURRENT_VERSION + "/apps/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -82,6 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(final WebSecurity webSecurity) {
         webSecurity.ignoring()
-                .antMatchers("/*","/security/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**", "/api/accessrole/**");
+                .antMatchers("/*","/security/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**");
     }
 }

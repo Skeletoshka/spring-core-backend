@@ -41,9 +41,7 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    @CrossOrigin
     public List<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
-        //todo избавиться от crossorigin
         return accessRoleService.getAll();
     }
 
