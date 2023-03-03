@@ -9,6 +9,7 @@ import biz.spring.core.view.PostView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -16,6 +17,11 @@ public class PostService extends BaseService<Post>{
 
     @Autowired
     private PostRepository postRepository;
+
+    @PostConstruct
+    public void init(){
+        init(postRepository);
+    }
 
     private final String mainSql = "" +
             "SELECT * " +
@@ -32,7 +38,7 @@ public class PostService extends BaseService<Post>{
         boolean findPost = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<PostView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
-                .setOrderBy("post_id")
+                .setOrderBy(gridDataOption.getOrderBy())
                 .injectSqlIf(findPost, "/*POST_PLACEHOLDER*/", " AND post_id = :postId")
                 .forClass(PostView.class)
                 .execute();

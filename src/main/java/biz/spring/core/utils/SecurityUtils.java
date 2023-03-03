@@ -2,10 +2,8 @@ package biz.spring.core.utils;
 
 import biz.spring.core.model.ControlObject;
 import biz.spring.core.repository.ControlObjectRepository;
-import biz.spring.core.repository.TableRepository;
-import org.junit.jupiter.api.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.reflections.Reflections;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +25,7 @@ public class SecurityUtils {
                     .filter(co -> co.getDeclaredAnnotation(RequestMapping.class)!=null).map(method -> {
                 ControlObject controlObject = new ControlObject();
                 controlObject.setControlObjectUrl(urlController + method.getDeclaredAnnotation(RequestMapping.class).value()[0]);
-                controlObject.setControlObjectName(method.getDeclaredAnnotation(Tag.class)==null?"":method.getDeclaredAnnotation(Tag.class).value());
+                controlObject.setControlObjectName(method.getDeclaredAnnotation(Operation.class)==null?"":method.getDeclaredAnnotation(Operation.class).summary());
                 return controlObject;
             }).collect(Collectors.toList());
         }).flatMap(List::stream).collect(Collectors.toList());

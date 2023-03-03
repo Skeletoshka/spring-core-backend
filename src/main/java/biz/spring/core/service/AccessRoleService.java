@@ -2,11 +2,13 @@ package biz.spring.core.service;
 
 import biz.spring.core.model.AccessRole;
 import biz.spring.core.repository.AccessRoleRepository;
+import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.AccessRoleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -15,6 +17,11 @@ public class AccessRoleService extends BaseService<AccessRole> {
     @Autowired
     private AccessRoleRepository accessRoleRepository;
 
+    @Override
+    @PostConstruct
+    void init() {
+        init(accessRoleRepository);
+    }
     private final String mainSql = "" +
             "SELECT * " +
             "FROM accessrole";
@@ -24,7 +31,7 @@ public class AccessRoleService extends BaseService<AccessRole> {
             "FROM accessrole " +
             "WHERE accessrole_id = :id";
 
-    public List<AccessRoleView> getAll(){
+    public List<AccessRoleView> getAll(GridDataOption gridDataOption){
         return new Query<AccessRoleView>(mainSql)
                 .forClass(AccessRoleView.class)
                 .execute();
@@ -36,7 +43,4 @@ public class AccessRoleService extends BaseService<AccessRole> {
                 .executeOne(id);
     }
 
-    public void save(AccessRole accessRole){
-        accessRoleRepository.insert(accessRole);
-    }
 }

@@ -77,7 +77,7 @@ public interface TableRepository<T> {
         objects.forEach(this::insert);
     }
 
-    default void update(T object){
+    default Integer update(T object){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
         String sql = "UPDATE " + tableMetadata.getTableName() + " SET ";
@@ -107,6 +107,7 @@ public interface TableRepository<T> {
         sql += " WHERE " + idFieldName + " = :" + idFieldName;
         OrmUtils.loggerSql(sql);
         jdbc.update(sql, params);
+        return (Integer)params.get(idFieldName);
     }
 
     default int nextValue(String seqName){
@@ -150,8 +151,6 @@ public interface TableRepository<T> {
         jdbc.execute(sql, params, PreparedStatement::execute);
     }
 
-    abstract public void create();
-
     default void drop(String[] tables){
         Arrays.stream(tables).forEach(this::drop);
     }
@@ -161,6 +160,14 @@ public interface TableRepository<T> {
         sql = "DROP SEQUENCE IF EXISTS %s_id_gen";
         executeSql(String.format(sql, tableName));
     }
+
+    default void delete(int id){
+        String tableName = OrmUtils.getTableName(this.getClass());
+        String sql = "DELETE FROM " + tableName + " WHERE " + tableName + "_id = :id";
+        executeSql(sql, Map.of("id", id));
+    }
+
+    abstract public void create();
 
     abstract public void drop();
 
