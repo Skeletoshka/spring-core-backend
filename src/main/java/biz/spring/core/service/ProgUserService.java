@@ -6,6 +6,7 @@ import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.AccessRoleRepository;
 import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.security.JwtUtils;
+import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
@@ -36,8 +37,10 @@ public class ProgUserService extends BaseService<ProgUser>{
             "FROM proguser " +
             "WHERE proguser_id = :id";
 
-    public List<ProgUserView> getAll(){
+    public List<ProgUserView> getAll(GridDataOption gridDataOption){
         return new Query<ProgUserView>(mainSql)
+                .setLimit(gridDataOption.buildPageRequest())
+                .setOrderBy(gridDataOption.getOrderBy())
                 .forClass(ProgUserView.class)
                 .execute();
     }
