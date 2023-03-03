@@ -9,6 +9,7 @@ import biz.spring.core.view.dnk.StudyProgramView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -17,6 +18,10 @@ public class StudyProgramService extends BaseService<StudyProgram> {
     @Autowired
     private StudyProgramRepository studyProgramRepository;
 
+    @PostConstruct
+    public void init(){
+        init(studyProgramRepository);
+    }
     private final String mainSql = "" +
             "SELECT * " +
             "FROM studyprogram";

@@ -8,6 +8,7 @@ import biz.spring.core.view.dnk.PeopleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -16,6 +17,10 @@ public class PeopleService extends BaseService<People> {
     @Autowired
     private PeopleRepository peopleRepository;
 
+    @PostConstruct
+    public void init(){
+        init(peopleRepository);
+    }
     private final String mainSql = "" +
             "SELECT * " +
             "FROM people";

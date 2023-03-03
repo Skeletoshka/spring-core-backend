@@ -8,6 +8,7 @@ import biz.spring.core.view.dnk.TestQuestionView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -15,6 +16,11 @@ public class TestQuestionService extends BaseService<TestQuestion> {
 
     @Autowired
     private TestQuestionRepository testQuestionRepository;
+
+    @PostConstruct
+    public void init(){
+        init(testQuestionRepository);
+    }
 
     private final String mainSql = "" +
             "SELECT * " +
