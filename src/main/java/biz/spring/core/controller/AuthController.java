@@ -12,8 +12,12 @@ import biz.spring.core.security.JwtUtils;
 import biz.spring.core.security.UserDetailsImpl;
 import biz.spring.core.service.ProgUserService;
 import biz.spring.core.view.AccessRoleView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +37,11 @@ import java.util.stream.Collectors;
 @RestController
 @Tag(name = "Контроллер для аутентификации", description = "Контроллер для регистрации и авторизации пользователя " +
         "в системе.")
-@RequestMapping(value ="/v" + Config.CURRENT_VERSION + "/apps/auth",
+@RequestMapping(value ="/security/v" + Config.CURRENT_VERSION + "/apps/auth",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
+    private static Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -58,7 +63,11 @@ public class AuthController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @Operation(summary = "Метод для авторизации", description = "Возвращается данные пользователя с его токеном доступа")
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        try {
+            logger.info("loginRequest: " + new ObjectMapper().writeValueAsString(loginRequest));
+        }catch (Exception e){
 
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -101,5 +110,15 @@ public class AuthController {
 
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @RequestMapping(value = "/getroles", method = RequestMethod.POST)
+    @Operation(summary = "Метод для получения ролей", description = "Возвращает доступные роли пользователя для регистрации в системе")
+    private List<AccessRoleView> getRoles(){
+        return accessRoleRepository.getAll().stream().map(role -> {
+            AccessRoleView view = new AccessRoleView();
+            BeanUtils.copyProperties(role, view);
+            return view;
+        }).collect(Collectors.toList());
     }
 }

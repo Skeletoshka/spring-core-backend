@@ -12,6 +12,7 @@ import biz.spring.core.view.ProgUserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,11 @@ public class ProgUserService extends BaseService<ProgUser>{
 
     @Autowired
     private ProgUserRepository progUserRepository;
+
+    @PostConstruct
+    public void init(){
+        init(progUserRepository);
+    }
 
     private final String mainSql = "" +
             "SELECT p " +
@@ -40,10 +46,6 @@ public class ProgUserService extends BaseService<ProgUser>{
         return new Query<ProgUserView>(mainSqlForOne)
                 .forClass(ProgUserView.class)
                 .executeOne(id);
-    }
-
-    public void save(ProgUser progUser){
-        progUserRepository.insert(progUser);
     }
 
     public List<AccessRoleView> getRoleByUserId(Integer userId){

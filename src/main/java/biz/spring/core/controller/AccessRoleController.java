@@ -3,7 +3,9 @@ package biz.spring.core.controller;
 import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.AccessRoleDTO;
+import biz.spring.core.model.AccessRole;
 import biz.spring.core.service.AccessRoleService;
+import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.AccessRoleView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +22,7 @@ import java.util.List;
 
 @RestController
 @Tag(name = "Контроллер для ролей", description = "Контроллер для получения ролей, доступ только админу")
-@RequestMapping(value = "/api",
+@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/refbooks",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Transactional
@@ -41,10 +43,9 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    @CrossOrigin
+    @CheckAnyRole
     public List<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
-        //todo избавиться от crossorigin
-        return accessRoleService.getAll();
+        return accessRoleService.getAll(gridDataOptionAccessRole);
     }
 
     @RequestMapping(value = "/accessrole/get", method = RequestMethod.POST)
@@ -66,9 +67,23 @@ public class AccessRoleController {
     @RequestMapping(value = "/accessrole/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Роль\"",
             description = "Запись с заполненным идентификатором обновляется, с пустым - вставляется")
-    public List<AccessRoleView> save(@RequestBody AccessRoleDTO accessRoleDTO){
-        //todo добавить ветвление
-        accessRoleService.save(accessRoleDTO.toEntity());
-        return accessRoleService.getAll();
+    @CheckAnyRole
+    public AccessRoleView save(@RequestBody AccessRoleDTO accessRoleDTO){
+        AccessRole accessRole;
+        if(accessRoleDTO.getAccessRoleId()==null){
+            accessRole = accessRoleService.add(accessRoleDTO.toEntity());
+        }else {
+            accessRole = accessRoleService.edit(accessRoleDTO.toEntity());
+        }
+        return accessRoleService.getOne(accessRole.getAccessRoleId());
+    }
+
+    @RequestMapping(value = "/accessrole/delete", method = RequestMethod.POST)
+    @Operation(summary = "Метод для удаления объекта \"Роль\"",
+            description = "Удаляются записи с переданными идентификаторами")
+    @CheckAnyRole
+    public String delete(@RequestBody int[] ids){
+        accessRoleService.delete(ids);
+        return BaseService.STANDARD_SUCCESS;
     }
 }

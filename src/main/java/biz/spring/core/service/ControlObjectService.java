@@ -8,12 +8,18 @@ import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ControlObjectView;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
 public class ControlObjectService extends BaseService<ControlObject> {
 
     private ControlObjectRepository controlObjectRepository;
+
+    @PostConstruct
+    public void init(){
+        init(controlObjectRepository);
+    }
 
     private final String mainSql = "" +
             "SELECT * " +
@@ -34,9 +40,5 @@ public class ControlObjectService extends BaseService<ControlObject> {
         return new Query<ControlObjectView>(mainSqlForOne)
                 .forClass(ControlObjectView.class)
                 .executeOne(id);
-    }
-
-    public void save(ControlObject controlObject){
-        controlObjectRepository.insert(controlObject);
     }
 }
