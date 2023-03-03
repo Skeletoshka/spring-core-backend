@@ -19,7 +19,7 @@ public class AccessRoleService extends BaseService<AccessRole> {
 
     @Override
     @PostConstruct
-    void init() {
+    public void init() {
         init(accessRoleRepository);
     }
     private final String mainSql = "" +

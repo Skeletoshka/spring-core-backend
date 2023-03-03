@@ -14,7 +14,7 @@ public abstract class BaseService<T> {
 
     public static String STANDARD_SUCCESS = "{\"status\":\"success\"}";
     TableRepository<T> tableRepository;
-    abstract void init();
+    protected abstract void init();
 
     public void init(TableRepository<T> tableRepository){
         this.tableRepository=tableRepository;
