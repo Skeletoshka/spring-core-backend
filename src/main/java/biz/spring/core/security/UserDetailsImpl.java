@@ -50,7 +50,7 @@ public class UserDetailsImpl implements UserDetails {
                 progUserDTO.getProgUserId(),
                 progUserDTO.getProgUserName(),
                 "",
-                progUserDTO.getProgUserWebPassword(),
+                progUserDTO.getProgUserPassword(),
                 authorities);
     }
 

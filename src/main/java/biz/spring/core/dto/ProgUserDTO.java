@@ -19,7 +19,7 @@ public class ProgUserDTO {
     private String progUserFullName;
 
     @Schema(description = "Пароль пользователя")
-    private String progUserWebPassword;
+    private String progUserPassword;
 
     @Schema(description = "Флаг активности пользователя")
     private Integer progUserActive;
@@ -36,13 +36,13 @@ public class ProgUserDTO {
     public ProgUserDTO(Integer progUserId,
                         String progUserName,
                         String progUserFullName,
-                        String progUserWebPassword,
+                        String progUserPassword,
                         Integer progUserActive,
                         Integer peopleId) {
         this.progUserId = progUserId;
         this.progUserName = progUserName;
         this.progUserFullName = progUserFullName;
-        this.progUserWebPassword = progUserWebPassword;
+        this.progUserPassword = progUserPassword;
         this.progUserActive = progUserActive;
         this.peopleId = peopleId;
     }
@@ -71,12 +71,12 @@ public class ProgUserDTO {
         this.progUserFullName = progUserFullName;
     }
 
-    public String getProgUserWebPassword() {
-        return progUserWebPassword;
+    public String getProgUserPassword() {
+        return progUserPassword;
     }
 
-    public void setProgUserWebPassword(String progUserWebPassword) {
-        this.progUserWebPassword = progUserWebPassword;
+    public void setProgUserPassword(String progUserPassword) {
+        this.progUserPassword = progUserPassword;
     }
 
     public Integer getProgUserActive() {
@@ -112,7 +112,7 @@ public class ProgUserDTO {
         entity.setProgUserName(this.progUserName);
         entity.setProgUserFullName(this.progUserFullName);
         entity.setPeopleId(this.peopleId);
-        entity.setProgUserWebPassword(this.progUserWebPassword);
+        entity.setProgUserPassword(this.progUserPassword);
         entity.setProgUserActive(this.progUserActive);
         return entity;
     }

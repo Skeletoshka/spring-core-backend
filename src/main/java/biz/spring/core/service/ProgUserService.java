@@ -29,7 +29,7 @@ public class ProgUserService extends BaseService<ProgUser>{
     }
 
     private final String mainSql = "" +
-            "SELECT p " +
+            "SELECT * " +
             "FROM proguser";
 
     private final String mainSqlForOne = "" +

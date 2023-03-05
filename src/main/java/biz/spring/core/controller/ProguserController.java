@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,8 @@ public class ProguserController {
 
     @Autowired
     private ProgUserService progUserService;
+    @Autowired
+    PasswordEncoder encoder;
 
     static class GridDataOptionProguser extends GridDataOption {
         @Schema(description = "" +
@@ -72,6 +75,7 @@ public class ProguserController {
     @CheckAdminRole
     public ProgUserView save(@RequestBody ProgUserDTO dto){
         ProgUser result;
+        dto.setProgUserPassword(encoder.encode(dto.getProgUserPassword()));
         if(dto.getProgUserId()==null){
             result = progUserService.add(dto.toEntity());
         }else{
