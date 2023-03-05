@@ -29,7 +29,7 @@ public class ProgUser {
     @Column(name = "proguser_password", nullable = false)
     @Size(max = 255, message = "Поле \"Пароль пользователя\" не может быть более {max} символов")
     @NotNull(message = "Поле \"Пароль пользователя\" не может быть null")
-    private String progUserWebPassword;
+    private String progUserPassword;
 
     @Column(name = "proguser_active", nullable = false)
     @NotNull(message = "Поле \"Активный пользователь\" не может быть null")
@@ -45,13 +45,13 @@ public class ProgUser {
     public ProgUser(Integer progUserId,
                     String progUserName,
                     String progUserFullName,
-                    String progUserWebPassword,
+                    String progUserPassword,
                     Integer progUserActive,
                     Integer peopleId) {
         this.progUserId = progUserId;
         this.progUserName = progUserName;
         this.progUserFullName = progUserFullName;
-        this.progUserWebPassword = progUserWebPassword;
+        this.progUserPassword = progUserPassword;
         this.progUserActive = progUserActive;
         this.peopleId = peopleId;
     }
@@ -80,12 +80,12 @@ public class ProgUser {
         this.progUserFullName = progUserFullName;
     }
 
-    public String getProgUserWebPassword() {
-        return progUserWebPassword;
+    public String getProgUserPassword() {
+        return progUserPassword;
     }
 
-    public void setProgUserWebPassword(String progUserWebPassword) {
-        this.progUserWebPassword = progUserWebPassword;
+    public void setProgUserPassword(String progUserPassword) {
+        this.progUserPassword = progUserPassword;
     }
 
     public Integer getProgUserActive() {

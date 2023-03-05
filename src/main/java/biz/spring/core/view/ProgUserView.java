@@ -26,9 +26,9 @@ public class ProgUserView {
     @Schema(description = "Флаг активности пользователя")
     private Integer progUserActive;
 
-    @Column(name = "worker_id")
+    @Column(name = "people_id")
     @Schema(description = "ИД человека")
-    private Integer workerId;
+    private Integer peopleId;
 
     public ProgUserView() {
     }
@@ -38,13 +38,13 @@ public class ProgUserView {
                     String progUserFullName,
                     String progUserWebPassword,
                     Integer progUserActive,
-                    Integer workerId) {
+                    Integer peopleId) {
         this.progUserId = progUserId;
         this.progUserName = progUserName;
         this.progUserFullName = progUserFullName;
         this.progUserWebPassword = progUserWebPassword;
         this.progUserActive = progUserActive;
-        this.workerId = workerId;
+        this.peopleId = peopleId;
     }
 
     public Integer getProgUserId() {
@@ -87,11 +87,11 @@ public class ProgUserView {
         this.progUserActive = progUserActive;
     }
 
-    public Integer getWorkerId() {
-        return workerId;
+    public Integer getPeopleId() {
+        return peopleId;
     }
 
-    public void setWorkerId(Integer workerId) {
-        this.workerId = workerId;
+    public void setPeopleId(Integer peopleId) {
+        this.peopleId = peopleId;
     }
 }

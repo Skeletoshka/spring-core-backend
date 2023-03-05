@@ -100,7 +100,7 @@ public class AuthController {
         ProgUserDTO progUserDTO = new ProgUserDTO();
         progUserDTO.setProgUserName(signUpRequest.getUsername());
         progUserDTO.setProgUserFullName(signUpRequest.getEmail());
-        progUserDTO.setProgUserWebPassword(encoder.encode(signUpRequest.getPassword()));
+        progUserDTO.setProgUserPassword(encoder.encode(signUpRequest.getPassword()));
         progUserDTO.setProgUserActive(1);
 
         List<AccessRoleView> strRoles = signUpRequest.getRole();
