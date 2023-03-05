@@ -94,7 +94,7 @@ public interface TableRepository<T> {
                     } catch (Exception e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
-                }).collect(Collectors.joining(" "));
+                }).collect(Collectors.joining(","));
         String idFieldName = tableMetadata.getIdField().getAnnotationsByType(Column.class)[0].name();
         try {
             params.put(idFieldName, Arrays.stream(object.getClass().getDeclaredMethods())
