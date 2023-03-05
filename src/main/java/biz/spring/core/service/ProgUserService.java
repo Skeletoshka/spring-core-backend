@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ProgUserService extends BaseService<ProgUser>{
@@ -55,14 +57,29 @@ public class ProgUserService extends BaseService<ProgUser>{
         String sql = "" +
                 "SELECT ar.* " +
                 "FROM proguserrole pur " +
-                    "INNER JOIN accessrole ar ON pur.accessrole_id = pur.accessrole_id " +
+                    "INNER JOIN accessrole ar ON pur.accessrole_id = ar.accessrole_id " +
                 "WHERE pur.proguser_id = :progUserId";
         return (List<AccessRoleView>) findQuery(sql, Map.of("progUserId", userId), AccessRoleView.class);
     }
 
+    public void updateRoles(Integer proguserId, List<AccessRoleView> roles){
+        List<AccessRoleView> views = getRoleByUserId(proguserId);
+        List<Integer> rolesDelete = views.stream().map(AccessRoleView::getAccessRoleId)
+                .filter(accessRoleId ->
+                        roles.stream().noneMatch(role -> role.getAccessRoleId().equals(accessRoleId)))
+                .collect(Collectors.toList());
+        List<Integer> rolesAdd = roles.stream().map(AccessRoleView::getAccessRoleId)
+                .filter(accessRoleId ->
+                        views.stream().noneMatch(role -> role.getAccessRoleId().equals(accessRoleId)))
+                .collect(Collectors.toList());
+        progUserRepository.bindWithRoles(rolesAdd, proguserId);
+        progUserRepository.unBindWithRoles(rolesDelete, proguserId);
+    }
+
     public void saveUser(ProgUserDTO progUserDTO){
         progUserDTO.setProgUserId(progUserRepository.insert(progUserDTO.toEntity()));
-        progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews(), progUserDTO.getProgUserId());
+        progUserRepository.bindWithRoles(progUserDTO.getAccessRoleViews().stream()
+                .map(AccessRoleView::getAccessRoleId).collect(Collectors.toList()), progUserDTO.getProgUserId());
         progUserRepository.createToken(progUserDTO.getProgUserId(), JwtUtils.createToken());
     }
 }

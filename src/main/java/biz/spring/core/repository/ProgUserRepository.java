@@ -1,9 +1,6 @@
 package biz.spring.core.repository;
 
 import biz.spring.core.dto.ProgUserDTO;
-import biz.spring.core.model.AccessRole;
-import biz.spring.core.model.ControlObject;
-import biz.spring.core.model.Post;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.payload.response.JwtResponse;
 import biz.spring.core.utils.DatabaseUtils;
@@ -20,7 +17,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProgUserRepository implements TableRepository<ProgUser> {
@@ -33,13 +29,22 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void bindWithRoles(List<AccessRoleView> views, Integer proguserId){
+    public void bindWithRoles(List<Integer> views, Integer proguserId){
         String sql = "INSERT INTO proguserrole VALUES (:proguserrole_id, :proguser_id, :accessrole_id)";
         views.forEach(view -> {
             executeSql(sql, Map.of(
                     "proguserrole_id", DatabaseUtils.getSequenceNextValue("proguserrole_id_gen"),
                     "proguser_id", proguserId,
-                    "accessrole_id", view.getAccessRoleId()));
+                    "accessrole_id", view));
+        });
+    }
+
+    public void unBindWithRoles(List<Integer> views, Integer proguserId){
+        String sql = "DELETE FROM proguserrole WHERE proguser_id = :proguser_id AND accessrole_id = :accessrole_id)";
+        views.forEach(view -> {
+            executeSql(sql, Map.of(
+                    "proguser_id", proguserId,
+                    "accessrole_id", view));
         });
     }
 

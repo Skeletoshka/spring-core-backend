@@ -65,6 +65,7 @@ public class ProguserController {
             ProgUserView view = progUserService.getOne(id);
             ProgUserDTO dto = new ProgUserDTO();
             BeanUtils.copyProperties(view, dto);
+            buildItems(dto);
             return dto;
         }
     }
@@ -78,8 +79,10 @@ public class ProguserController {
         dto.setProgUserPassword(encoder.encode(dto.getProgUserPassword()));
         if(dto.getProgUserId()==null){
             result = progUserService.add(dto.toEntity());
+            progUserService.updateRoles(result.getProgUserId(), dto.getAccessRoleViews());
         }else{
             result = progUserService.edit(dto.toEntity());
+            progUserService.updateRoles(result.getProgUserId(), dto.getAccessRoleViews());
         }
         return progUserService.getOne(result.getProgUserId());
     }
@@ -91,5 +94,9 @@ public class ProguserController {
     public String delete(@RequestBody int[] ids){
         progUserService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
+    }
+
+    public void buildItems(ProgUserDTO dto){
+        dto.setAccessRoleViews(progUserService.getRoleByUserId(dto.getProgUserId()));
     }
 }
