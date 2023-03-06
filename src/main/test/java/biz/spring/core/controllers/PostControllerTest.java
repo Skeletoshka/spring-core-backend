@@ -54,5 +54,13 @@ public class PostControllerTest extends IntegratedTest{
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"postId\":1")));
+
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/post/get")
+                        .content("100")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Запись с id = 100 не найдена")));
     }
 }
