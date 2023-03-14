@@ -1,19 +1,26 @@
 package biz.spring.core.dto.dnk;
 
 import biz.spring.core.model.dnk.Block;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class BlockDTO {
 
+    @Schema(description = "ИД Блока")
     private Integer blockId;
 
+    @Schema(description = "Наименование Блока")
     private String blockName;
 
+    @Schema(description = "ИД программы обучения")
     private Integer studyProgramId;
 
+    @Schema(description = "Нумерация блока")
     private Integer blockNum;
 
+    @Schema(description = "Видимость Блока")
     private Integer blockVisible;
 
+    @Schema(description = "ИД классификатора")
     private Integer capclassId;
 
     public BlockDTO(){

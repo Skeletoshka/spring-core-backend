@@ -1,43 +1,56 @@
 package biz.spring.core.view.dnk;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.Column;
 
 public class StudyProgramView {
+    @Schema(description = "ИД программы обучения")
     @Column(name = "studyprogram_id")
     private Integer studyProgramId;
 
+    @Schema(description = "Наименование программы обучения")
     @Column(name = "studyprogram_name")
     private String studyProgramName;
 
+    @Schema(description = "ИД направления")
     @Column(name = "direction_id")
     private Integer directionId;
 
+    @Schema(description = "ИД учителя")
     @Column(name = "teacher_id")
     private Integer teacherId;
 
+    @Schema(description = "ИД ассистента")
     @Column(name = "assistant_id")
     private Integer assistantId;
 
+    @Schema(description = "Наименование направления")
     @Column(name = "direction_name")
     private String directionName;
 
+    @Schema(description = "Имя учителя")
     @Column(name = "teacher_name")
     private String teacherName;
 
+    @Schema(description = "Фамилия учителя")
     @Column(name = "teacher_lastname")
     private String teacherLastName;
 
+    @Schema(description = "Отчество учителя")
     @Column(name = "teacher_middlename")
     private String teacherMiddleName;
 
+    @Schema(description = "Имя ассистента")
     @Column(name = "assistant_name")
     private String assistantName;
 
+    @Schema(description = "Фамилия ассистента")
     @Column(name = "assistant_lastname")
     private String assistantLastName;
 
+    @Schema(description = "Отчество ассистента")
     @Column(name = "assistant_middlename")
     private String assistantMiddleName;
 

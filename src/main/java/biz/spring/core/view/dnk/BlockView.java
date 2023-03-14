@@ -1,24 +1,32 @@
 package biz.spring.core.view.dnk;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 
 public class BlockView {
 
+    @Schema(description = "ИД блока")
     @Column(name = "block_id")
     private Integer blockId;
 
+    @Schema(description = "Наименование блока")
     @Column(name = "block_name")
     private String blockName;
 
+    @Schema(description = "ИД программы обучения")
     @Column(name = "studyprogram_id")
     private Integer studyProgramId;
 
+    @Schema(description = "Нумерация блока")
     @Column(name = "block_num")
     private Integer blockNum;
 
+    @Schema(description = "Видимость блока")
     @Column(name = "block_visible")
     private Integer blockVisible;
 
+    @Schema(description = "ИД классификатора")
     @Column(name = "capclass_id")
     private Integer capclassId;
 

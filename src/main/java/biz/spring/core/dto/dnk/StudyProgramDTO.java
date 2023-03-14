@@ -1,31 +1,44 @@
 package biz.spring.core.dto.dnk;
 
 import biz.spring.core.model.dnk.StudyProgram;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class StudyProgramDTO {
 
+    @Schema(description = "ИД Программы обучения")
     private Integer studyProgramId;
 
+    @Schema(description = "Наименование программы обучения")
     private String studyProgramName;
 
+    @Schema(description = "ИД направления")
     private Integer directionId;
 
+    @Schema(description = "ИД учителя")
     private Integer teacherId;
 
+    @Schema(description = "ИД ассистента")
     private Integer assistantId;
 
+    @Schema(description = "Наименование направления")
     private String directionName;
 
+    @Schema(description = "Имя учителя")
     private String teacherName;
 
+    @Schema(description = "Фамилия учителя")
     private String teacherLastName;
 
+    @Schema(description = "Отчество учителя")
     private String teacherMiddleName;
 
+    @Schema(description = "Имя ассистента")
     private String assistantName;
 
+    @Schema(description = "Фамилия ассистента")
     private String assistantLastName;
 
+    @Schema(description = "Отчество ассистента")
     private String assistantMiddleName;
 
     public StudyProgramDTO(){
