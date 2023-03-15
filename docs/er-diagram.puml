@@ -60,19 +60,20 @@ entity peoplegroup{
     ==
     Связь группы и учащегося
 }
-entity course{
-    course_id: int4 <<PK>>
+entity studyprogram{
+    studyprogram_id: int4 <<PK>>
     direction_id: int4 <<FK>>
     teacher_id:int4 <<FK>>
     assistant_id:int4 <<FK>>
     --
-    course_name: varchar
+    studyprogram_name: varchar
+    studyprogram_visible: varchar
     ==
     Программы обучения
 }
 entity case{
     case_id: int4 <<PK>>
-    course_id: int4 <<FK>>
+    studyprogram_id: int4 <<FK>>
     --
     case_name:varchar
     case_desc: varchar
@@ -95,7 +96,7 @@ entity block{
 }
 entity appendix{
     appendix_id: int4 <<PK>>
-    document_id: int4 <<FK>>
+    documentreal_id: int4 <<FK>>
     --
     appendix_name: varchar
     appendix_path: varchar
@@ -104,10 +105,8 @@ entity appendix{
 }
 entity document{
     document_id: int4 <<PK>>
-    proguser_id: int4 <<FK>>
     --
     document_name: varchar
-    document_date: date
     ==
     Документы
 }
@@ -158,7 +157,7 @@ entity controlobject{
 }
 entity shedule{
     shedule_id: int4 <<PK>>
-    course_id: int4 <<FK>>
+    studyprogram_id: int4 <<FK>>
     workgroup_id: int4 <<FK>>
     --
     shedule_date: date
@@ -176,9 +175,8 @@ entity attendance{
     Посещаемость
 }
 entity material{
-    material_id: int4 <<PK>>
+    material_id: int4 <<PK>> <<FK>>
     block_id: int4 <<FK>>
-    document_id: int4 <<FK>>
     --
     ==
     Материалы в блоке
@@ -330,13 +328,19 @@ entity documenttransit{
     ==
     Статусы документов
 }
+entity news{
+    news_id: int4 <<PK>><<FK>>
+    --
+    news_title: varchar
+    news_text: varchar
+}
 people--o{family
 people--o{family
 direction----o{workgroup
 workgroup--o{peoplegroup
 people--o{peoplegroup
-direction--o{course
-course--o{case
+direction--o{studyprogram
+studyprogram--o{case
 case--o{block
 documentreal-- appendix
 proguser--o{documentreal
@@ -346,7 +350,7 @@ accessrole--o{proguserrole
 accessrole----o{controlobjectrole
 controlobject--o{controlobjectrole
 workgroup---o{shedule
-course--o{shedule
+studyprogram--o{shedule
 people--o{shedule
 shedule--o{attendance
 people--o{attendance
@@ -374,4 +378,5 @@ testquestion-o{answer
 proguser--o{progusertesthistory
 progusertesthistory----o{answer
 documentreal---test
+documentreal-news
 @enduml
