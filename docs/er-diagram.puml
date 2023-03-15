@@ -144,7 +144,6 @@ entity controlobjectrole{
     controlobjectrole_id: int4 <<PK>>
     accessrole_id: int4 <<FK>>
     controlobject_id: int4 <<FK>>
-    sqlaction_id: int4 <<FK>>
     --
     ==
     Доступ на контроллируемый объект
@@ -156,14 +155,6 @@ entity controlobject{
     controlobject_desc: varchar
     ==
     Контроллируемый объект (метод)
-}
-entity sqlaction {
-    sqlaction_id: int4 <<PK>>
-    --
-    sqlaction_sql: varchar
-    sqlaction_desc: varchar
-    ==
-    Действие к\nконтроллируемому объекту
 }
 entity shedule{
     shedule_id: int4 <<PK>>
@@ -354,7 +345,6 @@ proguser--o{proguserrole
 accessrole--o{proguserrole
 accessrole----o{controlobjectrole
 controlobject--o{controlobjectrole
-sqlaction--o{controlobjectrole
 workgroup---o{shedule
 course--o{shedule
 people--o{shedule
