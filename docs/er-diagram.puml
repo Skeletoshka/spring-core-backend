@@ -232,18 +232,18 @@ entity event{
 }
 entity capclass{
     capclass_id: int4 <<PK>>
-    capcode_id: int4 <<FK>>
+    capclasstypeid: int4 <<FK>>
     --
     capclass_name: varchar
     capclass_desc: varchar
     ==
     Классификатор
 }
-entity capcode{
-    capcode_id: int4 <<PK>>
+entity capclasstype{
+    capclasstype_id: int4 <<PK>>
     --
-    capcode_name: varchar
-    capcode_desc: varchar
+    capclasstype_name: varchar
+    capclasstype_desc: varchar
     ==
     Кодификатор классификатора
 }
@@ -316,6 +316,29 @@ entity answer{
     ==
     Ответ
 }
+entity documentreal{
+    documentreal_id: int4 <<PK>>
+    document_id: int4 <<FK>>
+    documenttransit_id: int4 <<FK>>
+    proguser_id: int4 <<FK>>
+    --
+    documentreal_name: varchar
+    documentreal_number: varchar
+    documentreal_datecreate: date
+    documentreal_datemodify: date
+    ==
+    Документы
+}
+entity documenttransit{
+    documenttransit_id: int4 <<PK>>
+    document_id: int4 <<FK>>
+    --
+    documenttransit_name: varchar
+    documenttransit_number: int4
+    documenttransit_color: int4
+    ==
+    Статусы документов
+}
 people--o{family
 people--o{family
 direction----o{workgroup
@@ -324,8 +347,8 @@ people--o{peoplegroup
 direction--o{course
 course--o{case
 case--o{block
-document--{appendix
-proguser--o{document
+documentreal-- appendix
+proguser--o{documentreal
 people---o{proguser
 proguser--o{proguserrole
 accessrole--o{proguserrole
@@ -338,23 +361,27 @@ people--o{shedule
 shedule--o{attendance
 people--o{attendance
 block--o{material
-document--o{material
+documentreal--material
 street--o{address
 town--o{address
 address--o{event
 direction--o{event
-capcode--o{capclass
+capclasstype--o{capclass
 capclass-o{event
 capclass--o{people
 capclass-o{block
 capclass--o{town
 proguser-o{company
 address--o{company
-document--o{request
+documentreal-- request
+document--{documentreal
+document--{documenttransit
+documenttransit--{documentreal
 request--o{requestpos
 service--o{requestpos
 test-o{testquestion
 testquestion-o{answer
 proguser--o{progusertesthistory
 progusertesthistory----o{answer
+documentreal---test
 @enduml
