@@ -251,7 +251,6 @@ entity request{
     request_id: int4 <<PK>> <<FK>>
     --
     request_name: varchar
-    request_applyflag: int4
     ==
     Заявка
 }
@@ -276,8 +275,6 @@ entity progusertesthistory{
     progusertesthistory_id: int4 <<PK>>
     proguser_id: int4 <<FK>>
     answer_id: int4 <<FK>>
-    --
-    progusertesthistory_score
     ==
     История ответов на тест
 }
@@ -302,6 +299,7 @@ entity answer{
     testquestion_id: int4 <<FK>>
     --
     answer_text: varchar
+    answer_score: double precision
     ==
     Ответ
 }
