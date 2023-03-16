@@ -13,6 +13,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,18 @@ public class ControlObjectRepository implements TableRepository<ControlObject> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void bindWithRole(Integer roleId, List<Integer> controlObjectIds){
+        String sql = "INSERT INTO controlobjectrole (controlobjectrole_id, accessrole_id, controlobject_id) " +
+                "VALUES (:controlobjectrole_id, :accessrole_id, :controlobject_id)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessrole_id", roleId);
+        for(Integer id: controlObjectIds){
+            params.put("controlobjectrole_id", DatabaseUtils.getSequenceNextValue("controlobjectrole_id_gen"));
+            params.put("controlobject_id", id);
+            executeSql(sql, params);
+        }
+    }
 
     @Override
     public void create(){

@@ -10,8 +10,7 @@ CREATE TABLE controlobjectrole (
     controlobjectrole_id INTEGER NOT NULL,
     controlobject_id INTEGER NOT NULL,
     accessrole_id INTEGER NOT NULL,
-    sqlaction_id INTEGER NOT NULL,
     CONSTRAINT controlobjectrole_pk PRIMARY KEY (controlobjectrole_id),
-    CONSTRAINT controlobjectrole_un UNIQUE (sqlaction_id,accessrole_id,controlobject_id)
+    CONSTRAINT controlobjectrole_un UNIQUE (accessrole_id,controlobject_id)
 );
 CREATE SEQUENCE controlobjectrole_id_gen INCREMENT BY 1 MINVALUE 2 MAXVALUE 2147483647 START 2 CACHE 1 NO CYCLE;

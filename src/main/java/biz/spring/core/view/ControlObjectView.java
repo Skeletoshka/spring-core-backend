@@ -18,6 +18,10 @@ public class ControlObjectView {
     @Schema(description = "Наименование контроллируемого объекта")
     private String controlObjectName;
 
+    @Column(name = "access_flag")
+    @Schema(description = "Флаг доступа")
+    private Integer accessFlag;
+
     public ControlObjectView() {
     }
 
@@ -51,5 +55,13 @@ public class ControlObjectView {
 
     public void setControlObjectName(String controlObjectName) {
         this.controlObjectName = controlObjectName;
+    }
+
+    public Integer getAccessFlag() {
+        return accessFlag;
+    }
+
+    public void setAccessFlag(Integer accessFlag) {
+        this.accessFlag = accessFlag;
     }
 }
