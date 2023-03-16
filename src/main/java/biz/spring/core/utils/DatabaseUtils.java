@@ -11,9 +11,8 @@ public class DatabaseUtils {
 
     public static Integer getSequenceNextValue(String sequence){
         JdbcTemplate jdbcTemplate = OrmUtils.getJDBCTemplate();
-        String sql = "SELECT last_value FROM %s ";
-        Integer val = jdbcTemplate.queryForObject(String.format(sql, sequence), Integer.class) + 1;
-        setSequenceValue(sequence, val);
+        String sql = "SELECT nextval('controlobjectrole_id_gen') ";
+        Integer val = jdbcTemplate.queryForObject(String.format(sql, sequence), Integer.class);
         return val;
     }
 }

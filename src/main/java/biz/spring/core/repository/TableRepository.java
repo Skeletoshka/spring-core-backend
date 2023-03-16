@@ -151,6 +151,10 @@ public interface TableRepository<T> {
         jdbc.execute(sql, params, PreparedStatement::execute);
     }
 
+    default void executeSql(String sql, String paramName, Object paramValue){
+        executeSql(sql, Map.of(paramName, paramValue));
+    }
+
     default void drop(String[] tables){
         Arrays.stream(tables).forEach(this::drop);
     }

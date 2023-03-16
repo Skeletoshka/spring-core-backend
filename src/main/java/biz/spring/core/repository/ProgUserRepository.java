@@ -88,7 +88,7 @@ public class ProgUserRepository implements TableRepository<ProgUser> {
 
     @Override
     public void drop(){
-        String[] tables = {"proguser", "proguserrole", "sqlaction", "proguserauth"};
+        String[] tables = {"proguser", "proguserrole", "proguserauth"};
         drop(tables);
     }
 

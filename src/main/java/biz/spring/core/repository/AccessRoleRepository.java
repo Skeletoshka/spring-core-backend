@@ -26,6 +26,11 @@ public class AccessRoleRepository implements TableRepository<AccessRole>{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public void clearAccess(Integer roleId){
+        String sql = "DELETE FROM controlobjectrole WHERE accessrole_id = :roleId";
+        executeSql(sql, "roleId", roleId);
+    }
+
     @Override
     public void create(){
         Resource resource = new ClassPathResource("sql/100200-accessrole.sql");

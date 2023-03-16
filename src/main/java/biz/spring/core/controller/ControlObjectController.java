@@ -2,6 +2,8 @@ package biz.spring.core.controller;
 
 import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
+import biz.spring.core.dto.ControlObjectRoleDTO;
+import biz.spring.core.service.BaseService;
 import biz.spring.core.service.ControlObjectService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.ControlObjectView;
@@ -48,6 +50,16 @@ public class ControlObjectController {
             return new ArrayList<>();
         }
         return controlObjectService.getAll(gridDataOption);
+    }
+
+    @Operation(summary = "Обновляет права у \"Роль доступа\"",
+            description = "Обновляет права, доступные определенной роли. Сначала все права чистятся, " +
+                    "потом заново устанавливаются")
+    @RequestMapping(value = "/controlobjectrole/update", method = RequestMethod.POST)
+    @CheckAnyRole
+    public String updateControlObjectRole(@RequestBody ControlObjectRoleDTO dto){
+        controlObjectService.updateAccess(dto);
+        return BaseService.STANDARD_SUCCESS;
     }
 
 }
