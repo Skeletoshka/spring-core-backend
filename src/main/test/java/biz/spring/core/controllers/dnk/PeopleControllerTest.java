@@ -10,6 +10,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,7 +40,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .setOrderBy("people_id")
                 .setPage(1)
                 .setRowCount(10)
-                .setParam("capClasId", 2)
+                .setParam("capClassId", 2)
                 .build();
         this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
@@ -47,7 +48,9 @@ public class PeopleControllerTest extends IntegratedTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"peopleId\":2")));
+                .andExpect(content().string(not(containsString("\"peopleId\":1"))))
+                .andExpect(content().string(containsString("\"peopleId\":2")))
+                .andExpect(content().string(not(containsString("\"peopleId\":3"))));
     }
     @Test
     @Rollback
