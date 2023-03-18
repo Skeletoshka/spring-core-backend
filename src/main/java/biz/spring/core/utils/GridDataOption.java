@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GridDataOption {
-    private List<NamedFilter> namedFilters;
+    private List<NamedFilter> namedFilters = new ArrayList<>();
     private Integer rowCount;
     private Integer page;
     private String orderBy;
