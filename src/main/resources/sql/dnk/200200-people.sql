@@ -1,12 +1,12 @@
 CREATE TABLE people (
 	people_id INTEGER NOT NULL,
-	people_name VARCHAR(20) NOT NULL,
-	people_lastname VARCHAR(20) NOT NULL,
-	people_middlename VARCHAR(20) NOT NULL,
+	people_name VARCHAR(100) NOT NULL,
+	people_lastname VARCHAR(100) NOT NULL,
+	people_middlename VARCHAR(100) NOT NULL,
 	people_datebirth DATE NOT NULL,
 	capclass_id INTEGER NOT NULL,
-	people_email VARCHAR(40) NULL,
-	people_phone VARCHAR(20) NULL,
+	people_email VARCHAR(255) NULL,
+	people_phone VARCHAR(50) NULL,
 	people_deleteflag INTEGER NOT NULL,
 	people_datedelete DATE NULL,
 	CONSTRAINT people_pk PRIMARY KEY (people_id)

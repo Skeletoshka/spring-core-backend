@@ -49,7 +49,7 @@ public class PeopleRepository implements TableRepository<People> {
                 new People(1, "Иван", "Иванов", "Иванович",
                         new Date(), 1, "test@mail.ru", "89999999999", 0, null),
                 new People(2, "Петр", "Петров", "Петрович",
-                        new Date(), 1, "test123@mail.ru", "89999999999", 0, null),
+                        new Date(), 2, "test123@mail.ru", "89999999999", 0, null),
                 new People(3, "Салимов", "Сергей", "Пушкович",
                         new Date(), 1, "test321@mail.ru", "89999999999", 1, new Date())
         };

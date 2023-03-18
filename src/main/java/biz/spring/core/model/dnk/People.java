@@ -14,39 +14,39 @@ public class People {
 
     @Id
     @Column(name = "people_id", nullable = false)
-    @NotNull(message = "Поле \"ID пользователя\" не может быть NULL")
+    @NotNull(message = "Поле \"ID пользователя\" не может быть пустым")
     private Integer peopleId;
 
     @Column(name = "people_name", nullable = false)
-    @NotNull(message = "Поле \"Имя\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Имя\" не может иметь более {max} символов")
+    @NotNull(message = "Поле \"Имя\" не может быть пустым")
+    @Size(max = 100, message = "Поле \"Имя\" не может иметь более {max} символов")
     private String peopleName;
     
     @Column(name = "people_lastname", nullable = false)
-    @NotNull(message = "Поле \"Фамиоия\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+    @NotNull(message = "Поле \"Фамиоия\" не может быть пустым")
+    @Size(max = 100, message = "Поле \"Фамилия\" не может иметь более {max} символов")
     private String peopleLastName;
     
     @Column(name = "people_middlename", nullable = false)
-    @NotNull(message = "Поле \"Отчество\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Отчество\" не может иметь более {max} символов")
+    @NotNull(message = "Поле \"Отчество\" не может быть пустым")
+    @Size(max = 100, message = "Поле \"Отчество\" не может иметь более {max} символов")
     private String peopleMiddleName;
     
     @Column(name = "people_datebirth", nullable = false)
-    @NotNull(message = "Поле \"Дата рождения\" не может быть NULL")
+    @NotNull(message = "Поле \"Дата рождения\" не может быть пустым")
     private Date peopleDatebirth;
     
     @Column(name = "capclass_id", nullable = false)
-    @NotNull(message = "Поле \"ID класса\" не может быть NULL")
+    @NotNull(message = "Поле \"ID классификатора\" не может быть пустым")
     private Integer capclassId;
     
     @Column(name = "people_email", nullable = false)
     @NotNull(message = "Поле \"Email\" не может быть NULL")
-    @Size(max = 20, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+    @Size(max = 255, message = "Поле \"Email\" не может иметь более {max} символов")
     private String peopleEmail;
     
     @Column(name = "people_phone", nullable = false)
-    @Size(max = 14, message = "Поле \"Фамилия\" не может иметь более {max} символов")
+    @Size(max = 50, message = "Поле \"Телефон\" не может иметь более {max} символов")
     private String peoplePhone;
     
     @Column(name = "people_deleteflag", nullable = false)

@@ -1,5 +1,7 @@
 package biz.spring.core.view.dnk;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,33 +10,43 @@ import java.util.Date;
 public class PeopleView {
 
     @Column(name = "people_id")
+    @Schema(description = "ИД человека")
     private Integer peopleId;
 
     @Column(name = "people_name")
+    @Schema(description = "Имя человека")
     private String peopleName;
 
     @Column(name = "people_lastname")
+    @Schema(description = "Фамилия человека")
     private String peopleLastName;
 
     @Column(name = "people_middlename")
+    @Schema(description = "Отчество человека")
     private String peopleMiddleName;
 
     @Column(name = "people_datebirth")
+    @Schema(description = "Дата рождения человека")
     private Date peopleDatebirth;
 
     @Column(name = "capclass_id")
+    @Schema(description = "Классификатор человека")
     private Integer capclassId;
 
     @Column(name = "people_email")
+    @Schema(description = "Электронный адресс человека")
     private String peopleEmail;
 
     @Column(name = "people_phone")
+    @Schema(description = "Номер телефона человека")
     private String peoplePhone;
 
     @Column(name = "people_deleteflag")
+    @Schema(description = "Флаг удаления человека")
     private Integer peopleDeleteFlag;
 
     @Column(name = "people_datedelete")
+    @Schema(description = "Дата удаления человека")
     private Date peopleDateDelete;
 
     public PeopleView() {
