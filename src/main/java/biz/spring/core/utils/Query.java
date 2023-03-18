@@ -66,9 +66,9 @@ public class Query<T> {
     public List<T> execute(){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         RowMapForObject rowMapper = new RowMapForObject(cls);
-        replace.forEach((key, val) -> {
-            sql = sql.replaceAll(key, val);
-        });
+        for(Map.Entry<String, String> replacement:replace.entrySet()){
+            sql = sql.replaceAll(replacement.getKey(), replacement.getValue());
+        }
         OrmUtils.loggerSql(sql);
         if (params != null) {
             return (List<T>) jdbc.query(sql, params, rowMapper);
