@@ -1,5 +1,6 @@
 package biz.spring.core.controllers.dnk;
 
+import biz.spring.core.config.Config;
 import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.utils.GridDataOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +25,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .setPage(1)
                 .setRowCount(10)
                 .build();
-        this.mockMvc.perform(post("/api/people/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -40,7 +41,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .setRowCount(10)
                 .setParam("capClasId", 2)
                 .build();
-        this.mockMvc.perform(post("/api/people/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -52,7 +53,7 @@ public class PeopleControllerTest extends IntegratedTest {
     @Rollback
     @Transactional
     public void getTest() throws Exception{
-        this.mockMvc.perform(post("/api/people/get")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/get")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
