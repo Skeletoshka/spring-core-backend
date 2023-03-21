@@ -10,6 +10,8 @@ import biz.spring.core.utils.Query;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ControlObjectView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -30,19 +32,11 @@ public class ControlObjectService extends BaseService<ControlObject> {
         init(controlObjectRepository);
     }
 
-    private final String mainSql = "" +
-            "SELECT co.controlobject_id," +
-            "       co.controlobject_url," +
-            "       co.controlobject_name," +
-            "       CASE WHEN cor.controlobject_id IS NOT NULL THEN 1 ELSE 0 END access_flag " +
-            "FROM   controlobject co " +
-            "       LEFT JOIN controlobjectrole cor ON co.controlobject_id = cor.controlobject_id " +
-            "AND :accessRoleId = cor.accessrole_id";
+    @Value("classpath:/script/accessrole/mainSql.sql")
+    Resource mainSql;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM controlobject " +
-            "WHERE controlobject_id = :id";
+    @Value("classpath:/script/accessrole/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<ControlObjectView> getAll(GridDataOption gridDataOption){
         return new Query<ControlObjectView>(mainSql)

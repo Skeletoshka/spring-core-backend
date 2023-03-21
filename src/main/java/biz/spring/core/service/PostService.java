@@ -29,14 +29,12 @@ public class PostService extends BaseService<Post>{
     @Value("classpath:/script/post/mainSQL.sql")
     Resource mainSQL;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM post " +
-            "WHERE post_id = :id";
+    @Value("classpath:/script/post/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<PostView> getAll(GridDataOption gridDataOption){
         boolean findPost = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()) && !nf.getValue().equals(-1));
-        return new Query<PostView>(OrmUtils.loadResource(mainSQL))
+        return new Query<PostView>(mainSQL)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())

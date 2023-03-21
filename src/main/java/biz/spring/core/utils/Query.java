@@ -1,6 +1,7 @@
 package biz.spring.core.utils;
 
 import biz.spring.core.rowmapper.RowMapForObject;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.util.HashMap;
@@ -20,6 +21,10 @@ public class Query<T> {
 
     public Query(String sql){
         this.sql = sql;
+    }
+
+    public Query(Resource resource){
+        this.sql = OrmUtils.loadResource(resource);
     }
 
     public Query<T> forClass(Class cls){
