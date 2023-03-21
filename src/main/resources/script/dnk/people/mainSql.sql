@@ -1,0 +1,4 @@
+SELECT *
+FROM   people
+WHERE  1=1
+  /*CAPCLASS_PLACEHOLDER*/

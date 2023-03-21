@@ -51,8 +51,9 @@ public class PeopleController {
     }
 
     @RequestMapping(value = "/people/get", method = RequestMethod.POST)
-    @Operation(summary = "Метод для получения списка объектов \"Человек\"",
-            description = "Выводит список объектов \"Человек\" согласно переданным фильтрам")
+    @Operation(summary = "Метод для получения объекта \"Человек\"",
+            description = "Выводит объект \"Человек\" согласно переданному идентификатора. Если идентификатор пустой, " +
+                    "то возвращается объект с заполненными полями по умолчанию")
     @CheckAnyRole
     public PeopleDTO get(@RequestBody(required = false) int id){
         if(id == 0){
@@ -66,10 +67,12 @@ public class PeopleController {
     }
 
     @RequestMapping(value = "/people/save", method = RequestMethod.POST)
-    @Operation(summary = "Метод для получения списка объектов \"Человек\"",
-            description = "Выводит список объектов \"Человек\" согласно переданным фильтрам")
+    @Operation(summary = "Метод для получения сохранения объекта \"Человек\"",
+            description = "Сохраняет объект \"Человек\". Если идентификатор пустой, то запись добавляется, иначе обновляется")
     @CheckAnyRole
     public PeopleView save(@RequestBody PeopleDTO peopleDTO){
+        peopleDTO.setPeopleDateDelete(null);
+        peopleDTO.setPeopleDeleteFlag(null);
         People result;
         if(peopleDTO.getPeopleId()==null){
             result = peopleService.add(peopleDTO.toEntity());

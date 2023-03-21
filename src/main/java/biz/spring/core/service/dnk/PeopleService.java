@@ -7,6 +7,8 @@ import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.dnk.PeopleView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -22,16 +24,12 @@ public class PeopleService extends BaseService<People> {
     public void init(){
         init(peopleRepository);
     }
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM people " +
-            "WHERE 1=1 " +
-            "      /*CAPCLASS_PLACEHOLDER*/";
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM people " +
-            "WHERE people_id = :id";
+    @Value("classpath:/script/dnk/people/mainSQL.sql")
+    Resource mainSql;
+
+    @Value("classpath:/script/dnk/people/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<PeopleView> getAll(GridDataOption gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
