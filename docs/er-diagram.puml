@@ -71,20 +71,20 @@ entity studyprogram{
     ==
     Программы обучения
 }
-entity case{
-    case_id: int4 <<PK>>
+entity studycase{
+    studycase_id: int4 <<PK>>
     studyprogram_id: int4 <<FK>>
     --
-    case_name:varchar
-    case_desc: varchar
-    case_num: int4
-    case_visible: int4
+    studycase_name:varchar
+    studycase_desc: varchar
+    studycase_num: int4
+    studycase_visible: int4
     ==
     Кейс программы обучения
 }
 entity block{
     block_id: int4 <<PK>>
-    case_id: int4 <<FK>>
+    studycase_id: int4 <<FK>>
     capclass_id: int4 <<FK>>
     --
     block_name: varchar
@@ -338,8 +338,8 @@ direction----o{workgroup
 workgroup--o{peoplegroup
 people--o{peoplegroup
 direction--o{studyprogram
-studyprogram--o{case
-case--o{block
+studyprogram--o{studycase
+studycase--o{block
 documentreal-- appendix
 proguser--o{documentreal
 people---o{proguser
