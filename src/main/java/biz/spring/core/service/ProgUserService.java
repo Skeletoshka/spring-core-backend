@@ -11,6 +11,8 @@ import biz.spring.core.utils.Query;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -30,14 +32,11 @@ public class ProgUserService extends BaseService<ProgUser>{
         init(progUserRepository);
     }
 
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM proguser";
+    @Value("classpath:/script/proguser/mainSql.sql")
+    Resource mainSql;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM proguser " +
-            "WHERE proguser_id = :id";
+    @Value("classpath:/script/proguser/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<ProgUserView> getAll(GridDataOption gridDataOption){
         return new Query<ProgUserView>(mainSql)

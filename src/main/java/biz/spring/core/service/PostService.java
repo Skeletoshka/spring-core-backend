@@ -1,13 +1,16 @@
 package biz.spring.core.service;
 
-import biz.spring.core.controller.PostController;
 import biz.spring.core.model.Post;
 import biz.spring.core.repository.PostRepository;
 import biz.spring.core.utils.GridDataOption;
+import biz.spring.core.utils.OrmUtils;
 import biz.spring.core.utils.Query;
 import biz.spring.core.view.PostView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -23,20 +26,15 @@ public class PostService extends BaseService<Post>{
         init(postRepository);
     }
 
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM post " +
-            "WHERE 1=1 " +
-            "/*POST_PLACEHOLDER*/";
+    @Value("classpath:/script/post/mainSQL.sql")
+    Resource mainSQL;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM post " +
-            "WHERE post_id = :id";
+    @Value("classpath:/script/post/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<PostView> getAll(GridDataOption gridDataOption){
         boolean findPost = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()) && !nf.getValue().equals(-1));
-        return new Query<PostView>(mainSql)
+        return new Query<PostView>(mainSQL)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())

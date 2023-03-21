@@ -7,6 +7,8 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -16,7 +18,10 @@ import javax.persistence.Table;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,5 +103,13 @@ public class OrmUtils {
 
     public static void loggerSql(String sql){
         logger.info(sql);
+    }
+
+    public static String loadResource(Resource resource){
+        try(InputStream is = resource.getInputStream()){
+            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 }
