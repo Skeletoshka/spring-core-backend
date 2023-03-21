@@ -28,9 +28,13 @@ public class InitApp implements ApplicationRunner {
     @Value("${spring.core.run-as-test:false}")
     private boolean runAsTest;
 
+    @Value("${spring.datasource.url}")
+    private String url;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Init app ... run");
+        logger.info("connecting to " + url);
         //Заполняем метаданные таблиц
         OrmUtils.fillTableMetadata("biz.spring.core");
         MainApplication.setApplicationContext(applicationContext);
