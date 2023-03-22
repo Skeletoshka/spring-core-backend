@@ -20,11 +20,11 @@ entity people{
     people_name: varchar
     people_lastname: varchar
     people_middlename: varchar
-    people_datebirth: date
+    people_datebirth: timestamp
     people_email: varchar
     people_phone: varchar
     people_deleteflag: int4
-    people_datedelete: date
+    people_datedelete: timestamp
     ==
     Люди
 }
@@ -119,7 +119,7 @@ entity proguser {
     proguser_webpassword: varchar
     proguser_blockflag: int4
     proguser_deleteflag: int4
-    proguser_datedelete: date
+    proguser_datedelete: timestamp
     ==
     Пользователь
 }
@@ -151,7 +151,7 @@ entity controlobject{
     controlobject_id: int4 <<PK>>
     --
     controlobject_url: varchar
-    controlobject_desc: varchar
+    controlobject_name: varchar
     ==
     Контроллируемый объект (метод)
 }
@@ -160,7 +160,7 @@ entity shedule{
     studyprogram_id: int4 <<FK>>
     workgroup_id: int4 <<FK>>
     --
-    shedule_date: date
+    shedule_date: timestamp
     shedule_place: varchar
     ==
     Расписание
@@ -215,7 +215,7 @@ entity event{
     capclass_id: int4 <<FK>>
     --
     event_name: varchar
-    event_date: date
+    event_date: timestamp
     ==
     Мероприятия
 }
@@ -311,8 +311,8 @@ entity documentreal{
     --
     documentreal_name: varchar
     documentreal_number: varchar
-    documentreal_datecreate: date
-    documentreal_datemodify: date
+    documentreal_datecreate: timestamp
+    documentreal_datemodify: timestamp
     ==
     Документы
 }
