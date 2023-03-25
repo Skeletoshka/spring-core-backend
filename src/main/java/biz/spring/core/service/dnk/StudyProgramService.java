@@ -27,10 +27,10 @@ public class StudyProgramService extends BaseService<StudyProgram> {
     public void init(){
         init(studyProgramRepository, studyProgramValidator);
     }
-    @Value("classpath:/script/dnk/studyprogram/mainSQL.sql")
+    @Value("classpath:/script/dnk/studyprogram/mainSql.sql")
     Resource mainSql;
 
-    @Value("classpath:/script/dnk/studyprogram/mainSQL.sql")
+    @Value("classpath:/script/dnk/studyprogram/mainSqlForOne.sql")
     Resource mainSqlForOne;
 
 

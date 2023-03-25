@@ -218,7 +218,7 @@ public class StudyProgramDTO {
         documentReal.setDocumentRealNumber(this.documentRealNumber);
         documentReal.setDocumentTransitId(this.documentStatusId);
         documentReal.setDocumentRealId(this.studyProgramId);
-        documentReal.setDocumentRealDate(new Date());
+        documentReal.setDocumentRealDateCreate(new Date());
         documentReal.setDocumentTypeId(StudyProgram.DOCUMENT_ID);
         return documentReal;
     }

@@ -1,9 +1,9 @@
 SELECT SP.*,
        TR.people_name teacher_name,
-       TR.people_secondname teacher_secondname,
+       TR.people_lastname teacher_lastname,
        TR.people_middlename teacher_middlename,
        ASS.people_name assistant_name,
-       ASS.people_secondname assistant_secondname,
+       ASS.people_lastname assistant_lastname,
        ASS.people_middlename assistant_middlename,
        DR.documentreal_name,
        DR.documentreal_number

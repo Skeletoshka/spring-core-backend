@@ -46,6 +46,6 @@ public class StudyProgramRepository implements TableRepository<StudyProgram> {
                 new StudyProgram(3, "Как выжить после написание пособия, краткий курс", 2, 1, 1)
         };
         insert(Arrays.asList(studyPrograms));
-        DatabaseUtils.setSequenceValue("studyprogram_id_gen", studyPrograms.length+1);
+        //DatabaseUtils.setSequenceValue("studyprogram_id_gen", studyPrograms.length+1);
     }
 }

@@ -2,8 +2,10 @@ package biz.spring.core.controllers.dnk;
 
 import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.dto.dnk.StudyProgramDTO;
+import biz.spring.core.model.DocumentTransit;
 import biz.spring.core.model.DocumentType;
 import biz.spring.core.model.dnk.StudyProgram;
+import biz.spring.core.repository.DocumentTransitRepository;
 import biz.spring.core.repository.DocumentTypeRepository;
 import biz.spring.core.utils.GridDataOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +25,8 @@ public class StudyProgramControllerTest extends IntegratedTest {
 
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
+    @Autowired
+    private DocumentTransitRepository documentTransitRepository;
 
     @Test
     @Rollback
@@ -33,7 +37,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
                 .setRowCount(10)
                 .setPage(1)
                 .setParam("studyProgramId", 1)
-                .setOrderBy("studyProgramId")
+                .setOrderBy("studyProgram_Id")
                 .build();
 
         this.mockMvc.perform(post("/api/studyprogram/getlist")
