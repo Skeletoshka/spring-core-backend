@@ -79,7 +79,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"studyProgramName\":\"Информатика в цифрах\"")))
                 .andExpect(content().string(containsString("\"documentRealName\":\"Программа обучения №123\"")))
-                .andExpect(content().string(containsString("\"studyProgramName\":\"Информатика в цифрах\"")));
+                .andExpect(content().string(containsString("\"documentRealNumber\":\"123\"")));
     }
 
     private void load(){
