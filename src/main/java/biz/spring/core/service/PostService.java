@@ -5,6 +5,7 @@ import biz.spring.core.repository.PostRepository;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.OrmUtils;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.PostValidator;
 import biz.spring.core.view.PostView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +22,11 @@ public class PostService extends BaseService<Post>{
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private PostValidator postValidator;
     @PostConstruct
     public void init(){
-        init(postRepository);
+        init(postRepository, postValidator);
     }
 
     @Value("classpath:/script/post/mainSQL.sql")

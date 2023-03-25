@@ -13,7 +13,6 @@ public class Post {
 
     @Id
     @Column(name = "post_id", nullable = false)
-    @NotNull(message = "Поле \"ИД должности\" не может быть пустым")
     private Integer postId;
 
     @Column(name = "post_name", nullable = false)

@@ -21,6 +21,12 @@ public class RecreateDatabase {
     @Autowired
     private PostRepository postRepository;
     @Autowired
+    private DocumentTypeRepository documentTypeRepository;
+    @Autowired
+    private DocumentTransitRepository documentTransitRepository;
+    @Autowired
+    private DocumentRealRepository documentRealRepository;
+    @Autowired
     private TestRepository testRepository;
     @Autowired
     private StudyProgramRepository studyProgramRepository;
@@ -37,7 +43,11 @@ public class RecreateDatabase {
                 controlObjectRepository,
                 testRepository,
                 studyProgramRepository,
-                peopleRepository
+                peopleRepository,
+                controlObjectRepository,
+                documentTypeRepository,
+                documentTransitRepository,
+                documentRealRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

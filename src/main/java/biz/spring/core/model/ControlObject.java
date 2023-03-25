@@ -14,7 +14,6 @@ public class ControlObject {
 
     @Id
     @Column(name = "controlobject_id", nullable = false)
-    @NotNull(message = "Поле \"ИД контроллируемого объекта\" не может быть NULL")
     private Integer controlObjectId;
 
     @Column(name = "controlobject_url", nullable = false)
