@@ -7,6 +7,7 @@ import biz.spring.core.repository.AccessRoleRepository;
 import biz.spring.core.repository.ControlObjectRepository;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.ControlObjectValidator;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ControlObjectView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,14 @@ public class ControlObjectService extends BaseService<ControlObject> {
     private ControlObjectRepository controlObjectRepository;
 
     @Autowired
+    private ControlObjectValidator controlObjectValidator;
+
+    @Autowired
     private AccessRoleRepository accessRoleRepository;
 
     @PostConstruct
     public void init(){
-        init(controlObjectRepository);
+        init(controlObjectRepository, controlObjectValidator);
     }
 
     @Value("classpath:/script/accessrole/mainSql.sql")

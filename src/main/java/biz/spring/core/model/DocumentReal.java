@@ -14,7 +14,6 @@ public class DocumentReal {
 
     @Id
     @Column(name = "documentreal_id", nullable = false)
-    @NotNull(message = "Поле \"ИД документа\" не может быть пустым")
     private Integer documentRealId;
 
     @Column(name = "documenttype_id", nullable = false)

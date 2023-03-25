@@ -8,6 +8,7 @@ import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.security.JwtUtils;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.ProgUserValidator;
 import biz.spring.core.view.AccessRoleView;
 import biz.spring.core.view.ProgUserView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,12 @@ public class ProgUserService extends BaseService<ProgUser>{
 
     @Autowired
     private ProgUserRepository progUserRepository;
+    @Autowired
+    private ProgUserValidator progUserValidator;
 
     @PostConstruct
     public void init(){
-        init(progUserRepository);
+        init(progUserRepository, progUserValidator);
     }
 
     @Value("classpath:/script/proguser/mainSql.sql")

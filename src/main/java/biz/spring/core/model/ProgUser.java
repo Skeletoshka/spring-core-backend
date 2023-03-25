@@ -13,7 +13,6 @@ public class ProgUser {
 
     @Id
     @Column(name = "proguser_id", nullable = false)
-    @NotNull(message = "Поле \"ИД пользователя\" не может быть null")
     private Integer progUserId;
 
     @Column(name = "proguser_name", nullable = false)

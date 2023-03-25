@@ -13,7 +13,6 @@ public class AccessRole {
 
     @Id
     @Column(name = "accessrole_id", nullable = false)
-    @NotNull(message = "Поле \"ИД роли\" не может быть NULL")
     private Integer accessRoleId;
 
     @Column(name = "accessrole_name", nullable = false)

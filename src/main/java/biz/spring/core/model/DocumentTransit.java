@@ -13,7 +13,6 @@ public class DocumentTransit {
 
     @Id
     @Column(name = "documenttransit_id", nullable = false)
-    @NotNull(message = "Поле \"ИД статуса документа\" не может быть пустым")
     private Integer documentTransitId;
 
     @Column(name = "documenttransit_name", nullable = false)

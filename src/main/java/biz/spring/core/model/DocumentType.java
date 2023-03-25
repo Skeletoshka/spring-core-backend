@@ -13,7 +13,6 @@ public class DocumentType {
 
     @Id
     @Column(name = "documenttype_id", nullable = false)
-    @NotNull(message = "Поле \"Тип документа\" не может быть пустым")
     private Integer documentTypeId;
 
     @Column(name = "documenttype_name", nullable = false)

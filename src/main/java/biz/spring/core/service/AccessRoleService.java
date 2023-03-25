@@ -4,6 +4,7 @@ import biz.spring.core.model.AccessRole;
 import biz.spring.core.repository.AccessRoleRepository;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.AccessRoleValidator;
 import biz.spring.core.view.AccessRoleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,11 +19,13 @@ public class AccessRoleService extends BaseService<AccessRole> {
 
     @Autowired
     private AccessRoleRepository accessRoleRepository;
+    @Autowired
+    private AccessRoleValidator accessRoleValidator;
 
     @Override
     @PostConstruct
     public void init() {
-        init(accessRoleRepository);
+        init(accessRoleRepository, accessRoleValidator);
     }
 
     @Value("classpath:/script/accessrole/mainSql.sql")
