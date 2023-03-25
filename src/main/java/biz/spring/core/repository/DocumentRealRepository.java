@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,8 +52,17 @@ public class DocumentRealRepository implements TableRepository<DocumentReal>{
 
     @Override
     public void load() {
-        DocumentReal[] documentReals = {};
+        DocumentReal[] documentReals = {
+                new DocumentReal(1, 1, 1, "123",
+                        "123", new Date(), new Date(), 1),
+                new DocumentReal(2, 1, 1, "1234",
+                        "1235", new Date(), new Date(), 1),
+                new DocumentReal(3, 1, 1, "1235",
+                        "1234", new Date(), new Date(), 1),
+                new DocumentReal(4, 1, 1, "1234",
+                        "1235", new Date(), new Date(), 1)
+        };
         insert(Arrays.asList(documentReals));
-        DatabaseUtils.setSequenceValue("documenttransit_id_gen", documentReals.length+1);
+        DatabaseUtils.setSequenceValue("documentreal_id_gen", documentReals.length+1);
     }
 }

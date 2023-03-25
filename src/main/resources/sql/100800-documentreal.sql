@@ -9,3 +9,5 @@ CREATE TABLE documentreal (
 	proguser_id int4 NOT NULL,
 	CONSTRAINT documentreal_pk PRIMARY KEY (documentreal_id)
 );
+
+CREATE SEQUENCE documentreal_id_gen INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE;

@@ -38,7 +38,8 @@ public class RowMapForEntity implements RowMapper<Object> {
             for (int j = 1; j <= metadata.getColumnCount(); j++) {
                 String columnName = metadata.getColumnName(j);
                 Field resultField = Arrays.stream(fields)
-                        .filter(field -> field.getAnnotationsByType(Column.class)[0].name().equals(columnName))
+                        .filter(field -> field.getAnnotationsByType(Column.class).length>0 &&
+                                field.getAnnotationsByType(Column.class)[0].name().equals(columnName))
                         .findFirst().orElseThrow();
                 Method setMethod = Arrays.stream(obj.getClass().getMethods())
                         .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + resultField.getName().toLowerCase(Locale.ROOT)))

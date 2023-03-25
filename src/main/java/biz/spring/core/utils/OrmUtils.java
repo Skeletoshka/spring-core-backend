@@ -78,27 +78,29 @@ public class OrmUtils {
      * @param cls - Класс, из которого формируются метаданные
      * @return List<ColumnMetadata> - список из метаданных столбцов
      **/
-    private static List<ColumnMetadata> getColumnMetadata(Class cls){
+    private static List<ColumnMetadata> getColumnMetadata(Class cls) {
         Field[] fields = cls.getDeclaredFields();
-        return Arrays.stream(fields).map(field -> {
-            ColumnMetadata columnMetadata = new ColumnMetadata();
-            columnMetadata.setColumnName(field.getAnnotationsByType(Column.class)[0].name());
-            columnMetadata.setNullable(field.getAnnotationsByType(Column.class)[0].nullable());
-            columnMetadata.setNullableMessage(field.getAnnotationsByType(NotNull.class).length>=1?
-                    field.getAnnotationsByType(NotNull.class)[0].message():null);
-            if(field.getAnnotationsByType(Size.class).length>=1){
-                columnMetadata.setTextSize(field.getAnnotationsByType(Size.class)[0].max());
-                columnMetadata.setTextSizeMessage(field.getAnnotationsByType(Size.class)[0].message());
-            }
-            columnMetadata.setGetMethod(Arrays.stream(cls.getDeclaredMethods())
-                    .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
-                    .findAny().orElseThrow());
-            columnMetadata.setSetMethod(Arrays.stream(cls.getDeclaredMethods())
-                    .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + field.getName().toLowerCase(Locale.ROOT)))
-                    .findAny().orElseThrow());
-            columnMetadata.setVarName(field.getName());
-            return columnMetadata;
-        }).collect(Collectors.toList());
+        return Arrays.stream(fields)
+                .filter(field -> field.getAnnotationsByType(Column.class).length > 0)
+                .map(field -> {
+                    ColumnMetadata columnMetadata = new ColumnMetadata();
+                    columnMetadata.setColumnName(field.getAnnotationsByType(Column.class)[0].name());
+                    columnMetadata.setNullable(field.getAnnotationsByType(Column.class)[0].nullable());
+                    columnMetadata.setNullableMessage(field.getAnnotationsByType(NotNull.class).length >= 1 ?
+                            field.getAnnotationsByType(NotNull.class)[0].message() : null);
+                    if (field.getAnnotationsByType(Size.class).length >= 1) {
+                        columnMetadata.setTextSize(field.getAnnotationsByType(Size.class)[0].max());
+                        columnMetadata.setTextSizeMessage(field.getAnnotationsByType(Size.class)[0].message());
+                    }
+                    columnMetadata.setGetMethod(Arrays.stream(cls.getDeclaredMethods())
+                            .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
+                            .findAny().orElseThrow());
+                    columnMetadata.setSetMethod(Arrays.stream(cls.getDeclaredMethods())
+                            .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + field.getName().toLowerCase(Locale.ROOT)))
+                            .findAny().orElseThrow());
+                    columnMetadata.setVarName(field.getName());
+                    return columnMetadata;
+                }).collect(Collectors.toList());
     }
 
     public static void loggerSql(String sql){

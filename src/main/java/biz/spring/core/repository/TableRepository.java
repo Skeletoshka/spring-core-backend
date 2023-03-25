@@ -56,6 +56,7 @@ public interface TableRepository<T> {
         String sql = String.format("INSERT INTO " + tableMetadata.getTableName() + "(%s) VALUES (%s)", columnsName, paramsName);
         Map<String, Object> params = new HashMap<>();
         Arrays.stream(obj.getClass().getDeclaredFields())
+                .filter(field -> field.getAnnotationsByType(Column.class).length>0)
                 .peek(field -> {
                     try {
                         params.put(field.getName(), field.getAnnotationsByType(Id.class).length > 0 ?
