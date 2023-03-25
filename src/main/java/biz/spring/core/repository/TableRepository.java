@@ -44,7 +44,7 @@ public interface TableRepository<T> {
         return jdbc.queryForObject(sql, (Map<String, ?>) null, Integer.class);
     }
 
-    default Integer insert(T obj){
+    default Integer insert(T obj) {
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
         String columnsName = tableMetadata.getFields().stream()
@@ -58,19 +58,25 @@ public interface TableRepository<T> {
         Arrays.stream(obj.getClass().getDeclaredFields())
                 .peek(field -> {
                     try {
-                        params.put(field.getName(), field.getAnnotationsByType(Id.class).length>0?
-                                nextValue(tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
-                                        + "_gen"):
+                        params.put(field.getName(), field.getAnnotationsByType(Id.class).length > 0 ?
+                                (Arrays.stream(obj.getClass().getDeclaredMethods())
+                                        .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
+                                        .findFirst().orElseThrow().invoke(obj, null) == null ?
+                                        nextValue(tableMetadata.getIdField().getDeclaredAnnotation(Column.class).name()
+                                                + "_gen") :
+                                        Arrays.stream(obj.getClass().getDeclaredMethods())
+                                                .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
+                                                .findFirst().orElseThrow().invoke(obj, null)) :
                                 Arrays.stream(obj.getClass().getDeclaredMethods())
-                                .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
-                                .findFirst().orElseThrow().invoke(obj, null));
+                                        .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("get" + field.getName().toLowerCase(Locale.ROOT)))
+                                        .findFirst().orElseThrow().invoke(obj, null));
                     } catch (Exception e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
                 }).collect(Collectors.toList());
         OrmUtils.loggerSql(sql);
         jdbc.execute(sql, params, PreparedStatement::execute);
-        return (Integer)params.get(tableMetadata.getIdField().getName());
+        return (Integer) params.get(tableMetadata.getIdField().getName());
     }
 
     default void insert(List<T> objects){
