@@ -22,7 +22,7 @@ public class DocumentRealDTO {
     private String documentRealNumber;
 
     @Schema(description = "Дата создания документа")
-    private Date documentRealDate;
+    private Date documentRealDateCreate;
 
     @Schema(description = "Дата модификации документа")
     private Date documentRealDateModify;
@@ -38,7 +38,7 @@ public class DocumentRealDTO {
                            Integer documentTransitId,
                            String documentRealName,
                            String documentRealNumber,
-                           Date documentRealDate,
+                           Date documentRealDateCreate,
                            Date documentRealDateModify,
                            Integer progUserId) {
         this.documentRealId = documentRealId;
@@ -46,7 +46,7 @@ public class DocumentRealDTO {
         this.documentTransitId = documentTransitId;
         this.documentRealName = documentRealName;
         this.documentRealNumber = documentRealNumber;
-        this.documentRealDate = documentRealDate;
+        this.documentRealDateCreate = documentRealDateCreate;
         this.documentRealDateModify = documentRealDateModify;
         this.progUserId = progUserId;
     }
@@ -91,12 +91,12 @@ public class DocumentRealDTO {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealDate() {
-        return documentRealDate;
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
     }
 
-    public void setDocumentRealDate(Date documentRealDate) {
-        this.documentRealDate = documentRealDate;
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
     }
 
     public Date getDocumentRealDateModify() {

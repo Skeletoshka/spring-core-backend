@@ -27,9 +27,9 @@ public class DocumentRealView {
     @Schema(description = "Номер документа")
     private String documentRealNumber;
 
-    @Column(name = "documentreal_date")
+    @Column(name = "documentreal_datecreate")
     @Schema(description = "Дата создания документа")
-    private Date documentRealDate;
+    private Date documentRealDateCreate;
 
     @Column(name = "documentreal_datemodify")
     @Schema(description = "Дата модификации документа")
@@ -47,7 +47,7 @@ public class DocumentRealView {
                             Integer documentTransitId,
                             String documentRealName,
                             String documentRealNumber,
-                            Date documentRealDate,
+                            Date documentRealDateCreate,
                             Date documentRealDateModify,
                             Integer progUserId) {
         this.documentRealId = documentRealId;
@@ -55,7 +55,7 @@ public class DocumentRealView {
         this.documentTransitId = documentTransitId;
         this.documentRealName = documentRealName;
         this.documentRealNumber = documentRealNumber;
-        this.documentRealDate = documentRealDate;
+        this.documentRealDateCreate = documentRealDateCreate;
         this.documentRealDateModify = documentRealDateModify;
         this.progUserId = progUserId;
     }
@@ -100,12 +100,12 @@ public class DocumentRealView {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealDate() {
-        return documentRealDate;
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
     }
 
-    public void setDocumentRealDate(Date documentRealDate) {
-        this.documentRealDate = documentRealDate;
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
     }
 
     public Date getDocumentRealDateModify() {
