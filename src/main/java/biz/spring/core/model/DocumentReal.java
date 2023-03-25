@@ -33,9 +33,9 @@ public class DocumentReal {
     @Size(max = 100, message = "Поле \"Номер документа\" не может иметь больше {max} символов")
     private String documentRealNumber;
 
-    @Column(name = "documentreal_date", nullable = false)
+    @Column(name = "documentreal_datecreate", nullable = false)
     @NotNull(message = "Поле \"Дата создания документа\" не может быть пустым")
-    private Date documentRealDate;
+    private Date documentRealDateCreate;
 
     @Column(name = "documentreal_datemodify", nullable = false)
     @NotNull(message = "Поле \"Дата модификации документа\" не может быть пустым")
@@ -53,7 +53,7 @@ public class DocumentReal {
                         Integer documentTransitId,
                         String documentRealName,
                         String documentRealNumber,
-                        Date documentRealDate,
+                        Date documentRealDateCreate,
                         Date documentRealDateModify,
                         Integer progUserId) {
         this.documentRealId = documentRealId;
@@ -61,7 +61,7 @@ public class DocumentReal {
         this.documentTransitId = documentTransitId;
         this.documentRealName = documentRealName;
         this.documentRealNumber = documentRealNumber;
-        this.documentRealDate = documentRealDate;
+        this.documentRealDateCreate = documentRealDateCreate;
         this.documentRealDateModify = documentRealDateModify;
         this.progUserId = progUserId;
     }
@@ -106,12 +106,12 @@ public class DocumentReal {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealDate() {
-        return documentRealDate;
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
     }
 
-    public void setDocumentRealDate(Date documentRealDate) {
-        this.documentRealDate = documentRealDate;
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
     }
 
     public Date getDocumentRealDateModify() {
