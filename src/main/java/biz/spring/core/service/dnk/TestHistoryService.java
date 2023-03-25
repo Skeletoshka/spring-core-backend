@@ -4,6 +4,7 @@ import biz.spring.core.model.dnk.TestHistory;
 import biz.spring.core.repository.dnk.TestHistoryRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.dnk.TestHistoryValidator;
 import biz.spring.core.view.dnk.TestHistoryView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ public class TestHistoryService extends BaseService<TestHistory> {
 
     @Autowired
     private TestHistoryRepository testHistoryRepository;
+    @Autowired
+    private TestHistoryValidator testHistoryValidator;
 
     @PostConstruct
     public void init(){
-        init(testHistoryRepository);
+        init(testHistoryRepository, testHistoryValidator);
     }
     private final String mainSql = "" +
             "SELECT * " +

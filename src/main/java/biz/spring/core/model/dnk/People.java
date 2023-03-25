@@ -14,7 +14,6 @@ public class People {
 
     @Id
     @Column(name = "people_id", nullable = false)
-    @NotNull(message = "Поле \"ID пользователя\" не может быть пустым")
     private Integer peopleId;
 
     @Column(name = "people_name", nullable = false)

@@ -41,13 +41,13 @@ public class RecreateDatabase {
                 progUserRepsitory,
                 accessRoleRepository,
                 controlObjectRepository,
-                testRepository,
-                studyProgramRepository,
-                peopleRepository,
                 controlObjectRepository,
                 documentTypeRepository,
                 documentTransitRepository,
-                documentRealRepository
+                documentRealRepository,
+                testRepository,
+                studyProgramRepository,
+                peopleRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

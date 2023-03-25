@@ -5,6 +5,7 @@ import biz.spring.core.repository.dnk.BlockRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.dnk.BlockValidator;
 import biz.spring.core.view.dnk.BlockView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ public class BlockService extends BaseService<Block> {
 
     @Autowired
     private BlockRepository blockRepository;
+    @Autowired
+    private BlockValidator blockValidator;
 
     @PostConstruct
     public void init(){
-        init(blockRepository);
+        init(blockRepository, blockValidator);
     }
 
     private final String mainSql = "" +

@@ -5,6 +5,7 @@ import biz.spring.core.repository.dnk.AppendixRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.dnk.AppendixValidator;
 import biz.spring.core.view.dnk.AppendixView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,11 @@ public class AppendixService extends BaseService<Appendix> {
     @Autowired
     private AppendixRepository appendixRepository;
 
+    @Autowired
+    private AppendixValidator appendixValidator;
+
     @PostConstruct
-    public void init() { init(appendixRepository); }
+    public void init() { init(appendixRepository, appendixValidator); }
 
     private final String mainSql = "" +
             "SELECT * " +

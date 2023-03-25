@@ -13,7 +13,6 @@ public class Answer {
 
     @Id
     @Column(name = "answer_id", nullable = false)
-    @NotNull(message = "Поле \"ИД ответа\" не может быть NULL")
     private Integer answerId;
 
     @Column(name = "testquestion_id", nullable = false)

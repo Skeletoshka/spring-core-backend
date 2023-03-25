@@ -16,7 +16,6 @@ public class Block {
 
     @Id
     @Column(name = "block_id", nullable = false)
-    @NotNull(message = "Поле \"ИД блока\" не может быть NULL")
     private Integer blockId;
 
     @Column(name = "block_name", nullable = false)

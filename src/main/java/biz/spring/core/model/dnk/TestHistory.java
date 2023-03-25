@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 public class TestHistory {
     @Id
     @Column(name = "testhistory_id", nullable = false)
-    @NotNull(message = "Поле \"ИД истори ответа\" не может быть NULL")
     private Integer testHistoryId;
 
     @Column(name = "people_id", nullable = false)

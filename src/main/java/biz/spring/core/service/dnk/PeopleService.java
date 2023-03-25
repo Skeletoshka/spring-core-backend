@@ -5,6 +5,7 @@ import biz.spring.core.repository.dnk.PeopleRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.dnk.PeopleValidator;
 import biz.spring.core.view.dnk.PeopleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +20,12 @@ public class PeopleService extends BaseService<People> {
 
     @Autowired
     private PeopleRepository peopleRepository;
+    @Autowired
+    private PeopleValidator peopleValidator;
 
     @PostConstruct
     public void init(){
-        init(peopleRepository);
+        init(peopleRepository, peopleValidator);
     }
 
     @Value("classpath:/script/dnk/people/mainSQL.sql")

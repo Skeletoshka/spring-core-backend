@@ -13,7 +13,6 @@ public class StudyProgram {
 
     @Id
     @Column(name = "studyprogram_id", nullable = false)
-    @NotNull(message = "Поле \"ИД программы обучения\" не может быть NULL")
     private Integer studyProgramId;
 
     @Column(name = "studyprogram_name", nullable = false)

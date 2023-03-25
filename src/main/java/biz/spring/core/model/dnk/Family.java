@@ -13,7 +13,6 @@ public class Family {
 
     @Id
     @Column(name = "family_id", nullable = false)
-    @NotNull(message = "Поле \"ID семьи\" не может быть NULL")
     @Size(max = 5, message = "Поле \"ID семьи\" не может иметь более {max} символов")
     private Integer familyId;
 

@@ -4,6 +4,7 @@ import biz.spring.core.model.dnk.Test;
 import biz.spring.core.repository.dnk.TestRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.Query;
+import biz.spring.core.validator.dnk.TestValidator;
 import biz.spring.core.view.dnk.TestView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ public class TestService extends BaseService<Test> {
 
     @Autowired
     private TestRepository testRepository;
+    @Autowired
+    private TestValidator testValidator;
 
     @PostConstruct
     public void init(){
-        init(testRepository);
+        init(testRepository, testValidator);
     }
     private final String mainSql = "" +
             "SELECT * " +

@@ -14,7 +14,6 @@ public class Appendix {
 
     @Id
     @Column(name = "appendix_id", nullable = false)
-    @NotNull(message = "Поле \"ИД вложения\" не может быть пустым")
     private Integer appendixId;
 
     @Column(name = "appendix_name", nullable = false)

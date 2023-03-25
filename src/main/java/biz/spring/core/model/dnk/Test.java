@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 public class Test {
     @Id
     @Column(name = "test_id", nullable = false)
-    @NotNull(message = "Поле \"ИД теста\" не может быть NULL")
     private Integer testId;
 
     @Column(name = "test_name", nullable = false)
