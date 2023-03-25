@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 
 @Service
@@ -30,6 +31,7 @@ public class DocumentRealService extends BaseService<DocumentReal>{
     private AuthenticationBean authenticationBean;
 
     @Override
+    @PostConstruct
     protected void init() {
         super.init(documentRealRepository, documentRealValidator);
     }
@@ -51,8 +53,10 @@ public class DocumentRealService extends BaseService<DocumentReal>{
     @Override
     protected void beforeValidate(DocumentReal documentReal){
         UserDetailsImpl userDetails = (UserDetailsImpl) authenticationBean.getCurrentUserDetails();
-        DocumentTransit documentTransit = documentTransitRepository.get(documentReal.getDocumentTransitId());
-        checkAccess(documentReal, documentTransit);
+        if(documentReal.getDocumentTransitId()!=null) {
+            DocumentTransit documentTransit = documentTransitRepository.get(documentReal.getDocumentTransitId());
+            checkAccess(documentReal, documentTransit);
+        }
         DocumentType documentType = documentTypeRepository.get(documentReal.getDocumentTypeId());
         documentReal.setDocumentRealName(documentType.getDocumentTypeName() + " №" + documentReal.getDocumentRealNumber());
         documentReal.setProgUserId(userDetails.getId());
