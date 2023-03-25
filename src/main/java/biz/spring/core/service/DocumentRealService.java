@@ -6,9 +6,12 @@ import biz.spring.core.model.DocumentType;
 import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.repository.DocumentTransitRepository;
 import biz.spring.core.repository.DocumentTypeRepository;
+import biz.spring.core.security.UserDetailsImpl;
 import biz.spring.core.validator.DocumentRealValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class DocumentRealService extends BaseService<DocumentReal>{
@@ -21,6 +24,8 @@ public class DocumentRealService extends BaseService<DocumentReal>{
     private DocumentTransitRepository documentTransitRepository;
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
+    @Autowired
+    private UserDetailsImpl userDetails;
 
     @Override
     protected void init() {
@@ -47,5 +52,7 @@ public class DocumentRealService extends BaseService<DocumentReal>{
         checkAccess(documentReal, documentTransit);
         DocumentType documentType = documentTypeRepository.get(documentReal.getDocumentTypeId());
         documentReal.setDocumentRealName(documentType.getDocumentTypeName() + " №" + documentReal.getDocumentRealNumber());
+        documentReal.setProgUserId(userDetails.getId());
+        documentReal.setDocumentRealDateModify(new Date());
     }
 }
