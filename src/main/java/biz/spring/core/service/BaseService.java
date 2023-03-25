@@ -33,12 +33,14 @@ public abstract class BaseService<T> {
     }
 
     public T add(T obj){
+        beforeValidate(obj);
         validate(obj);
         Integer id = tableRepository.insert(obj);
         return tableRepository.get(id);
     }
 
     public T edit(T obj){
+        beforeValidate(obj);
         validate(obj);
         Integer id = tableRepository.update(obj);
         return tableRepository.get(id);
@@ -63,4 +65,6 @@ public abstract class BaseService<T> {
             throw new RuntimeException(dataBinder.getBindingResult().getAllErrors().toString());
         }
     }
+
+    protected void beforeValidate(T obj){}
 }

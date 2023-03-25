@@ -12,6 +12,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class DocumentRealRepository implements TableRepository<DocumentReal>{
@@ -20,6 +22,17 @@ public class DocumentRealRepository implements TableRepository<DocumentReal>{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void setStatus(Integer documentRealId, Integer statusId){
+        String sql = "" +
+                "UPDATE documentreal SET " +
+                "documenttransit_id = :statusId " +
+                "WHERE documentreal_id = :documentRealId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("documentRealId", documentRealId);
+        params.put("statusId", statusId);
+        executeSql(sql, params);
+    }
 
     @Override
     public void create() {
