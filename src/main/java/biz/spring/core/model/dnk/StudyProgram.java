@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 @Table(name = "studyprogram")
 public class StudyProgram {
 
+    public static int DOCUMENT_ID = 1;
+
     @Id
     @Column(name = "studyprogram_id", nullable = false)
     private Integer studyProgramId;

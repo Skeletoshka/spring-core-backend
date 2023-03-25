@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.checkerframework.checker.units.qual.C;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 public class StudyProgramView {
     @Schema(description = "ИД программы обучения")
@@ -53,6 +54,14 @@ public class StudyProgramView {
     @Schema(description = "Отчество ассистента")
     @Column(name = "assistant_middlename")
     private String assistantMiddleName;
+
+    @Column(name = "documentreal_name")
+    @Schema(description = "Имя документа")
+    private String documentRealName;
+
+    @Column(name = "documentreal_number")
+    @Schema(description = "Номер документа")
+    private String documentRealNumber;
 
 
     public StudyProgramView(){
@@ -118,4 +127,20 @@ public class StudyProgramView {
     public String getAssistantMiddleName() { return assistantMiddleName; }
 
     public void setAssistantMiddleName(String assistantMiddleName) { this.assistantMiddleName = assistantMiddleName; }
+
+    public String getDocumentRealName() {
+        return documentRealName;
+    }
+
+    public void setDocumentRealName(String documentRealName) {
+        this.documentRealName = documentRealName;
+    }
+
+    public String getDocumentRealNumber() {
+        return documentRealNumber;
+    }
+
+    public void setDocumentRealNumber(String documentRealNumber) {
+        this.documentRealNumber = documentRealNumber;
+    }
 }

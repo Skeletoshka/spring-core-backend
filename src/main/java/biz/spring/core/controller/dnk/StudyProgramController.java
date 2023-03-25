@@ -4,7 +4,11 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.dto.dnk.StudyProgramDTO;
+import biz.spring.core.model.DocumentReal;
+import biz.spring.core.model.dnk.StudyProgram;
+import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.repository.dnk.StudyProgramRepository;
+import biz.spring.core.service.DocumentRealService;
 import biz.spring.core.service.dnk.StudyProgramService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.dnk.StudyProgramView;
@@ -31,14 +35,17 @@ public class StudyProgramController {
 
     @Autowired
     private StudyProgramService studyProgramService;
+    @Autowired
+    private DocumentRealService documentRealService;
 
     @Autowired
     private StudyProgramRepository studyProgramRepository;
+    @Autowired
+    private DocumentRealRepository documentRealRepository;
 
     static class GridDataOptionStudyProgram extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
-                    "<li>studyProgramId - ИД должности" +
                 "<ul>")
         public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
@@ -49,19 +56,14 @@ public class StudyProgramController {
     @Tag(value = "Метод для получения списка объектов \"Программа обучения\"")
     @CheckAdminRole
     public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOptionStudyProgram){
-        boolean findStudyProgram = gridDataOptionStudyProgram.getNamedFilters().stream()
-                .anyMatch(nf ->"studyProgramId".equals(nf.getName()));
-        if(!findStudyProgram){
-            gridDataOptionStudyProgram.getNamedFilters().add(new GridDataOption.NamedFilter("studyProgramId", -1));
-        }
         return studyProgramService.getAll(gridDataOptionStudyProgram);
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @Tag(value = "Метод для получения объекта \"Программа обучения\" по его идентификатору")
     @CheckAnyRole
-    public StudyProgramDTO get(@RequestBody(required = false ) int id){
-        if (id == 0){
+    public StudyProgramDTO get(@RequestBody(required = false ) Integer id){
+        if (id == null){
             return new StudyProgramDTO();
         } else{
             StudyProgramView view = studyProgramService.getOne(id);
@@ -74,14 +76,18 @@ public class StudyProgramController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @Tag(value = "Метод для сохранения объекта \"Программа обучения\"")
     public StudyProgramView save(@RequestBody StudyProgramDTO studyProgramDTO){
-        if(studyProgramDTO.getStudyProgramId() == null) {
-            Integer id = studyProgramRepository.insert(studyProgramDTO.toEntity());
-            studyProgramDTO.setStudyProgramId(id);
-
+        StudyProgram result;
+        if(studyProgramDTO.getStudyProgramId() == null){
+            DocumentReal documentReal = documentRealService.add(studyProgramDTO.toDocumentReal());
+            studyProgramDTO.setStudyProgramId(documentReal.getDocumentRealId());
+            result = studyProgramService.add(studyProgramDTO.toEntity());
         }else{
-            studyProgramRepository.update(studyProgramDTO.toEntity());
+            DocumentReal documentReal = documentRealRepository.get(studyProgramDTO.getStudyProgramId());
+            documentReal.setDocumentRealNumber(studyProgramDTO.getDocumentRealNumber());
+            documentRealService.edit(documentReal);
+            result = studyProgramService.edit(studyProgramDTO.toEntity());
         }
-        return studyProgramService.getOne(studyProgramDTO.getStudyProgramId());
+        return studyProgramService.getOne(result.getStudyProgramId());
     }
 
 

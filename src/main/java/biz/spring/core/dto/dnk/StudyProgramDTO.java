@@ -1,7 +1,10 @@
 package biz.spring.core.dto.dnk;
 
+import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.StudyProgram;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Date;
 
 public class StudyProgramDTO {
 
@@ -40,6 +43,18 @@ public class StudyProgramDTO {
 
     @Schema(description = "Отчество ассистента")
     private String assistantMiddleName;
+
+    @Schema(description = "Номер образовательной программы")
+    private String documentRealNumber;
+
+    @Schema(description = "Дата создания образовательной программы")
+    private Date documentRealDateCreate;
+
+    @Schema(description = "ИД статуса документа")
+    private Integer documentStatusId;
+
+    @Schema(description = "Имя статуса")
+    private String documentStatusName;
 
     public StudyProgramDTO(){
     }
@@ -152,6 +167,38 @@ public class StudyProgramDTO {
         this.assistantMiddleName = assistantMiddleName;
     }
 
+    public String getDocumentRealNumber() {
+        return documentRealNumber;
+    }
+
+    public void setDocumentRealNumber(String documentRealNumber) {
+        this.documentRealNumber = documentRealNumber;
+    }
+
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
+    }
+
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
+    }
+
+    public Integer getDocumentStatusId() {
+        return documentStatusId;
+    }
+
+    public void setDocumentStatusId(Integer documentStatusId) {
+        this.documentStatusId = documentStatusId;
+    }
+
+    public String getDocumentStatusName() {
+        return documentStatusName;
+    }
+
+    public void setDocumentStatusName(String documentStatusName) {
+        this.documentStatusName = documentStatusName;
+    }
+
     public StudyProgram toEntity() { return toEntity(new StudyProgram()); }
 
     public StudyProgram toEntity(StudyProgram entity){
@@ -161,6 +208,19 @@ public class StudyProgramDTO {
         entity.setTeacherId(this.teacherId);
         entity.setAssistantId(this.assistantId);
         return entity;
+    }
+
+    public DocumentReal toDocumentReal(){
+        return toDocumentReal(new DocumentReal());
+    }
+
+    public DocumentReal toDocumentReal(DocumentReal documentReal){
+        documentReal.setDocumentRealNumber(this.documentRealNumber);
+        documentReal.setDocumentTransitId(this.documentStatusId);
+        documentReal.setDocumentRealId(this.studyProgramId);
+        documentReal.setDocumentRealDate(new Date());
+        documentReal.setDocumentTypeId(StudyProgram.DOCUMENT_ID);
+        return documentReal;
     }
 }
 

@@ -8,6 +8,8 @@ import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.StudyProgramValidator;
 import biz.spring.core.view.dnk.StudyProgramView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -25,23 +27,17 @@ public class StudyProgramService extends BaseService<StudyProgram> {
     public void init(){
         init(studyProgramRepository, studyProgramValidator);
     }
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM studyprogram";
+    @Value("classpath:/script/dnk/studyprogram/mainSQL.sql")
+    Resource mainSql;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM studyprogram " +
-            "WHERE studyprogram_id = :id";
+    @Value("classpath:/script/dnk/studyprogram/mainSQL.sql")
+    Resource mainSqlForOne;
 
 
     public List<StudyProgramView> getAll(GridDataOption gridDataOption) {
-        boolean findStudyProgram = gridDataOption.getNamedFilters().stream()
-                .anyMatch(nf ->"studyProgramId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<StudyProgramView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
-                .setOrderBy("studyprogram_id")
-                .injectSqlIf(findStudyProgram, "/*STUDY PROGRAM_PLACEHOLDER*/", " AND studyprogram_id = :postId")
+                .setOrderBy(gridDataOption.getOrderBy())
                 .forClass(StudyProgramView.class)
                 .execute();
     }
