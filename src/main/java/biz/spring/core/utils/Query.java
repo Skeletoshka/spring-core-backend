@@ -2,11 +2,11 @@ package biz.spring.core.utils;
 
 import biz.spring.core.rowmapper.RowMapForObject;
 import org.springframework.core.io.Resource;
+import javax.persistence.Column;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 
 //TODO реализация класса для кастомных запросов
 public class Query<T> {
@@ -46,8 +46,11 @@ public class Query<T> {
      * Для выполнения сортировки в запросе должен быть ORDERBY_PLACEHOLDER
      * @param orderBy */
     public Query<T> setOrderBy(String orderBy){
-        this.orderBy = orderBy;
-        this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " + orderBy);
+        Field orderByField = Arrays.stream(this.cls.getDeclaredFields())
+                .filter(field -> field.getName().toLowerCase(Locale.ROOT).equals(orderBy.toLowerCase(Locale.ROOT)))
+                .findFirst().orElse(null);
+        this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " +
+                (orderByField!=null?orderByField.getAnnotationsByType(Column.class)[0].name():orderByField.getName()));
         return this;
     }
 

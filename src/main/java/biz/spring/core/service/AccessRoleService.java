@@ -37,6 +37,7 @@ public class AccessRoleService extends BaseService<AccessRole> {
     public List<AccessRoleView> getAll(GridDataOption gridDataOption){
         return new Query<AccessRoleView>(mainSQL)
                 .forClass(AccessRoleView.class)
+                .setOrderBy(gridDataOption.getOrderBy())
                 .execute();
     }
 

@@ -38,11 +38,11 @@ public class PostService extends BaseService<Post>{
     public List<PostView> getAll(GridDataOption gridDataOption){
         boolean findPost = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<PostView>(mainSQL)
+                .forClass(PostView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
                 .injectSqlIf(findPost, "/*POST_PLACEHOLDER*/", " AND post_id = :postId")
-                .forClass(PostView.class)
                 .execute();
     }
 
