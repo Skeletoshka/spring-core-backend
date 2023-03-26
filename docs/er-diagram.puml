@@ -367,6 +367,7 @@ proguser-o{company
 address--o{company
 documentreal-- request
 document--{documentreal
+studyprogram--{documentreal
 document--{documenttransit
 documenttransit--{documentreal
 request--o{requestpos
