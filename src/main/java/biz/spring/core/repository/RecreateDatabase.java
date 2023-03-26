@@ -1,6 +1,7 @@
 package biz.spring.core.repository;
 
 import biz.spring.core.model.dnk.People;
+import biz.spring.core.repository.dnk.DirectionRepository;
 import biz.spring.core.repository.dnk.PeopleRepository;
 import biz.spring.core.repository.dnk.StudyProgramRepository;
 import biz.spring.core.repository.dnk.TestRepository;
@@ -32,6 +33,8 @@ public class RecreateDatabase {
     private StudyProgramRepository studyProgramRepository;
     @Autowired
     private PeopleRepository peopleRepository;
+    @Autowired
+    private DirectionRepository directionRepository;
 
 
     public void recreate(){
@@ -47,7 +50,8 @@ public class RecreateDatabase {
                 documentRealRepository,
                 testRepository,
                 studyProgramRepository,
-                peopleRepository
+                peopleRepository,
+                directionRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{
