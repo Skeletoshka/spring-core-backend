@@ -96,7 +96,6 @@ entity block{
 }
 entity appendix{
     appendix_id: int4 <<PK>>
-    documentreal_id: int4 <<FK>>
     --
     appendix_name: varchar
     appendix_path: varchar
