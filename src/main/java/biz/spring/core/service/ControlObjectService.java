@@ -36,10 +36,10 @@ public class ControlObjectService extends BaseService<ControlObject> {
         init(controlObjectRepository, controlObjectValidator);
     }
 
-    @Value("classpath:/script/accessrole/mainSql.sql")
+    @Value("classpath:/script/controlobject/mainSql.sql")
     Resource mainSql;
 
-    @Value("classpath:/script/accessrole/mainSqlForOne.sql")
+    @Value("classpath:/script/controlobject/mainSqlForOne.sql")
     Resource mainSqlForOne;
 
     public List<ControlObjectView> getAll(GridDataOption gridDataOption){

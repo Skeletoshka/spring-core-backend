@@ -35,7 +35,6 @@ public class ProgUser {
     private Integer progUserActive;
 
     @Column(name = "people_id", nullable = false)
-    @NotNull(message = "Поле \"ИД человека\" не может быть null")
     private Integer peopleId;
 
     public ProgUser() {
