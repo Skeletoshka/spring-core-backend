@@ -12,5 +12,8 @@ FROM   studyprogram SP
        LEFT JOIN people ASS ON SP.assistant_id = ASS.people_id
        INNER JOIN documentreal DR ON SP.studyprogram_id = DR.documentreal_id
 WHERE  1=1
+  /*DIRECTION_PLACEHOLDER*/
+  /*TEACHER_PLACEHOLDER*/
+  /*ASSISTANT_PLACEHOLDER*/
 /*WHERE_PLACEHOLDER*/
 /*ORDERBY_PLACEHOLDER*/

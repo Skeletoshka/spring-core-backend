@@ -35,9 +35,19 @@ public class StudyProgramService extends BaseService<StudyProgram> {
 
 
     public List<StudyProgramView> getAll(GridDataOption gridDataOption) {
+        boolean directionFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "directionId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "teacherId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        boolean assistantFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "assistantId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<StudyProgramView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND SP.direction_id = :directionId")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND SP.teacher_id = :teacherId")
+                .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND SP.assistant_id = :assistantId")
+                .setParams(gridDataOption.buildParams())
                 .forClass(StudyProgramView.class)
                 .execute();
     }

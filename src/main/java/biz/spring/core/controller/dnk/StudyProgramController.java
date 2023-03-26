@@ -12,8 +12,9 @@ import biz.spring.core.service.DocumentRealService;
 import biz.spring.core.service.dnk.StudyProgramService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.dnk.StudyProgramView;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.junit.jupiter.api.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(value = "Контроллер для программы обучения" )
+@Tag(name = "Контроллер для программы обучения",
+        description = "Контроллер для взаимодействий с объектом \"Программа обучения\"")
 @RequestMapping(value = "/api/studyprogram",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,21 +48,39 @@ public class StudyProgramController {
     static class GridDataOptionStudyProgram extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
-                "<ul>")
+                    "<li>directionId - Направление "+
+                    "<li>teacherId - Преподаватель " +
+                    "<li>assistantId - Ассистент "+
+                "</ul>")
         public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
         }
     }
 
     @RequestMapping(value = "/getlist", method = RequestMethod.POST)
-    @Tag(value = "Метод для получения списка объектов \"Программа обучения\"")
+    @Operation(summary = "Метод для получения списка объектов \"Программа обучения\"",
+        description = "Возвращает список объектов \"Программа обучения\" согласно переданным фильтрам")
     @CheckAdminRole
-    public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOptionStudyProgram){
-        return studyProgramService.getAll(gridDataOptionStudyProgram);
+    public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOption){
+        boolean directionFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "directionId".equals(nf.getName()));
+        if(!directionFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("directionId", -1));
+        }
+        boolean teacherFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "teacherId".equals(nf.getName()));
+        if(!teacherFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("teacherId", -1));
+        }
+        boolean assistantFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "assistantId".equals(nf.getName()));
+        if(!assistantFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("assistantId", -1));
+        }
+        return studyProgramService.getAll(gridDataOption);
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.POST)
-    @Tag(value = "Метод для получения объекта \"Программа обучения\" по его идентификатору")
+    @Operation(summary = "Метод для получения объекта \"Программа обучения\" по его идентификатору",
+        description = "Возвращает объект \"Программа обучения\" по его идентификатору." +
+                " Если идентификатор пуст, возращает объект по умолчанию")
     @CheckAnyRole
     public StudyProgramDTO get(@RequestBody(required = false ) Integer id){
         if (id == null){
@@ -74,7 +94,8 @@ public class StudyProgramController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @Tag(value = "Метод для сохранения объекта \"Программа обучения\"")
+    @Operation(summary = "Метод для сохранения объекта \"Программа обучения\"", description = "Сохраняет объект в базе данных. " +
+            "Если идентификатор пуст, то происходит добавление, иначе обновление записи")
     public StudyProgramView save(@RequestBody StudyProgramDTO studyProgramDTO){
         StudyProgram result;
         if(studyProgramDTO.getStudyProgramId() == null){
@@ -89,6 +110,7 @@ public class StudyProgramController {
         }
         return studyProgramService.getOne(result.getStudyProgramId());
     }
+
 
 
 }
