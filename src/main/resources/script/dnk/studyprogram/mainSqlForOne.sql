@@ -6,11 +6,13 @@ SELECT SP.*,
        ASS.people_lastname assistant_lastname,
        ASS.people_middlename assistant_middlename,
        DR.documentreal_name,
-       DR.documentreal_number
+       DR.documentreal_number,
+       Dn.direction_name
 FROM   studyprogram SP
        INNER JOIN people TR ON SP.teacher_id = TR.people_id
        LEFT JOIN people ASS ON SP.assistant_id = ASS.people_id
        INNER JOIN documentreal DR ON SP.studyprogram_id = DR.documentreal_id
+       INNER JOIN direction DN ON SP.direction_id = DN.direction_id
 WHERE  1=1
   AND  SP.studyprogram_id = :id
 /*WHERE_PLACEHOLDER*/
