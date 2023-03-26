@@ -95,7 +95,7 @@ entity block{
     Блок кейса
 }
 entity appendix{
-    appendix_id: int4 <<PK>>
+    appendix_id: int4 <<PK>> <<FK>>
     --
     appendix_name: varchar
     appendix_path: varchar
