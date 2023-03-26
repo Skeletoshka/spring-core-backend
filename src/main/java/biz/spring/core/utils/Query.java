@@ -49,8 +49,11 @@ public class Query<T> {
         Field orderByField = Arrays.stream(this.cls.getDeclaredFields())
                 .filter(field -> field.getName().toLowerCase(Locale.ROOT).equals(orderBy.toLowerCase(Locale.ROOT)))
                 .findFirst().orElse(null);
-        this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " +
-                (orderByField!=null?orderByField.getAnnotationsByType(Column.class)[0].name():orderByField.getName()));
+        if(orderByField!=null) {
+            this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " +
+                    (orderByField.getAnnotationsByType(Column.class).length>0 ?
+                            orderByField.getAnnotationsByType(Column.class)[0].name() : orderByField.getName()));
+        }
         return this;
     }
 

@@ -43,9 +43,9 @@ public class ProgUserService extends BaseService<ProgUser>{
 
     public List<ProgUserView> getAll(GridDataOption gridDataOption){
         return new Query<ProgUserView>(mainSql)
+                .forClass(ProgUserView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
-                .forClass(ProgUserView.class)
                 .execute();
     }
 
