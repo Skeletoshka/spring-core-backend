@@ -45,7 +45,7 @@ public class RowMapForObject implements RowMapper<Object> {
                     switch (columnTypeName) {
                         case "int4":
                         case "serial":
-                            setMethod.invoke(obj, resultSet.getInt(j));
+                            setMethod.invoke(obj, resultSet.getObject(j, Integer.class));
                             break;
                         case "varchar":
                             setMethod.invoke(obj, resultSet.getString(j));
