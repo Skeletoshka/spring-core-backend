@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 
 import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.annotations.CheckAnyRole;
+import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.StudyProgramDTO;
 import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.StudyProgram;
@@ -29,7 +30,7 @@ import java.util.List;
 @RestController
 @Tag(name = "Контроллер для программы обучения",
         description = "Контроллер для взаимодействий с объектом \"Программа обучения\"")
-@RequestMapping(value = "/api/studyprogram",
+@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/dnk/objects",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Transactional
@@ -57,10 +58,9 @@ public class StudyProgramController {
         }
     }
 
-    @RequestMapping(value = "/getlist", method = RequestMethod.POST)
+    @RequestMapping(value = "/studyprogram/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Программа обучения\"",
         description = "Возвращает список объектов \"Программа обучения\" согласно переданным фильтрам")
-    @CheckAdminRole
     public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOption){
         boolean directionFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "directionId".equals(nf.getName()));
         if(!directionFound){
@@ -77,11 +77,10 @@ public class StudyProgramController {
         return studyProgramService.getAll(gridDataOption);
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/studyprogram/get", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения объекта \"Программа обучения\" по его идентификатору",
         description = "Возвращает объект \"Программа обучения\" по его идентификатору." +
                 " Если идентификатор пуст, возращает объект по умолчанию")
-    @CheckAnyRole
     public StudyProgramDTO get(@RequestBody(required = false ) Integer id){
         if (id == null){
             return new StudyProgramDTO();
@@ -93,7 +92,7 @@ public class StudyProgramController {
         }
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/studyprogram/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Программа обучения\"", description = "Сохраняет объект в базе данных. " +
             "Если идентификатор пуст, то происходит добавление, иначе обновление записи")
     public StudyProgramView save(@RequestBody StudyProgramDTO studyProgramDTO){

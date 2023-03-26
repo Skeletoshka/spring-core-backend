@@ -26,7 +26,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .setPage(1)
                 .setRowCount(10)
                 .build();
-        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/people/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -42,7 +42,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .setRowCount(10)
                 .setParam("capClassId", 2)
                 .build();
-        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/people/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -56,7 +56,7 @@ public class PeopleControllerTest extends IntegratedTest {
     @Rollback
     @Transactional
     public void getTest() throws Exception{
-        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/objects/people/get")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/people/get")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )

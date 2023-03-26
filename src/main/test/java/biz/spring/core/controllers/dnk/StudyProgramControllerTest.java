@@ -1,5 +1,6 @@
 package biz.spring.core.controllers.dnk;
 
+import biz.spring.core.config.Config;
 import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.dto.dnk.StudyProgramDTO;
 import biz.spring.core.model.DocumentTransit;
@@ -40,7 +41,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
                 .setOrderBy("studyProgramId")
                 .build();
 
-        this.mockMvc.perform(post("/api/studyprogram/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/studyprogram/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -53,7 +54,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
     @Rollback
     @Transactional
     public void getTest() throws Exception {
-        this.mockMvc.perform(post("/api/studyprogram/get")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/studyprogram/get")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -71,7 +72,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
                 1, 2, 3);
         dto.setDocumentRealNumber("123");
 
-        this.mockMvc.perform(post("/api/studyprogram/save")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/studyprogram/save")
                         .content(new ObjectMapper().writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON)
                 )

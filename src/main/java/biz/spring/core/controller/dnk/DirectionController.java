@@ -45,7 +45,6 @@ public class DirectionController {
     @Operation(summary = "Возвращает список объектов \"Направление\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/direction/getlist", method = RequestMethod.POST)
-    @CheckAnyRole
     public List<DirectionView> getList(@RequestBody GridDataOptionDirection gridDataOption){
         return directionService.getAll(gridDataOption);
     }
@@ -54,7 +53,6 @@ public class DirectionController {
     @Operation(summary = "Возвращает объект \"Направление\"",
             description = "Вовзращает объект \"Направление\" по его идентификатору. Если идентификатора нет - " +
                     "возвращается объект с полями по умолчанию")
-    @CheckAnyRole
     public DirectionDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new DirectionDTO();
@@ -69,7 +67,6 @@ public class DirectionController {
     @RequestMapping(value = "/direction/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Направление\"",
             description = "Запись с заполненным идентификатором обновляется, с пустым - вставляется")
-    @CheckAnyRole
     public DirectionView save(@RequestBody DirectionDTO directionDTO){
         Direction direction;
         if(directionDTO.getDirectionId()==null){

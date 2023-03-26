@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @Tag(value = "Контроллер для пользователей")
-@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/objects",
+@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/dnk/objects",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class PeopleController {
@@ -41,7 +41,6 @@ public class PeopleController {
     @RequestMapping(value = "/people/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Человек\"",
             description = "Выводит список объектов \"Человек\" согласно переданным фильтрам")
-    @CheckAnyRole
     public List<PeopleView> getList(@RequestBody GridDataOptionPeople gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName()));
         if(!capClassFound){
@@ -54,7 +53,6 @@ public class PeopleController {
     @Operation(summary = "Метод для получения объекта \"Человек\"",
             description = "Выводит объект \"Человек\" согласно переданному идентификатора. Если идентификатор пустой, " +
                     "то возвращается объект с заполненными полями по умолчанию")
-    @CheckAnyRole
     public PeopleDTO get(@RequestBody(required = false) int id){
         if(id == 0){
             return new PeopleDTO();
@@ -69,7 +67,6 @@ public class PeopleController {
     @RequestMapping(value = "/people/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения сохранения объекта \"Человек\"",
             description = "Сохраняет объект \"Человек\". Если идентификатор пустой, то запись добавляется, иначе обновляется")
-    @CheckAnyRole
     public PeopleView save(@RequestBody PeopleDTO peopleDTO){
         peopleDTO.setPeopleDateDelete(null);
         peopleDTO.setPeopleDeleteFlag(null);
@@ -85,7 +82,6 @@ public class PeopleController {
     @RequestMapping(value = "/people/delete", method = RequestMethod.POST)
     @Operation(summary = "Метод для удаления объектов \"Человек\"",
             description = "Удаляет список объектов \"Человек\" согласно переданным идентификаторам")
-    @CheckAnyRole
     public String delete(@RequestBody int[] ids){
         peopleService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
