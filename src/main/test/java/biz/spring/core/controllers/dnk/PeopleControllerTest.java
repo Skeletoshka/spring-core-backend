@@ -22,7 +22,7 @@ public class PeopleControllerTest extends IntegratedTest {
     @Transactional
     public void getListTest() throws Exception{
         GridDataOption gridDataOption = new GridDataOption.Builder()
-                .setOrderBy("people_id")
+                .setOrderBy("peopleId")
                 .setPage(1)
                 .setRowCount(10)
                 .build();
@@ -37,7 +37,7 @@ public class PeopleControllerTest extends IntegratedTest {
                 .andExpect(content().string(containsString("\"peopleId\":3")));
 
         gridDataOption = new GridDataOption.Builder()
-                .setOrderBy("people_id")
+                .setOrderBy("peopleId")
                 .setPage(1)
                 .setRowCount(10)
                 .setParam("capClassId", 2)

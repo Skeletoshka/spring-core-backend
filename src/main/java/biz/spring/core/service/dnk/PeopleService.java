@@ -38,11 +38,11 @@ public class PeopleService extends BaseService<People> {
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
          && !nf.getValue().equals(-1));
         return new Query<PeopleView>(mainSql)
+                .forClass(People.class)
                 .setParams(gridDataOption.buildParams())
                 .setLimit(gridDataOption.buildPageRequest())
                 .injectSqlIf(capClassFound, "/*CAPCLASS_PLACEHOLDER*/", "AND capclass_id = :capClassId")
                 .setOrderBy(gridDataOption.getOrderBy())
-                .forClass(People.class)
                 .execute();
     }
 

@@ -37,7 +37,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
                 .setRowCount(10)
                 .setPage(1)
                 .setParam("studyProgramId", 1)
-                .setOrderBy("studyProgram_Id")
+                .setOrderBy("studyProgramId")
                 .build();
 
         this.mockMvc.perform(post("/api/studyprogram/getlist")

@@ -42,13 +42,13 @@ public class StudyProgramService extends BaseService<StudyProgram> {
         boolean assistantFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> "assistantId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query<StudyProgramView>(mainSql)
+                .forClass(StudyProgramView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND SP.direction_id = :directionId")
                 .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND SP.teacher_id = :teacherId")
                 .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND SP.assistant_id = :assistantId")
                 .setParams(gridDataOption.buildParams())
-                .forClass(StudyProgramView.class)
                 .execute();
     }
 
