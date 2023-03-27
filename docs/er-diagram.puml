@@ -61,7 +61,7 @@ entity peoplegroup{
     Связь группы и учащегося
 }
 entity studyprogram{
-    studyprogram_id: int4 <<PK>>
+    studyprogram_id: int4 <<PK>> <<FK>>
     direction_id: int4 <<FK>>
     teacher_id:int4 <<FK>>
     assistant_id:int4 <<FK>>

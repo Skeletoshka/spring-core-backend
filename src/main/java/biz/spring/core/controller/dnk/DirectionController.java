@@ -80,7 +80,6 @@ public class DirectionController {
     @RequestMapping(value = "/direction/delete", method = RequestMethod.POST)
     @Operation(summary = "Метод для удаления объекта \"Направление\"",
             description = "Удаляются записи с переданными идентификаторами")
-    @CheckAnyRole
     public String delete(@RequestBody int[] ids){
         directionService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
