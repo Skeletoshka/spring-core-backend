@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  *  конфигурация сваггера
- *  localhost:8080/swagger-ui.html
+ *  localhost:8080/swagger-ui/index.html
  */
 @Configuration
 @SecurityScheme(
