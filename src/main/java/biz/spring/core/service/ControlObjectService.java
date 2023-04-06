@@ -43,11 +43,12 @@ public class ControlObjectService extends BaseService<ControlObject> {
     Resource mainSqlForOne;
 
     public List<ControlObjectView> getAll(GridDataOption gridDataOption){
-        return new Query<ControlObjectView>(mainSql)
+        return new Query.QueryBuilder<ControlObjectView>(mainSql)
                 .forClass(ControlObjectView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
+                .build()
                 .execute();
     }
 

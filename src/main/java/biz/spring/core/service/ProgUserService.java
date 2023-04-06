@@ -42,16 +42,18 @@ public class ProgUserService extends BaseService<ProgUser>{
     Resource mainSqlForOne;
 
     public List<ProgUserView> getAll(GridDataOption gridDataOption){
-        return new Query<ProgUserView>(mainSql)
+        return new Query.QueryBuilder<ProgUserView>(mainSql)
                 .forClass(ProgUserView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .build()
                 .execute();
     }
 
     public ProgUserView getOne(Integer id){
-        return new Query<ProgUserView>(mainSqlForOne)
+        return new Query.QueryBuilder<ProgUserView>(mainSqlForOne)
                 .forClass(ProgUserView.class)
+                .build()
                 .executeOne(id);
     }
 

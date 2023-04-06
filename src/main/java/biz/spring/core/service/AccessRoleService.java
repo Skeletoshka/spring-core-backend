@@ -35,15 +35,17 @@ public class AccessRoleService extends BaseService<AccessRole> {
     Resource mainSqlForOne;
 
     public List<AccessRoleView> getAll(GridDataOption gridDataOption){
-        return new Query<AccessRoleView>(mainSQL)
+        return new Query.QueryBuilder<AccessRoleView>(mainSQL)
                 .forClass(AccessRoleView.class)
                 .setOrderBy(gridDataOption.getOrderBy())
+                .build()
                 .execute();
     }
 
     public AccessRoleView getOne(Integer id){
-        return new Query<AccessRoleView>(mainSqlForOne)
+        return new Query.QueryBuilder<AccessRoleView>(mainSqlForOne)
                 .forClass(AccessRoleView.class)
+                .build()
                 .executeOne(id);
     }
 
