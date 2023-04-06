@@ -37,18 +37,20 @@ public class PeopleService extends BaseService<People> {
     public List<PeopleView> getAll(GridDataOption gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
          && !nf.getValue().equals(-1));
-        return new Query<PeopleView>(mainSql)
+        return new Query.QueryBuilder<PeopleView>(mainSql)
                 .forClass(People.class)
                 .setParams(gridDataOption.buildParams())
                 .setLimit(gridDataOption.buildPageRequest())
                 .injectSqlIf(capClassFound, "/*CAPCLASS_PLACEHOLDER*/", "AND capclass_id = :capClassId")
                 .setOrderBy(gridDataOption.getOrderBy())
+                .build()
                 .execute();
     }
 
     public PeopleView getOne(Integer id){
-        return new Query<PeopleView>(mainSqlForOne)
+        return new Query.QueryBuilder<PeopleView>(mainSqlForOne)
                 .forClass(PeopleView.class)
+                .build()
                 .executeOne(id);
     }
 }

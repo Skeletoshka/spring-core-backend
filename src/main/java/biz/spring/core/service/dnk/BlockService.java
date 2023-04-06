@@ -37,17 +37,19 @@ public class BlockService extends BaseService<Block> {
 
     public List<BlockView> getAll(GridDataOption gridDataOption) {
         boolean findBlock = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "blockId".equals(nf.getName()) && !nf.getValue().equals(-1));
-        return new Query<BlockView>(mainSql)
+        return new Query.QueryBuilder<BlockView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy("blockId")
                 .injectSqlIf(findBlock, "/*BLOCK PROGRAM_PLACEHOLDER*/", " AND block_id = :blockId")
                 .forClass(BlockView.class)
+                .build()
                 .execute();
     }
 
     public BlockView getOne(Integer id){
-        return new Query<BlockView>(mainSqlForOne)
+        return new Query.QueryBuilder<BlockView>(mainSqlForOne)
                 .forClass(BlockView.class)
+                .build()
                 .executeOne(id);
     }
 }

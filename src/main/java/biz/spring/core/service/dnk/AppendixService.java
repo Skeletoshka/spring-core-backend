@@ -37,17 +37,19 @@ public class AppendixService extends BaseService<Appendix> {
 
     public List<AppendixView> getAll(GridDataOption gridDataOption){
         boolean findAppendix = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "appendixId".equals(nf.getName()) && !nf.getValue().equals(-1));
-        return new Query<AppendixView>(mainSql)
+        return new Query.QueryBuilder<AppendixView>(mainSql)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .injectSqlIf(findAppendix, "/*APPENDIX_PLACEHOLDER*/", " AND appendix_id = :appendixId")
                 .forClass(AppendixView.class)
+                .build()
                 .execute();
     }
 
     public AppendixView getOne(Integer id){
-        return new Query<AppendixView>(mainSqlForOne)
+        return new Query.QueryBuilder<AppendixView>(mainSqlForOne)
                 .forClass(AppendixView.class)
+                .build()
                 .executeOne(id);
     }
 

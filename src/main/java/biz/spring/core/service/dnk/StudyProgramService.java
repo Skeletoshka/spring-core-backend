@@ -41,7 +41,7 @@ public class StudyProgramService extends BaseService<StudyProgram> {
                 .anyMatch(nf -> "teacherId".equals(nf.getName()) && !nf.getValue().equals(-1));
         boolean assistantFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> "assistantId".equals(nf.getName()) && !nf.getValue().equals(-1));
-        return new Query<StudyProgramView>(mainSql)
+        return new Query.QueryBuilder<StudyProgramView>(mainSql)
                 .forClass(StudyProgramView.class)
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
@@ -49,12 +49,14 @@ public class StudyProgramService extends BaseService<StudyProgram> {
                 .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND SP.teacher_id = :teacherId")
                 .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND SP.assistant_id = :assistantId")
                 .setParams(gridDataOption.buildParams())
+                .build()
                 .execute();
     }
 
     public StudyProgramView getOne(Integer id){
-        return new Query<StudyProgramView>(mainSqlForOne)
+        return new Query.QueryBuilder<StudyProgramView>(mainSqlForOne)
                 .forClass(StudyProgramView.class)
+                .build()
                 .executeOne(id);
     }
 }

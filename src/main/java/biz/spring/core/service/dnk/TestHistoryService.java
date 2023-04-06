@@ -34,14 +34,16 @@ public class TestHistoryService extends BaseService<TestHistory> {
             "WHERE testhistory_id = :id";
 
     public List<TestHistoryView> getAll(){
-        return new Query<TestHistoryView>(mainSql)
+        return new Query.QueryBuilder<TestHistoryView>(mainSql)
                 .forClass(TestHistoryView.class)
+                .build()
                 .execute();
     }
 
     public TestHistoryView getOne(Integer id){
-        return new Query<TestHistoryView>(mainSqlForOne)
+        return new Query.QueryBuilder<TestHistoryView>(mainSqlForOne)
                 .forClass(TestHistoryView.class)
+                .build()
                 .executeOne(id);
     }
 

@@ -35,14 +35,16 @@ public class AnswerService extends BaseService<Answer> {
             "WHERE answer_id = :id";
 
     public List<AnswerView> getAll(){
-        return new Query<AnswerView>(mainSql)
+        return new Query.QueryBuilder<AnswerView>(mainSql)
                 .forClass(AnswerView.class)
+                .build()
                 .execute();
     }
 
     public AnswerView getOne(Integer id){
-        return new Query<AnswerView>(mainSqlForOne)
+        return new Query.QueryBuilder<AnswerView>(mainSqlForOne)
                 .forClass(AnswerView.class)
+                .build()
                 .executeOne(id);
     }
 

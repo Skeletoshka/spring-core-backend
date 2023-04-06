@@ -34,14 +34,16 @@ public class TestService extends BaseService<Test> {
             "WHERE test_id = :id";
 
     public List<TestView> getAll(){
-        return new Query<TestView>(mainSql)
+        return new Query.QueryBuilder<TestView>(mainSql)
                 .forClass(TestView.class)
+                .build()
                 .execute();
     }
 
     public TestView getOne(Integer id){
-        return new Query<TestView>(mainSqlForOne)
+        return new Query.QueryBuilder<TestView>(mainSqlForOne)
                 .forClass(TestView.class)
+                .build()
                 .executeOne(id);
     }
 

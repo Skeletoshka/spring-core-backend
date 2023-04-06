@@ -67,7 +67,6 @@ entity studyprogram{
     assistant_id:int4 <<FK>>
     --
     studyprogram_name: varchar
-    studyprogram_visible: varchar
     ==
     Программы обучения
 }
@@ -169,7 +168,7 @@ entity attendance{
     shedule_id: int4 <<FK>>
     people_id: int4 <<FK>>
     --
-    attendance_persenceflag: int4
+    attendance_presenceflag: int4
     ==
     Посещаемость
 }
@@ -348,7 +347,6 @@ accessrole----o{controlobjectrole
 controlobject--o{controlobjectrole
 workgroup---o{shedule
 studyprogram--o{shedule
-people--o{shedule
 shedule--o{attendance
 people--o{attendance
 block--o{material
