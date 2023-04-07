@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -61,12 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/security/v" + Config.CURRENT_VERSION + "/apps/auth/**").permitAll();
-                //.anyRequest().authenticated();
-
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .logout().disable()
+                .sessionManagement().disable()
+                .addFilterBefore(authenticationJwtTokenFilter(), AnonymousAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean
