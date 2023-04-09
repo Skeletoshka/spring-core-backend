@@ -63,11 +63,6 @@ public class AuthController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     @Operation(summary = "Метод для авторизации", description = "Возвращается данные пользователя с его токеном доступа")
     public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            logger.info("loginRequest: " + new ObjectMapper().writeValueAsString(loginRequest));
-        }catch (Exception e){
-
-        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -80,9 +75,10 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
+                userDetails.getProgUserId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
+                userDetails.getProgUserFullName(),
+                userDetails.getPeopleId(),
                 roles));
     }
 
