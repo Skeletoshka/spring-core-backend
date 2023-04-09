@@ -21,23 +21,30 @@ public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Integer progUserId;
+
+    private Integer peopleId;
 
     private String username;
 
-    private String email;
+    private String progUserFullName;
 
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Integer id, String username, String email, String password,
+    public UserDetailsImpl(Integer progUserId,
+                           String username,
+                           String progUserFullName,
+                           String password,
+                           Integer peopleId,
                            Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+        this.progUserId = progUserId;
         this.username = username;
-        this.email = email;
+        this.progUserFullName = progUserFullName;
         this.password = password;
+        this.peopleId = peopleId;
         this.authorities = authorities;
     }
 
@@ -49,8 +56,9 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 progUserDTO.getProgUserId(),
                 progUserDTO.getProgUserName(),
-                "",
+                progUserDTO.getProgUserFullName(),
                 progUserDTO.getProgUserPassword(),
+                progUserDTO.getPeopleId(),
                 authorities);
     }
 
@@ -59,12 +67,12 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getProgUserId() {
+        return progUserId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getProgUserFullName() {
+        return progUserFullName;
     }
 
     @Override
@@ -75,6 +83,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public Integer getPeopleId() {
+        return peopleId;
     }
 
     @Override
@@ -104,6 +116,6 @@ public class UserDetailsImpl implements UserDetails {
         if (o == null || getClass() != o.getClass())
             return false;
         UserDetailsImpl user = (UserDetailsImpl) o;
-        return Objects.equals(id, user.id);
+        return Objects.equals(progUserId, user.progUserId);
     }
 }

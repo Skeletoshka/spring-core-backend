@@ -8,19 +8,26 @@ public class JwtResponse {
 	@Column(name = "proguserauth_token")
 	private String token;
 	private String type = "Bearer";
-	private Integer id;
-	private String username;
-	private String email;
+	private Integer progUserId;
+	private String progUserName;
+	private String progUserFullName;
+	private Integer peopleId;
 	private List<String> roles;
 
 	public JwtResponse() {
 	}
 
-	public JwtResponse(String accessToken, Integer id, String username, String email, List<String> roles) {
+	public JwtResponse(String accessToken,
+					   Integer progUserId,
+					   String progUserName,
+					   String progUserFullName,
+					   Integer peopleId,
+					   List<String> roles) {
 		this.token = accessToken;
-		this.id = id;
-		this.username = username;
-		this.email = email;
+		this.progUserId = progUserId;
+		this.progUserName = progUserName;
+		this.progUserFullName = progUserFullName;
+		this.peopleId = peopleId;
 		this.roles = roles;
 	}
 
@@ -40,28 +47,36 @@ public class JwtResponse {
 		this.type = tokenType;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getProgUserId() {
+		return progUserId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setProgUserId(Integer progUserId) {
+		this.progUserId = progUserId;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getProgUserFullName() {
+		return progUserFullName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setProgUserFullName(String progUserFullName) {
+		this.progUserFullName = progUserFullName;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getProgUserName() {
+		return progUserName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setProgUserName(String progUserName) {
+		this.progUserName = progUserName;
+	}
+
+	public Integer getPeopleId() {
+		return peopleId;
+	}
+
+	public void setPeopleId(Integer peopleId) {
+		this.peopleId = peopleId;
 	}
 
 	public List<String> getRoles() {

@@ -59,7 +59,7 @@ public class DocumentRealService extends BaseService<DocumentReal>{
         }
         DocumentType documentType = documentTypeRepository.get(documentReal.getDocumentTypeId());
         documentReal.setDocumentRealName(documentType.getDocumentTypeName() + " №" + documentReal.getDocumentRealNumber());
-        documentReal.setProgUserId(userDetails.getId());
+        documentReal.setProgUserId(userDetails.getProgUserId());
         documentReal.setDocumentRealDateModify(new Date());
     }
 }
