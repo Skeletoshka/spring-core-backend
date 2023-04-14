@@ -31,13 +31,13 @@ public class People {
     @Size(max = 100, message = "Поле \"Отчество\" не может иметь более {max} символов")
     private String peopleMiddleName;
     
-    @Column(name = "people_datebirth", nullable = false)
+    @Column(name = "people_DateBirth", nullable = false)
     @NotNull(message = "Поле \"Дата рождения\" не может быть пустым")
-    private Date peopleDatebirth;
+    private Date peopleDateBirth;
     
     @Column(name = "capclass_id", nullable = false)
     @NotNull(message = "Поле \"ID классификатора\" не может быть пустым")
-    private Integer capclassId;
+    private Integer capClassId;
     
     @Column(name = "people_email", nullable = false)
     @NotNull(message = "Поле \"Email\" не может быть NULL")
@@ -61,8 +61,8 @@ public class People {
                       String peopleName,
                       String peopleLastName,
                       String peopleMiddleName,
-                      Date peopleDatebirth,
-                      Integer capclassId,
+                      Date peopleDateBirth,
+                      Integer capClassId,
                       String peopleEmail,
                       String peoplePhone,
                       Integer peopleDeleteFlag,
@@ -72,8 +72,8 @@ public class People {
         this.peopleName= peopleName;
         this.peopleLastName = peopleLastName;
         this.peopleMiddleName = peopleMiddleName;
-        this.peopleDatebirth = peopleDatebirth;
-        this.capclassId = capclassId;
+        this.peopleDateBirth = peopleDateBirth;
+        this.capClassId = capClassId;
         this.peopleEmail = peopleEmail;
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
@@ -109,20 +109,22 @@ public class People {
     public void setPeopleMiddleName(String peopleMiddleName) {
         this.peopleMiddleName = peopleMiddleName;
     }
-    public Date getPeopleDatebirth() {
-        return peopleDatebirth;
+    public Date getPeopleDateBirth() {
+        return peopleDateBirth;
     }
 
-    public void setPeopleDatebirth(Date peopleDatebirth) {
-        this.peopleDatebirth = peopleDatebirth;
+    public void setPeopleDateBirth(Date peopleDateBirth) {
+        this.peopleDateBirth = peopleDateBirth;
     }
+
     public Integer getCapClassId() {
-        return capclassId;
+        return capClassId;
     }
 
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
     }
+
     public String getPeopleEmail() {
         return peopleEmail;
     }

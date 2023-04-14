@@ -31,7 +31,11 @@ public class PeopleView {
 
     @Column(name = "capclass_id")
     @Schema(description = "Классификатор человека")
-    private Integer capclassId;
+    private Integer capClassId;
+
+    @Column(name = "capclass_name")
+    @Schema(description = "Наименование классификатора")
+    private String capClassName;
 
     @Column(name = "people_email")
     @Schema(description = "Электронный адресс человека")
@@ -57,7 +61,7 @@ public class PeopleView {
                   String peopleLastName,
                   String peopleMiddleName,
                   Date peopleDatebirth,
-                  Integer capclassId,
+                  Integer capClassId,
                   String peopleEmail,
                   String peoplePhone,
                   Integer peopleDeleteFlag,
@@ -68,7 +72,7 @@ public class PeopleView {
         this.peopleLastName = peopleLastName;
         this.peopleMiddleName = peopleMiddleName;
         this.peopleDatebirth = peopleDatebirth;
-        this.capclassId = capclassId;
+        this.capClassId = capClassId;
         this.peopleEmail = peopleEmail;
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
@@ -112,11 +116,11 @@ public class PeopleView {
         this.peopleDatebirth = peopleDatebirth;
     }
     public Integer getCapClassId() {
-        return capclassId;
+        return capClassId;
     }
 
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
     }
     public String getPeopleEmail() {
         return peopleEmail;
@@ -145,6 +149,14 @@ public class PeopleView {
 
     public void setPeopleDateDelete(Date peopleDateDelete) {
         this.peopleDateDelete = peopleDateDelete;
+    }
+
+    public String getCapClassName() {
+        return capClassName;
+    }
+
+    public void setCapClassName(String capClassName) {
+        this.capClassName = capClassName;
     }
 }
 

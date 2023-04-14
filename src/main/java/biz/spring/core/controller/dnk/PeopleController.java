@@ -45,15 +45,16 @@ public class PeopleController {
         if(!capClassFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("capClassId", -1));
         }
-        return peopleService.getAll(gridDataOption);
+        List<PeopleView> result = peopleService.getAll(gridDataOption);
+        return result;
     }
 
     @RequestMapping(value = "/people/get", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения объекта \"Человек\"",
             description = "Выводит объект \"Человек\" согласно переданному идентификатора. Если идентификатор пустой, " +
                     "то возвращается объект с заполненными полями по умолчанию")
-    public PeopleDTO get(@RequestBody(required = false) int id){
-        if(id == 0){
+    public PeopleDTO get(@RequestBody(required = false) Integer id){
+        if(id == null){
             return new PeopleDTO();
         } else {
             PeopleView view = peopleService.getOne(id);

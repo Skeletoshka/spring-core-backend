@@ -1,20 +1,43 @@
 package biz.spring.core.dto.dnk;
 
 import biz.spring.core.model.dnk.People;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
 
 public class PeopleDTO {
 
+    @Schema(description = "ИД человека")
     private Integer peopleId;
+
+    @Schema(description = "Имя")
     private String peopleName;
+
+    @Schema(description = "Фамилия")
     private String peopleLastName;
+
+    @Schema(description = "Отчество")
     private String peopleMiddleName;
-    private Date peopleDatebirth;
-    private Integer capclassId;
+
+    @Schema(description = "Дата рождения")
+    private Date peopleDateBirth;
+
+    @Schema(description = "ИД класса человека")
+    private Integer capClassId;
+
+    @Schema(description = "Наименование класса человека")
+    private Integer capClassName;
+
+    @Schema(description = "Электронная почта")
     private String peopleEmail;
+
+    @Schema(description = "Номер телефона")
     private String peoplePhone;
+
+    @Schema(description = "Флаг удаления")
     private Integer peopleDeleteFlag;
+
+    @Schema(description = "Дата удаления")
     private Date peopleDateDelete;
 
     public PeopleDTO() {
@@ -24,8 +47,8 @@ public class PeopleDTO {
                   String peopleName,
                   String peopleLastName,
                   String peopleMiddleName,
-                  Date peopleDatebirth,
-                  Integer capclassId,
+                  Date peopleDateBirth,
+                  Integer capClassId,
                   String peopleEmail,
                   String peoplePhone,
                   Integer peopleDeleteFlag,
@@ -35,8 +58,8 @@ public class PeopleDTO {
         this.peopleName= peopleName;
         this.peopleLastName = peopleLastName;
         this.peopleMiddleName = peopleMiddleName;
-        this.peopleDatebirth = peopleDatebirth;
-        this.capclassId = capclassId;
+        this.peopleDateBirth = peopleDateBirth;
+        this.capClassId = capClassId;
         this.peopleEmail = peopleEmail;
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
@@ -59,20 +82,6 @@ public class PeopleDTO {
 
     public void setPeopleMiddleName(String peopleMiddleName) {
         this.peopleMiddleName = peopleMiddleName;
-    }
-    public Date getPeopleDatebirth() {
-        return peopleDatebirth;
-    }
-
-    public void setPeopleDatebirth(Date peopleDatebirth) {
-        this.peopleDatebirth = peopleDatebirth;
-    }
-    public Integer getCapClassId() {
-        return capclassId;
-    }
-
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
     }
     public String getPeopleEmail() {
         return peopleEmail;
@@ -115,8 +124,28 @@ public class PeopleDTO {
         return peopleName;
     }
 
-    public Integer getCapclassId() {
-        return capclassId;
+    public Date getPeopleDateBirth() {
+        return peopleDateBirth;
+    }
+
+    public void setPeopleDateBirth(Date peopleDateBirth) {
+        this.peopleDateBirth = peopleDateBirth;
+    }
+
+    public Integer getCapClassId() {
+        return capClassId;
+    }
+
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
+    }
+
+    public Integer getCapClassName() {
+        return capClassName;
+    }
+
+    public void setCapClassName(Integer capClassName) {
+        this.capClassName = capClassName;
     }
 
     public People toEntity(){
@@ -127,8 +156,8 @@ public class PeopleDTO {
         people.setPeopleName(this.peopleName);
         people.setPeopleLastName(this.peopleLastName);
         people.setPeopleMiddleName(this.peopleMiddleName);
-        people.setPeopleDatebirth(this.peopleDatebirth);
-        people.setCapclassId(this.capclassId);
+        people.setPeopleDateBirth(this.peopleDateBirth);
+        people.setCapClassId(this.capClassId);
         people.setPeopleEmail(this.peopleEmail);
         people.setPeoplePhone(this.peoplePhone);
         people.setPeopleDeleteFlag(this.peopleDeleteFlag);
