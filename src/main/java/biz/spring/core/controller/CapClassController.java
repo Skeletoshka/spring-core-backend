@@ -42,7 +42,6 @@ public class CapClassController {
     @Operation(summary = "Возвращает список объектов \"Классификатор\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/capclass/getlist", method = RequestMethod.POST)
-    @CheckAnyRole
     public List<CapClassView> getList(@RequestBody GridDataOptionCapClass gridDataOption){
         boolean capClassTypeFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassTypeId".equals(nf.getName()));
         if(!capClassTypeFound){
