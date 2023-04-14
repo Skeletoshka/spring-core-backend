@@ -1,6 +1,5 @@
 package biz.spring.core.controller.dnk;
 
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.PeopleDTO;
 import biz.spring.core.model.dnk.People;
@@ -68,10 +67,10 @@ public class PeopleController {
     @Operation(summary = "Метод для получения сохранения объекта \"Человек\"",
             description = "Сохраняет объект \"Человек\". Если идентификатор пустой, то запись добавляется, иначе обновляется")
     public PeopleView save(@RequestBody PeopleDTO peopleDTO){
-        peopleDTO.setPeopleDateDelete(null);
-        peopleDTO.setPeopleDeleteFlag(null);
         People result;
         if(peopleDTO.getPeopleId()==null){
+            peopleDTO.setPeopleDateDelete(null);
+            peopleDTO.setPeopleDeleteFlag(null);
             result = peopleService.add(peopleDTO.toEntity());
         }else{
             result = peopleService.edit(peopleDTO.toEntity());

@@ -1,6 +1,5 @@
 package biz.spring.core.controller.dnk;
 
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.DirectionDTO;
 import biz.spring.core.model.dnk.Direction;

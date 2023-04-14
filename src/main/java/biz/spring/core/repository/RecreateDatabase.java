@@ -1,10 +1,8 @@
 package biz.spring.core.repository;
 
-import biz.spring.core.model.dnk.People;
 import biz.spring.core.repository.dnk.DirectionRepository;
 import biz.spring.core.repository.dnk.PeopleRepository;
 import biz.spring.core.repository.dnk.StudyProgramRepository;
-import biz.spring.core.repository.dnk.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +30,6 @@ public class RecreateDatabase {
     @Autowired
     private CapClassTypeRepository capClassTypeRepository;
     @Autowired
-    private TestRepository testRepository;
-    @Autowired
     private StudyProgramRepository studyProgramRepository;
     @Autowired
     private PeopleRepository peopleRepository;
@@ -54,7 +50,6 @@ public class RecreateDatabase {
                 capClassRepository,
                 capClassTypeRepository,
                 documentRealRepository,
-                testRepository,
                 studyProgramRepository,
                 peopleRepository,
                 directionRepository
