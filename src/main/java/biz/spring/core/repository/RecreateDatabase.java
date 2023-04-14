@@ -28,6 +28,10 @@ public class RecreateDatabase {
     @Autowired
     private DocumentRealRepository documentRealRepository;
     @Autowired
+    private CapClassRepository capClassRepository;
+    @Autowired
+    private CapClassTypeRepository capClassTypeRepository;
+    @Autowired
     private TestRepository testRepository;
     @Autowired
     private StudyProgramRepository studyProgramRepository;
@@ -44,9 +48,11 @@ public class RecreateDatabase {
                 progUserRepsitory,
                 accessRoleRepository,
                 controlObjectRepository,
-                controlObjectRepository,
                 documentTypeRepository,
                 documentTransitRepository,
+                documentRealRepository,
+                capClassRepository,
+                capClassTypeRepository,
                 documentRealRepository,
                 testRepository,
                 studyProgramRepository,
