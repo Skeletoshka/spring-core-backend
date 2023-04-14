@@ -36,6 +36,7 @@ public class CapClassService extends BaseService<CapClass>{
         return new Query.QueryBuilder<CapClassView>(mainSQL)
                 .forClass(CapClassView.class)
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
                 .injectSqlIf(capClassTypeFound, "/*CAPCLASSTYPE_PLACEHOLDER*/", "AND cc.capclasstype_id = :capClassTypeId")
                 .build()
                 .execute();

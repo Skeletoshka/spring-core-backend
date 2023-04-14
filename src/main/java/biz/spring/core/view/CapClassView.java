@@ -24,7 +24,7 @@ public class CapClassView {
 
     @Column(name = "capclasstype_name")
     @Schema(description = "Наименование типа классификатора")
-    private Integer capClassTypeName;
+    private String capClassTypeName;
 
     public CapClassView() {
     }
@@ -71,11 +71,11 @@ public class CapClassView {
         this.capClassTypeId = capClassTypeId;
     }
 
-    public Integer getCapClassTypeName() {
+    public String getCapClassTypeName() {
         return capClassTypeName;
     }
 
-    public void setCapClassTypeName(Integer capClassTypeName) {
+    public void setCapClassTypeName(String capClassTypeName) {
         this.capClassTypeName = capClassTypeName;
     }
 }
