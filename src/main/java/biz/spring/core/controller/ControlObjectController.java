@@ -1,6 +1,5 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.ControlObjectRoleDTO;
 import biz.spring.core.service.BaseService;
@@ -44,7 +43,6 @@ public class ControlObjectController {
     @Operation(summary = "Возвращает список объектов \"Контроллируемый объект\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/controlobject/getlist", method = RequestMethod.POST)
-    @CheckAnyRole
     public List<ControlObjectView> getlist(@RequestBody GridDataOptionControlObject gridDataOption){
         if (gridDataOption.getNamedFilters().stream().noneMatch(filter -> "accessRoleId".equals(filter.getName()))){
             return new ArrayList<>();
@@ -56,7 +54,6 @@ public class ControlObjectController {
             description = "Обновляет права, доступные определенной роли. Сначала все права чистятся, " +
                     "потом заново устанавливаются")
     @RequestMapping(value = "/controlobjectrole/update", method = RequestMethod.POST)
-    @CheckAnyRole
     public String updateControlObjectRole(@RequestBody ControlObjectRoleDTO dto){
         controlObjectService.updateAccess(dto);
         return BaseService.STANDARD_SUCCESS;

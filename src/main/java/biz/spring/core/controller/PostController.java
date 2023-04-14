@@ -1,7 +1,5 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAdminRole;
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.PostDTO;
 import biz.spring.core.repository.PostRepository;
@@ -50,7 +48,6 @@ public class PostController {
     @RequestMapping(value = "/post/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Должность\"", description = "Возвращает список объектов " +
             "\"Должность\" согласно переданным параметрам")
-    @CheckAdminRole
     public List<PostView> getList(@RequestBody GridDataOptionPost gridDataOptionPost){
         boolean findPost = gridDataOptionPost.getNamedFilters().stream().anyMatch(nf -> "postId".equals(nf.getName()));
         if(!findPost){
@@ -63,7 +60,6 @@ public class PostController {
     @Operation(summary = "Метод для получения объекта \"Должность\" по его идентификатору", description = "Возвращает " +
             "объект \"Должность\" по его идентификатору. Если идентификатора нет, возвращается пустая должность (Для " +
             "добавления)")
-    @CheckAnyRole
     public PostDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new PostDTO();
