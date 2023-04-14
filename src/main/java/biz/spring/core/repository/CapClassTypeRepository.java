@@ -39,7 +39,8 @@ public class CapClassTypeRepository implements TableRepository<CapClassType>{
     @Override
     public void load() {
         CapClassType[] capClassTypes = new CapClassType[]{
-                new CapClassType(1, "Люди", "Классификатор людей")
+                new CapClassType(1, "Люди", "Классификатор людей"),
+                new CapClassType(2, "Тест", "Тест")
         };
         insert(Arrays.asList(capClassTypes));
         DatabaseUtils.setSequenceValue("capclasstype_id_gen", capClassTypes.length+1);

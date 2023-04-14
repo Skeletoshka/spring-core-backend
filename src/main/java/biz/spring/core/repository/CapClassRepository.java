@@ -42,7 +42,8 @@ public class CapClassRepository implements TableRepository<CapClass>{
                 new CapClass(1, "Преподаватель", "Преподаёт", 1),
                 new CapClass(2, "Учащийся", "Учится", 1),
                 new CapClass(3, "Партнёр", "Партнёрирует", 1),
-                new CapClass(4, "Методист", "Методирует", 1)
+                new CapClass(4, "Методист", "Методирует", 1),
+                new CapClass(5, "Тест", "Тестирует", 2)
         };
         insert(Arrays.asList(capClasses));
         DatabaseUtils.setSequenceValue("capclass_id_gen", capClasses.length+1);
