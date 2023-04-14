@@ -1,6 +1,5 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.service.CapClassService;
 import biz.spring.core.utils.GridDataOption;

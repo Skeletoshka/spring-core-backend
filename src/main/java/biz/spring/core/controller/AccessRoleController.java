@@ -1,6 +1,5 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAnyRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.AccessRoleDTO;
 import biz.spring.core.model.AccessRole;
@@ -43,7 +42,6 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    @CheckAnyRole
     public List<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
         return accessRoleService.getAll(gridDataOptionAccessRole);
     }
@@ -52,7 +50,6 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает объект \"Роль\"",
             description = "Вовзращает список объект \"Роль\" по его идентификатору. Если идентификатора нет - " +
                     "возвращается пустой объект")
-    @CheckAnyRole
     public AccessRoleDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new AccessRoleDTO();
@@ -67,7 +64,6 @@ public class AccessRoleController {
     @RequestMapping(value = "/accessrole/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Роль\"",
             description = "Запись с заполненным идентификатором обновляется, с пустым - вставляется")
-    @CheckAnyRole
     public AccessRoleView save(@RequestBody AccessRoleDTO accessRoleDTO){
         AccessRole accessRole;
         if(accessRoleDTO.getAccessRoleId()==null){
@@ -81,7 +77,6 @@ public class AccessRoleController {
     @RequestMapping(value = "/accessrole/delete", method = RequestMethod.POST)
     @Operation(summary = "Метод для удаления объекта \"Роль\"",
             description = "Удаляются записи с переданными идентификаторами")
-    @CheckAnyRole
     public String delete(@RequestBody int[] ids){
         accessRoleService.delete(ids);
         return BaseService.STANDARD_SUCCESS;

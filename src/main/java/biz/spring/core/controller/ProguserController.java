@@ -1,6 +1,5 @@
 package biz.spring.core.controller;
 
-import biz.spring.core.annotations.CheckAdminRole;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.ProgUserDTO;
 import biz.spring.core.model.ProgUser;
@@ -49,7 +48,6 @@ public class ProguserController {
     @RequestMapping(value = "/proguser/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Пользователь\"", description = "Возвращает список объектов " +
             "\"Пользователь\" согласно переданным параметрам")
-    @CheckAdminRole
     public List<ProgUserView> getList(@RequestBody GridDataOptionProguser gridDataOption){
         return progUserService.getAll(gridDataOption);
     }
@@ -57,7 +55,6 @@ public class ProguserController {
     @RequestMapping(value = "/proguser/get", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения объекта \"Пользователь\"", description = "Возвращает объект " +
             "\"Пользователь\" по его id. Если id null, то возвращается пустой пользователь")
-    @CheckAdminRole
     public ProgUserDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new ProgUserDTO();
@@ -73,7 +70,6 @@ public class ProguserController {
     @RequestMapping(value = "/proguser/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Пользователь\"", description = "Если идентификатор пустой, то " +
             "производится вставка, иначе проивзодится сохранение")
-    @CheckAdminRole
     public ProgUserView save(@RequestBody ProgUserDTO dto){
         ProgUser result;
         dto.setProgUserPassword(encoder.encode(dto.getProgUserPassword()));
@@ -90,7 +86,6 @@ public class ProguserController {
     @RequestMapping(value = "/proguser/delete", method = RequestMethod.POST)
     @Operation(summary = "Метод для удаления объектов \"Пользователь\"", description = "Удаляет все записи с переданными " +
             "идентификаторами")
-    @CheckAdminRole
     public String delete(@RequestBody int[] ids){
         progUserService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
