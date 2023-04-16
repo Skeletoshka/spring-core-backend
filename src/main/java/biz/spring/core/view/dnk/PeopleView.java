@@ -27,7 +27,7 @@ public class PeopleView {
 
     @Column(name = "people_datebirth")
     @Schema(description = "Дата рождения человека")
-    private Date peopleDatebirth;
+    private Date peopleDateBirth;
 
     @Column(name = "capclass_id")
     @Schema(description = "Классификатор человека")
@@ -60,7 +60,7 @@ public class PeopleView {
                   String peopleName,
                   String peopleLastName,
                   String peopleMiddleName,
-                  Date peopleDatebirth,
+                  Date peopleDateBirth,
                   Integer capClassId,
                   String peopleEmail,
                   String peoplePhone,
@@ -71,7 +71,7 @@ public class PeopleView {
         this.peopleName= peopleName;
         this.peopleLastName = peopleLastName;
         this.peopleMiddleName = peopleMiddleName;
-        this.peopleDatebirth = peopleDatebirth;
+        this.peopleDateBirth = peopleDateBirth;
         this.capClassId = capClassId;
         this.peopleEmail = peopleEmail;
         this.peoplePhone = peoplePhone;
@@ -108,12 +108,12 @@ public class PeopleView {
     public void setPeopleMiddleName(String peopleMiddleName) {
         this.peopleMiddleName = peopleMiddleName;
     }
-    public Date getPeopleDatebirth() {
-        return peopleDatebirth;
+    public Date getPeopleDateBirth() {
+        return peopleDateBirth;
     }
 
-    public void setPeopleDatebirth(Date peopleDatebirth) {
-        this.peopleDatebirth = peopleDatebirth;
+    public void setPeopleDateBirth(Date peopleDateBirth) {
+        this.peopleDateBirth = peopleDateBirth;
     }
     public Integer getCapClassId() {
         return capClassId;

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -55,7 +56,10 @@ public class PeopleController {
                     "то возвращается объект с заполненными полями по умолчанию")
     public PeopleDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
-            return new PeopleDTO();
+            PeopleDTO dto = new PeopleDTO();
+            dto.setPeopleDateDelete(null);
+            dto.setPeopleDateBirth(new Date());
+            return dto;
         } else {
             PeopleView view = peopleService.getOne(id);
             PeopleDTO dto = new PeopleDTO();
@@ -72,8 +76,11 @@ public class PeopleController {
         if(peopleDTO.getPeopleId()==null){
             peopleDTO.setPeopleDateDelete(null);
             peopleDTO.setPeopleDeleteFlag(null);
+            peopleDTO.setPeopleDeleteFlag(0);
             result = peopleService.add(peopleDTO.toEntity());
         }else{
+            peopleDTO.setPeopleDeleteFlag(null);
+            peopleDTO.setPeopleDeleteFlag(0);
             result = peopleService.edit(peopleDTO.toEntity());
         }
         return peopleService.getOne(result.getPeopleId());
