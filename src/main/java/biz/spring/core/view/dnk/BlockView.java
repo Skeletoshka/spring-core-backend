@@ -15,8 +15,8 @@ public class BlockView {
     private String blockName;
 
     @Schema(description = "ИД программы обучения")
-    @Column(name = "studyprogram_id")
-    private Integer studyProgramId;
+    @Column(name = "studycase_id")
+    private Integer studyCaseId;
 
     @Schema(description = "Нумерация блока")
     @Column(name = "block_num")
@@ -30,21 +30,27 @@ public class BlockView {
     @Column(name = "capclass_id")
     private Integer capclassId;
 
+    @Schema(description = "Описание блока")
+    @Column(name = "block_desc")
+    private String blockDesc;
+
     public BlockView(){
     }
 
     public BlockView(Integer blockId,
                      String blockName,
-                     Integer studyProgramId,
+                     Integer studyCaseId,
                      Integer blockNum,
                      Integer blockVisible,
-                     Integer capclassId){
+                     Integer capclassId,
+                     String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
-        this.studyProgramId = studyProgramId;
+        this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
         this.capclassId = capclassId;
+        this.blockDesc = blockDesc;
     }
 
     public Integer getBlockId() {
@@ -63,12 +69,12 @@ public class BlockView {
         this.blockName = blockName;
     }
 
-    public Integer getStudyProgramId() {
-        return studyProgramId;
+    public Integer getStudyCaseId() {
+        return studyCaseId;
     }
 
-    public void setStudyProgramId(Integer studyProgramId) {
-        this.studyProgramId = studyProgramId;
+    public void setStudyCaseId(Integer studyCaseId) {
+        this.studyCaseId = studyCaseId;
     }
 
     public Integer getBlockNum() {
@@ -93,6 +99,14 @@ public class BlockView {
 
     public void setCapclassId(Integer capclassId) {
         this.capclassId = capclassId;
+    }
+
+    public String getBlockDesc() {
+        return blockDesc;
+    }
+
+    public void setBlockDesc(String blockDesc) {
+        this.blockDesc = blockDesc;
     }
 }
 

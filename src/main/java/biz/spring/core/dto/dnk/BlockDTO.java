@@ -12,7 +12,7 @@ public class BlockDTO {
     private String blockName;
 
     @Schema(description = "ИД программы обучения")
-    private Integer studyProgramId;
+    private Integer studyCaseId;
 
     @Schema(description = "Нумерация блока")
     private Integer blockNum;
@@ -23,21 +23,26 @@ public class BlockDTO {
     @Schema(description = "ИД классификатора")
     private Integer capclassId;
 
+    @Schema(description = "Описание блока")
+    private String blockDesc;
+
     public BlockDTO(){
     }
 
     public BlockDTO(Integer blockId,
                     String blockName,
-                    Integer studyProgramId,
+                    Integer studyCaseId,
                     Integer blockNum,
                     Integer blockVisible,
-                    Integer capclassId){
+                    Integer capclassId,
+                    String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
-        this.studyProgramId = studyProgramId;
+        this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
         this.capclassId = capclassId;
+        this.blockDesc = blockDesc;
     }
 
     public Integer getBlockId() {
@@ -56,12 +61,12 @@ public class BlockDTO {
         this.blockName = blockName;
     }
 
-    public Integer getStudyProgramId() {
-        return studyProgramId;
+    public Integer getStudyCaseId() {
+        return studyCaseId;
     }
 
-    public void setStudyProgramId(Integer studyProgramId) {
-        this.studyProgramId = studyProgramId;
+    public void setStudyCaseId(Integer studyCaseId) {
+        this.studyCaseId = studyCaseId;
     }
 
     public Integer getBlockNum() {
@@ -88,12 +93,20 @@ public class BlockDTO {
         this.capclassId = capclassId;
     }
 
+    public String getBlockDesc() {
+        return blockDesc;
+    }
+
+    public void setBlockDesc(String blockDesc) {
+        this.blockDesc = blockDesc;
+    }
+
     public Block toEntity() { return toEntity(new Block()); }
 
     public Block toEntity(Block entity){
         entity.setBlockId(this.blockId);
         entity.setBlockName(this.blockName);
-        entity.setStudyProgramId(this.studyProgramId);
+        entity.setStudyCaseId(this.studyCaseId);
         entity.setBlockNum(this.blockNum);
         entity.setBlockVisible(this.blockVisible);
         entity.setCapclassId(this.capclassId);

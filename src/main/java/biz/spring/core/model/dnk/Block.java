@@ -23,9 +23,9 @@ public class Block {
     @NotNull(message = "Поле \"Наименование блока\" не может быть NULL")
     private String blockName;
 
-    @Column(name = "studyprogram_id", nullable = false)
-    @NotNull(message = "Поле \"ИД программы обучения\" не может быть null")
-    private Integer studyProgramId;
+    @Column(name = "studycase_id", nullable = false)
+    @NotNull(message = "Поле \"ИД кейса обучения\" не может быть null")
+    private Integer studyCaseId;
 
     @Column(name = "block_num", nullable = false)
     @NotNull(message = "\"Поле \\\"Нумерация блока\\\" не может быть NULL\"")
@@ -39,6 +39,9 @@ public class Block {
     @NotNull(message = "\"Поле \\\"Копатыч класс\\\" не может быть null\"")
     private Integer capclassId;
 
+    @Column(name = "block_desc", nullable = false)
+    @Size(max = 255, message = "\"Поле \\\"Описание блока\\\" не может быть более {max} символов\")")
+    private String blockDesc;
 
     public Block(){
     }
@@ -46,16 +49,18 @@ public class Block {
 
     public Block(Integer blockId,
                  String blockName,
-                 Integer studyProgramId,
+                 Integer studyCaseId,
                  Integer blockNum,
                  Integer blockVisible,
-                 Integer capclassId){
+                 Integer capclassId,
+                 String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
-        this.studyProgramId = studyProgramId;
+        this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
         this.capclassId = capclassId;
+        this.blockDesc = blockDesc;
     }
 
     public Integer getBlockId() {
@@ -74,12 +79,12 @@ public class Block {
         this.blockName = blockName;
     }
 
-    public Integer getStudyProgramId() {
-        return studyProgramId;
+    public Integer getStudyCaseId() {
+        return studyCaseId;
     }
 
-    public void setStudyProgramId(Integer studyProgramId) {
-        this.studyProgramId = studyProgramId;
+    public void setStudyCaseId(Integer studyCaseId) {
+        this.studyCaseId = studyCaseId;
     }
 
     public Integer getBlockNum() {
@@ -104,5 +109,13 @@ public class Block {
 
     public void setCapclassId(Integer capclassId) {
         this.capclassId = capclassId;
+    }
+
+    public String getBlockDesc() {
+        return blockDesc;
+    }
+
+    public void setBlockDesc(String blockDesc) {
+        this.blockDesc = blockDesc;
     }
 }

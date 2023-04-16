@@ -1,9 +1,6 @@
 package biz.spring.core.repository;
 
-import biz.spring.core.repository.dnk.DirectionRepository;
-import biz.spring.core.repository.dnk.PeopleRepository;
-import biz.spring.core.repository.dnk.StudyCaseRepository;
-import biz.spring.core.repository.dnk.StudyProgramRepository;
+import biz.spring.core.repository.dnk.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +35,8 @@ public class RecreateDatabase {
     private DirectionRepository directionRepository;
     @Autowired
     private StudyCaseRepository studyCaseRepository;
+    @Autowired
+    private BlockRepository blockRepository;
 
     public void recreate(){
         TableRepository[] repositories = {
@@ -55,7 +54,8 @@ public class RecreateDatabase {
                 studyProgramRepository,
                 peopleRepository,
                 directionRepository,
-                studyCaseRepository
+                studyCaseRepository,
+                blockRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

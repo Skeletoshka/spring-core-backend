@@ -39,9 +39,9 @@ public class BlockRepository implements TableRepository<Block> {
     @Override
     public void load(){
         Block[] blocks = {
-                new Block(1, "Вступление", 1, 1, 1, 1),
-                new Block(2, "Вступление", 2, 1, 1, 2),
-                new Block(3, "Вступление", 3, 1, 1, 3)
+                new Block(1, "Вступление", 1, 1, 1, 1, "Тест1"),
+                new Block(2, "Вступление", 1, 2, 1, 2, "Тест2"),
+                new Block(3, "Вступление", 1, 3, 1, 3, "Тест3")
         };
         insert(Arrays.asList(blocks));
         DatabaseUtils.setSequenceValue("block_id_gen", blocks.length+1);
