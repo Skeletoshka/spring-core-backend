@@ -91,7 +91,7 @@ public class ProgUserDTO {
         return peopleId;
     }
 
-    public void setPeopleId(Integer workerId) {
+    public void setPeopleId(Integer peopleId) {
         this.peopleId = peopleId;
     }
 

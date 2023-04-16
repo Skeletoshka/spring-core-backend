@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -40,22 +41,12 @@ public class RowMapForEntity implements RowMapper<Object> {
                 Field resultField = Arrays.stream(fields)
                         .filter(field -> field.getAnnotationsByType(Column.class).length>0 &&
                                 field.getAnnotationsByType(Column.class)[0].name().equals(columnName))
-                        .findFirst().orElseThrow();
-                Method setMethod = Arrays.stream(obj.getClass().getMethods())
-                        .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + resultField.getName().toLowerCase(Locale.ROOT)))
-                        .findFirst().orElseThrow();
-                String columnTypeName = metadata.getColumnTypeName(j);
-                switch (columnTypeName) {
-                    case "int4":
-                    case "serial":
-                        setMethod.invoke(obj, resultSet.getObject(j, Integer.class));
-                        break;
-                    case "varchar":
-                        setMethod.invoke(obj, resultSet.getString(j));
-                        break;
-                    case "date":
-                        setMethod.invoke(obj, resultSet.getDate(j));
-                        break;
+                        .findFirst().orElse(null);
+                if(resultField != null) {
+                    Method setMethod = Arrays.stream(obj.getClass().getMethods())
+                            .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + resultField.getName().toLowerCase(Locale.ROOT)))
+                            .findFirst().orElseThrow();
+                    setMethod.invoke(obj, resultSet.getObject(j));
                 }
             }
         } catch (Exception e) {
