@@ -4,6 +4,7 @@ import biz.spring.core.rowmapper.RowMapForEntity;
 import biz.spring.core.rowmapper.RowMapForObject;
 import biz.spring.core.utils.OrmUtils;
 import biz.spring.core.utils.TableMetadata;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -132,18 +133,35 @@ public interface TableRepository<T> {
         return (List<T>) jdbc.query(sql, params, rowMapper);
     }
 
-    default List<T> findListForObject(String sql, Map<String, Object> params, Class<T> cls){
-        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
-        RowMapForObject rowMapper = new RowMapForObject(cls);
-        OrmUtils.loggerSql(sql);
-        return (List<T>)jdbc.query(sql, params, rowMapper);
+
+    default <V> List<V> findListForObject(Resource sql, String firstParamName, Object firstParamValue, Class<V> cls){
+        return findListForObject(sql, Map.of(firstParamName, firstParamValue), cls);
     }
 
-    default <T> T findForObject(String sql, Map<String, Object> params, Class<T> cls){
+    default <V> List<V> findListForObject(Resource sql, Map<String, Object> params, Class<V> cls){
+        return findListForObject(OrmUtils.loadResource(sql), params, cls);
+    }
+
+    default <V> List<V> findListForObject(String sql, String firstParamName, Object firstParamValue, Class<V> cls){
+        return findListForObject(sql, Map.of(firstParamName, firstParamValue), cls);
+    }
+
+    default <V> List<V> findListForObject(String sql, Map<String, Object> params, Class<V> cls){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         RowMapForObject rowMapper = new RowMapForObject(cls);
         OrmUtils.loggerSql(sql);
-        return ((List<T>)jdbc.query(sql, params, rowMapper)).get(0);
+        return (List<V>)jdbc.query(sql, params, rowMapper);
+    }
+
+    default <V> V findForObject(String sql, String firstParamName, Object firstParamValue, Class<V> cls){
+        return findForObject(sql, Map.of(firstParamName, firstParamValue), cls);
+    }
+
+    default <V> V findForObject(String sql, Map<String, Object> params, Class<V> cls){
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        RowMapForObject rowMapper = new RowMapForObject(cls);
+        OrmUtils.loggerSql(sql);
+        return ((List<V>)jdbc.query(sql, params, rowMapper)).get(0);
     }
 
     default void executeSql(String sql){
@@ -166,7 +184,7 @@ public interface TableRepository<T> {
         Arrays.stream(tables).forEach(this::drop);
     }
     default void drop(String tableName){
-        String sql = "DROP TABLE IF EXISTS %s";
+        String sql = "DROP TABLE IF EXISTS %s CASCADE";
         executeSql(String.format(sql, tableName));
         sql = "DROP SEQUENCE IF EXISTS %s_id_gen";
         executeSql(String.format(sql, tableName));

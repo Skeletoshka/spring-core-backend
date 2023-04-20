@@ -26,6 +26,10 @@ public class RecreateDatabase {
     private CapClassRepository capClassRepository;
     @Autowired
     private CapClassTypeRepository capClassTypeRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private AddressRepository addressRepository;
 
 
     public void recreate(){
@@ -39,7 +43,9 @@ public class RecreateDatabase {
                 documentTransitRepository,
                 documentRealRepository,
                 capClassRepository,
-                capClassTypeRepository
+                capClassTypeRepository,
+                companyRepository,
+                addressRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

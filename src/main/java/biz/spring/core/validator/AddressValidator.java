@@ -1,6 +1,6 @@
 package biz.spring.core.validator;
 
-import biz.spring.core.model.CapClass;
+import biz.spring.core.model.Address;
 import biz.spring.core.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,14 +11,14 @@ import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 @Component
-public class CapClassValidator implements Validator {
+public class AddressValidator implements Validator {
 
     @Autowired
     private javax.validation.Validator validator;
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return CapClass.class.equals(aClass);
+        return Address.class.equals(aClass);
     }
 
     @Override
@@ -26,4 +26,6 @@ public class CapClassValidator implements Validator {
         Set<ConstraintViolation<Object>> validates =  validator.validate(o);
         ValidateUtils.fillErrors(errors, validates);
     }
+
+
 }
