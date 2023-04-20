@@ -113,13 +113,13 @@ public class Query<T> {
 
         public QueryBuilder<T> setSearch(String search){
             if(search != null && !search.isEmpty()){
-                TableMetadata metaDataMap = TableRepository.metaDataMap.get(cls.getName().toLowerCase(Locale.ROOT));
+                TableMetadata metaDataMap = TableRepository.metaDataMap.get(cls.getSimpleName().toLowerCase(Locale.ROOT).replace("view", ""));
                 String tableName = metaDataMap.getTableName();
                 String primaryKeyName = metaDataMap.getIdField().getAnnotationsByType(Column.class)[0].name();
                 this.params.put("search", search);
                 this.replace.put(FROM_PLACEHOLDER, "INNER JOIN " + tableName + "_ft ft ON " +
                         this.mainAlias + "." + primaryKeyName + " = ft." + primaryKeyName);
-                this.replace.put(WHERE_PLACEHOLDER, "AND ft.fulltext LIKE CONCAT('%', :search, '%')");
+                this.replace.put(WHERE_PLACEHOLDER, "AND lower(ft.fulltext) LIKE lower(CONCAT('%', :search, '%'))");
             }
             return this;
         }

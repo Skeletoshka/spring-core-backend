@@ -39,6 +39,7 @@ public class CompanyService extends BaseService<Company>{
                 .forClass(CompanyView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
     }
