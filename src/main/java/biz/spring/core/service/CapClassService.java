@@ -34,10 +34,10 @@ public class CapClassService extends BaseService<CapClass>{
         boolean capClassTypeFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
                 "capClassTypeId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<CapClassView>(mainSQL)
-                .forClass(CapClassView.class)
+                .forClass(CapClassView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
-                .injectSqlIf(capClassTypeFound, "/*CAPCLASSTYPE_PLACEHOLDER*/", "AND cc.capclasstype_id = :capClassTypeId")
+                .injectSqlIf(capClassTypeFound, "/*CAPCLASSTYPE_PLACEHOLDER*/", "AND m0.capclasstype_id = :capClassTypeId")
                 .build()
                 .execute();
     }

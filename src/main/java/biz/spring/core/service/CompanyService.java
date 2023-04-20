@@ -36,7 +36,7 @@ public class CompanyService extends BaseService<Company>{
 
     public List<CompanyView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<CompanyView>(mainSQL)
-                .forClass(CompanyView.class)
+                .forClass(CompanyView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
@@ -45,7 +45,7 @@ public class CompanyService extends BaseService<Company>{
 
     public CompanyView getOne(Integer id){
         return new Query.QueryBuilder<CompanyView>(mainSQLForOne)
-                .forClass(CompanyView.class)
+                .forClass(CompanyView.class, "m0")
                 .build()
                 .executeOne(id);
     }

@@ -15,8 +15,6 @@ public class RecreateDatabase {
     @Autowired
     private ProgUserRepository progUserRepsitory;
     @Autowired
-    private PostRepository postRepository;
-    @Autowired
     private DocumentTypeRepository documentTypeRepository;
     @Autowired
     private DocumentTransitRepository documentTransitRepository;
@@ -34,7 +32,6 @@ public class RecreateDatabase {
 
     public void recreate(){
         TableRepository[] repositories = {
-                postRepository,
                 accessRoleRepository,
                 progUserRepsitory,
                 accessRoleRepository,

@@ -1,5 +1,6 @@
 package biz.spring.core.utils;
 
+import biz.spring.core.repository.TableRepository;
 import biz.spring.core.rowmapper.RowMapForObject;
 import org.springframework.core.io.Resource;
 import javax.persistence.Column;
@@ -52,8 +53,14 @@ public class Query<T> {
 
         private Class cls;
         private String sql;
+        private String mainAlias;
         private Map<String, Object> params = new HashMap<>();
         private Map<String, String> replace = new HashMap<>();
+
+        private static final String ORDERBY_PLACEHOLDER="/*ORDERBY_PLACEHOLDER*/";
+        private static final String LIMIT_PLACEHOLDER="/*LIMIT_PLACEHOLDER*/";
+        private static final String FROM_PLACEHOLDER="/*FROM_PLACEHOLDER*/";
+        private static final String WHERE_PLACEHOLDER="/*WHERE_PLACEHOLDER*/";
 
         public QueryBuilder(String sql){
             this.sql = sql;
@@ -63,8 +70,9 @@ public class Query<T> {
             this.sql = OrmUtils.loadResource(resource);
         }
 
-        public QueryBuilder<T> forClass(Class cls){
+        public QueryBuilder<T> forClass(Class cls, String mainAlias){
             this.cls = cls;
+            this.mainAlias = mainAlias;
             return this;
         }
 
@@ -86,7 +94,7 @@ public class Query<T> {
                     .filter(field -> field.getName().toLowerCase(Locale.ROOT).equals(orderBy.toLowerCase(Locale.ROOT)))
                     .findFirst().orElse(null);
             if(orderByField!=null) {
-                this.replace.put("/*ORDERBY_PLACEHOLDER*/", "ORDER BY " +
+                this.replace.put(ORDERBY_PLACEHOLDER, "ORDER BY " +
                         (orderByField.getAnnotationsByType(Column.class).length>0 ?
                                 orderByField.getAnnotationsByType(Column.class)[0].name() : orderByField.getName()));
             }
@@ -94,12 +102,25 @@ public class Query<T> {
         }
 
         public QueryBuilder<T> setLimit(String limitPlaceholder){
-            this.replace.put("/*LIMIT_PLACEHOLDER*/", limitPlaceholder);
+            this.replace.put(LIMIT_PLACEHOLDER, limitPlaceholder);
             return this;
         }
 
         public QueryBuilder<T> injectSql(String placeholder, String sql){
             this.replace.put(placeholder, sql);
+            return this;
+        }
+
+        public QueryBuilder<T> setSearch(String search){
+            if(search != null && !search.isEmpty()){
+                TableMetadata metaDataMap = TableRepository.metaDataMap.get(cls.getName().toLowerCase(Locale.ROOT));
+                String tableName = metaDataMap.getTableName();
+                String primaryKeyName = metaDataMap.getIdField().getAnnotationsByType(Column.class)[0].name();
+                this.params.put("search", search);
+                this.replace.put(FROM_PLACEHOLDER, "INNER JOIN " + tableName + "_ft ft ON " +
+                        this.mainAlias + "." + primaryKeyName + " = ft." + primaryKeyName);
+                this.replace.put(WHERE_PLACEHOLDER, "AND ft.fulltext LIKE CONCAT('%', :search, '%')");
+            }
             return this;
         }
 
