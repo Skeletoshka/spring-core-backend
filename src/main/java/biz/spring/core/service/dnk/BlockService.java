@@ -41,14 +41,14 @@ public class BlockService extends BaseService<Block> {
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy("blockId")
                 .injectSqlIf(findBlock, "/*BLOCK PROGRAM_PLACEHOLDER*/", " AND block_id = :blockId")
-                .forClass(BlockView.class)
+                .forClass(BlockView.class, "m0")
                 .build()
                 .execute();
     }
 
     public BlockView getOne(Integer id){
         return new Query.QueryBuilder<BlockView>(mainSqlForOne)
-                .forClass(BlockView.class)
+                .forClass(BlockView.class, "m0")
                 .build()
                 .executeOne(id);
     }

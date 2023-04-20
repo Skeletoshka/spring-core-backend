@@ -2,7 +2,6 @@ package biz.spring.core.repository.dnk;
 
 import biz.spring.core.config.JdbcConnection;
 import biz.spring.core.model.dnk.Appendix;
-import biz.spring.core.repository.PostRepository;
 import biz.spring.core.repository.TableRepository;
 import biz.spring.core.utils.DatabaseUtils;
 import org.slf4j.Logger;

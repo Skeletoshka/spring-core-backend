@@ -1,6 +1,5 @@
 package biz.spring.core.dto.dnk;
 
-import biz.spring.core.model.Post;
 import biz.spring.core.model.dnk.Appendix;
 import io.swagger.v3.oas.annotations.media.Schema;
 

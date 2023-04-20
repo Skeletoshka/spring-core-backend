@@ -42,12 +42,12 @@ public class StudyProgramService extends BaseService<StudyProgram> {
         boolean assistantFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> "assistantId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<StudyProgramView>(mainSql)
-                .forClass(StudyProgramView.class)
+                .forClass(StudyProgramView.class, "m0")
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
-                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND SP.direction_id = :directionId")
-                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND SP.teacher_id = :teacherId")
-                .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND SP.assistant_id = :assistantId")
+                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND m0.direction_id = :directionId")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND m0.teacher_id = :teacherId")
+                .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND m0.assistant_id = :assistantId")
                 .setParams(gridDataOption.buildParams())
                 .build()
                 .execute();
@@ -55,7 +55,7 @@ public class StudyProgramService extends BaseService<StudyProgram> {
 
     public StudyProgramView getOne(Integer id){
         return new Query.QueryBuilder<StudyProgramView>(mainSqlForOne)
-                .forClass(StudyProgramView.class)
+                .forClass(StudyProgramView.class, "m0")
                 .build()
                 .executeOne(id);
     }

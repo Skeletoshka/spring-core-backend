@@ -31,7 +31,7 @@ public class StudyCaseService extends BaseService<StudyCase> {
 
     public StudyCaseView getOne(Integer id){
         return new Query.QueryBuilder<StudyCaseView>(mainSqlForOne)
-                .forClass(StudyCaseView.class)
+                .forClass(StudyCaseView.class, "m0")
                 .build()
                 .executeOne(id);
     }

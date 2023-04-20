@@ -36,7 +36,7 @@ public class DirectionService extends BaseService<Direction> {
 
     public List<DirectionView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<DirectionView>(mainSql)
-                .forClass(DirectionView.class)
+                .forClass(DirectionView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
                 .execute();
@@ -44,7 +44,7 @@ public class DirectionService extends BaseService<Direction> {
 
     public DirectionView getOne(Integer id){
         return new Query.QueryBuilder<DirectionView>(mainSqlForOne)
-                .forClass(DirectionView.class)
+                .forClass(DirectionView.class, "m0")
                 .build()
                 .executeOne(id);
     }

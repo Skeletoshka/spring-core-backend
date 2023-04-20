@@ -41,14 +41,14 @@ public class AppendixService extends BaseService<Appendix> {
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .injectSqlIf(findAppendix, "/*APPENDIX_PLACEHOLDER*/", " AND appendix_id = :appendixId")
-                .forClass(AppendixView.class)
+                .forClass(AppendixView.class, "m0")
                 .build()
                 .execute();
     }
 
     public AppendixView getOne(Integer id){
         return new Query.QueryBuilder<AppendixView>(mainSqlForOne)
-                .forClass(AppendixView.class)
+                .forClass(AppendixView.class, "m0")
                 .build()
                 .executeOne(id);
     }

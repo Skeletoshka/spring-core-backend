@@ -1,5 +1,5 @@
-SELECT p.*,
+SELECT m0.*,
        cc.capclass_name
-FROM   people p
-       INNER JOIN capclass cc ON p.capclass_id = cc.capclass_id
-WHERE  p.people_id = :id
+FROM   people m0
+       INNER JOIN capclass cc ON m0.capclass_id = cc.capclass_id
+WHERE  m0.people_id = :id
