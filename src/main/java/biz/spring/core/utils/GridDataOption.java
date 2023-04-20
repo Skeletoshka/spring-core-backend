@@ -56,7 +56,7 @@ public class GridDataOption {
 
     /**Метод, для внедрения в запрос LIMIT*/
     public String buildPageRequest(){
-        return "LIMIT " + page + " OFFSET " + page * rowCount;
+        return "LIMIT " + rowCount + " OFFSET " + (page - 1) * rowCount;
     }
 
     public Map<String, Object> buildParams(){
