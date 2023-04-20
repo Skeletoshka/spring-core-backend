@@ -12,6 +12,7 @@ public class GridDataOption {
     private Integer page;
     private String orderBy;
     private String from;
+    private String search;
 
     public List<NamedFilter> getNamedFilters() {
         return namedFilters;
@@ -66,11 +67,20 @@ public class GridDataOption {
         return params;
     }
 
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
     public static class Builder{
         private List<NamedFilter> namedFilters;
         private String orderBy;
         private Integer rowCount;
         private Integer page;
+        private String search;
 
         public Builder(){
             namedFilters = new ArrayList<>();
@@ -96,12 +106,18 @@ public class GridDataOption {
             return this;
         }
 
+        public Builder setSearch(String search) {
+            this.search = search;
+            return this;
+        }
+
         public GridDataOption build(){
             GridDataOption gridDataOption = new GridDataOption();
             gridDataOption.setRowCount(rowCount==null?10:rowCount);
             gridDataOption.setOrderBy(orderBy);
             gridDataOption.setNamedFilters(namedFilters);
             gridDataOption.setPage(page==null?1:page);
+            gridDataOption.setSearch(search);
             return gridDataOption;
         }
     }

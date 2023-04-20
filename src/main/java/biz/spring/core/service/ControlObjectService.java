@@ -44,7 +44,7 @@ public class ControlObjectService extends BaseService<ControlObject> {
 
     public List<ControlObjectView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<ControlObjectView>(mainSql)
-                .forClass(ControlObjectView.class)
+                .forClass(ControlObjectView.class, "m0")
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())

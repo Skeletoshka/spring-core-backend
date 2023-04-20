@@ -36,7 +36,7 @@ public class AccessRoleService extends BaseService<AccessRole> {
 
     public List<AccessRoleView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<AccessRoleView>(mainSQL)
-                .forClass(AccessRoleView.class)
+                .forClass(AccessRoleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
                 .execute();
@@ -44,7 +44,7 @@ public class AccessRoleService extends BaseService<AccessRole> {
 
     public AccessRoleView getOne(Integer id){
         return new Query.QueryBuilder<AccessRoleView>(mainSqlForOne)
-                .forClass(AccessRoleView.class)
+                .forClass(AccessRoleView.class, "m0")
                 .build()
                 .executeOne(id);
     }

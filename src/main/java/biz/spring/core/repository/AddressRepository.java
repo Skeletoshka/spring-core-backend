@@ -1,6 +1,6 @@
 package biz.spring.core.repository;
 
-import biz.spring.core.model.Post;
+import biz.spring.core.model.Address;
 import biz.spring.core.utils.DatabaseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,35 +14,30 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 
 @Repository
-public class PostRepository implements TableRepository<Post> {
-    private static Logger logger = LoggerFactory.getLogger(PostRepository.class);
+public class AddressRepository implements TableRepository<Address>{
 
+    private static Logger logger = LoggerFactory.getLogger(AddressRepository.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void create(){
-        Resource resource = new ClassPathResource("sql/100500-post.sql");
+        Resource resource = new ClassPathResource("sql/200300-address.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.setSqlScriptEncoding("UTF-8");
         databasePopulator.execute(jdbcTemplate.getDataSource());
-        logger.info("post created");
+        logger.info("address created");
     }
 
     @Override
     public void drop(){
-        String[] tables = {"post"};
+        String[] tables = {"address", "street", "town"};
         drop(tables);
     }
 
     @Override
     public void load(){
-        Post[] posts = {
-                new Post(1, "Директор"),
-                new Post(2, "Секретарь"),
-                new Post(3, "Методист")
-        };
-        insert(Arrays.asList(posts));
-        DatabaseUtils.setSequenceValue("post_id_gen", posts.length+1);
+        //INSERT происходит в файле 200300-address.sql
     }
+
 }

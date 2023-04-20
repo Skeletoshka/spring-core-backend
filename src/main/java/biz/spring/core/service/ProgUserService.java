@@ -43,7 +43,7 @@ public class ProgUserService extends BaseService<ProgUser>{
 
     public List<ProgUserView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<ProgUserView>(mainSql)
-                .forClass(ProgUserView.class)
+                .forClass(ProgUserView.class, "m0")
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
@@ -52,7 +52,7 @@ public class ProgUserService extends BaseService<ProgUser>{
 
     public ProgUserView getOne(Integer id){
         return new Query.QueryBuilder<ProgUserView>(mainSqlForOne)
-                .forClass(ProgUserView.class)
+                .forClass(ProgUserView.class, "m0")
                 .build()
                 .executeOne(id);
     }
