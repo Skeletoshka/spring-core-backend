@@ -62,6 +62,7 @@ public class Query<T> {
         private static final String FROM_PLACEHOLDER="/*FROM_PLACEHOLDER*/";
         private static final String WHERE_PLACEHOLDER="/*WHERE_PLACEHOLDER*/";
 
+        @Deprecated
         public QueryBuilder(String sql){
             this.sql = sql;
         }
