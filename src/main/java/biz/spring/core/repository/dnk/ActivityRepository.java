@@ -23,7 +23,7 @@ public class ActivityRepository implements TableRepository<Activity> {
 
     @Override
     public void create() {
-        Resource resource = new ClassPathResource("sql/100200-activity.sql");
+        Resource resource = new ClassPathResource("sql/dnk/100200-activity.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.setSqlScriptEncoding("UTF-8");
         databasePopulator.execute(jdbcTemplate.getDataSource());

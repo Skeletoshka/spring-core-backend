@@ -40,6 +40,8 @@ public class RecreateDatabase {
     private StudyCaseRepository studyCaseRepository;
     @Autowired
     private BlockRepository blockRepository;
+    @Autowired
+    private ActivityRepository activityRepository;
 
     public void recreate(){
         TableRepository[] repositories = {
@@ -60,7 +62,8 @@ public class RecreateDatabase {
                 peopleRepository,
                 directionRepository,
                 studyCaseRepository,
-                blockRepository
+                blockRepository,
+                activityRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{

@@ -1,5 +1,6 @@
 package biz.spring.core.dto.dnk;
 
+import biz.spring.core.model.dnk.Activity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -68,6 +69,21 @@ public class ActivityDTO {
         this.activityName = activityName;
         this.activityDate = activityDate;
         this.capClassId = capClassId;
+    }
+
+    public Activity toEntity(){
+        return toEntity(new Activity());
+    }
+
+    public Activity toEntity(Activity entity){
+        entity.setActivityId(this.activityId);
+        entity.setActivityDate(this.activityDate);
+        entity.setActivityName(this.activityName);
+        entity.setAddressId(this.addressId);
+        entity.setCompanyId(this.companyId);
+        entity.setCapClassId(this.capClassId);
+        entity.setDirectionId(this.directionId);
+        return entity;
     }
 
     public Integer getActivityId() {
