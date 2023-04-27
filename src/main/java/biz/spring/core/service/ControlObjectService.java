@@ -63,9 +63,13 @@ public class ControlObjectService extends BaseService<ControlObject> {
                 .count();
     }
 
-    public void updateAccess(ControlObjectRoleDTO dto){
-        accessRoleRepository.clearAccess(dto.getAccessRoleId());
+    public void insertAccess(ControlObjectRoleDTO dto){
         controlObjectRepository.bindWithRole(dto.getAccessRoleId(),
+                dto.getControlObjects().stream().map(ControlObject::getControlObjectId).collect(Collectors.toList()));
+    }
+
+    public void deleteAccess(ControlObjectRoleDTO dto){
+        controlObjectRepository.unbindWithRole(dto.getAccessRoleId(),
                 dto.getControlObjects().stream().map(ControlObject::getControlObjectId).collect(Collectors.toList()));
     }
 }
