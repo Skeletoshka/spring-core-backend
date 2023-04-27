@@ -4,17 +4,18 @@ import biz.spring.core.repository.TableRepository;
 import biz.spring.core.rowmapper.RowMapForObject;
 import org.springframework.core.io.Resource;
 import javax.persistence.Column;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-//TODO реализация класса для кастомных запросов
 public class Query<T> {
     private Class cls;
     private String sql;
-    private Map<String, Object> params = new HashMap<>();
-    private Map<String, String> replace = new HashMap<>();
+    private Map<String, Object> params;
+    private Map<String, String> replace;
 
     public Query(QueryBuilder queryBuilder){
         this.cls = queryBuilder.cls;
@@ -37,6 +38,13 @@ public class Query<T> {
         }else{
             return (List<T>) jdbc.query(sql, rowMapper);
         }
+    }
+
+    public Integer count(){
+        sql = "SELECT COUNT(*) FROM (" + sql + ") as t";
+        NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
+        OrmUtils.loggerSql(sql);
+        return jdbc.queryForObject(sql, params, Integer.class);
     }
 
     public T executeOne(Integer id){

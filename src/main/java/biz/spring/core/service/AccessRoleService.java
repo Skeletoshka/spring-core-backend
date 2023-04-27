@@ -38,8 +38,19 @@ public class AccessRoleService extends BaseService<AccessRole> {
         return new Query.QueryBuilder<AccessRoleView>(mainSQL)
                 .forClass(AccessRoleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<AccessRoleView>(mainSQL)
+                .forClass(AccessRoleView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public AccessRoleView getOne(Integer id){

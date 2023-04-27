@@ -1,7 +1,9 @@
 package biz.spring.core.service;
 
 import biz.spring.core.repository.TableRepository;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.rowmapper.RowMapForEntity;
+import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.OrmUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.validation.DataBinder;
 import org.springframework.validation.Validator;
 
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class BaseService<T> {
@@ -67,4 +70,8 @@ public abstract class BaseService<T> {
     }
 
     protected void beforeValidate(T obj){}
+
+    public static <V> DataResponse<V> buildResponse(List<V> data, GridDataOption gridDataOption, Integer count){
+        return new DataResponse<V>(data, gridDataOption.getRowCount(), gridDataOption.getPage(), count);
+    }
 }
