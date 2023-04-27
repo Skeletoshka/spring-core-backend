@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.ActivityDTO;
 import biz.spring.core.model.dnk.Activity;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.dnk.ActivityService;
 import biz.spring.core.utils.GridDataOption;
@@ -45,15 +46,17 @@ public class ActivityController {
     @Operation(summary = "Возвращает список объектов \"Активность\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/activity/getlist", method = RequestMethod.POST)
-    public List<ActivityView> getList(@RequestBody GridDataOptionActivity gridDataOption){
-        return activityService.getAll(gridDataOption);
+    public DataResponse<ActivityView> getList(@RequestBody GridDataOptionActivity gridDataOption){
+        List<ActivityView> result = activityService.getAll(gridDataOption);
+        Integer count = activityService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @Operation(summary = "Возвращает объект \"Активность\"",
             description = "Вовзращает объект согласно переданному идентификатору. " +
                     "Если идентификатор пуст, то возвращает объект по умолчанию")
     @RequestMapping(value = "/activity/get", method = RequestMethod.POST)
-    public ActivityDTO get(@RequestBody Integer id){
+    public ActivityDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new ActivityDTO();
         }else{

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Service
@@ -29,6 +30,7 @@ public class ActivityService extends BaseService<Activity> {
     Resource mainSQLForOne;
 
     @Override
+    @PostConstruct
     protected void init() {
         init(activityRepository, activityValidator);
     }
@@ -37,10 +39,21 @@ public class ActivityService extends BaseService<Activity> {
         return new Query.QueryBuilder<ActivityView>(mainSQL)
                 .forClass(ActivityView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<ActivityView>(mainSQL)
+                .forClass(ActivityView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public ActivityView getOne(Integer id){

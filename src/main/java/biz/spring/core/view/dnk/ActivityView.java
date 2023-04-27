@@ -65,7 +65,7 @@ public class ActivityView {
 
     @Schema(description = "Наименование классификатора")
     @Column(name = "capclass_name")
-    private Integer capClassName;
+    private String capClassName;
 
     public ActivityView() {
     }
@@ -198,11 +198,11 @@ public class ActivityView {
         this.capClassId = capClassId;
     }
 
-    public Integer getCapClassName() {
+    public String getCapClassName() {
         return capClassName;
     }
 
-    public void setCapClassName(Integer capClassName) {
+    public void setCapClassName(String capClassName) {
         this.capClassName = capClassName;
     }
 }

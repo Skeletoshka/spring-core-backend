@@ -11,5 +11,5 @@ FROM   activity m0
        INNER JOIN town t on a.town_id = t.town_id
        INNER JOIN street s on a.street_id = s.street_id
        INNER JOIN capclass cc on m0.capclass_id = cc.capclass_id
-       INNER JOIN company c on a.address_id = c.address_id
+       LEFT JOIN company c on a.address_id = c.address_id
 WHERE  m0.activity_id = :id
