@@ -40,8 +40,19 @@ public class CompanyService extends BaseService<Company>{
                 .setParams(gridDataOption.buildParams())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setSearch(gridDataOption.getSearch())
+                .setLimit(gridDataOption.buildPageRequest())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<CompanyView>(mainSQL)
+                .forClass(CompanyView.class, "m0")
+                .setParams(gridDataOption.buildParams())
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public CompanyView getOne(Integer id){

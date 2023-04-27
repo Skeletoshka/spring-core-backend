@@ -2,6 +2,7 @@ package biz.spring.core.controller;
 
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.ControlObjectRoleDTO;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.ControlObjectService;
 import biz.spring.core.utils.GridDataOption;
@@ -43,11 +44,13 @@ public class ControlObjectController {
     @Operation(summary = "Возвращает список объектов \"Контроллируемый объект\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/controlobject/getlist", method = RequestMethod.POST)
-    public List<ControlObjectView> getlist(@RequestBody GridDataOptionControlObject gridDataOption){
+    public DataResponse<ControlObjectView> getlist(@RequestBody GridDataOptionControlObject gridDataOption){
         if (gridDataOption.getNamedFilters().stream().noneMatch(filter -> "accessRoleId".equals(filter.getName()))){
-            return new ArrayList<>();
+            throw new RuntimeException("Выберите роль");
         }
-        return controlObjectService.getAll(gridDataOption);
+        List<ControlObjectView> result = controlObjectService.getAll(gridDataOption);
+        Integer count = controlObjectService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @Operation(summary = "Обновляет права у \"Роль доступа\"",

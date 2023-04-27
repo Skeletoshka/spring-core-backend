@@ -48,8 +48,19 @@ public class ControlObjectService extends BaseService<ControlObject> {
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<ControlObjectView>(mainSql)
+                .forClass(ControlObjectView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public void updateAccess(ControlObjectRoleDTO dto){

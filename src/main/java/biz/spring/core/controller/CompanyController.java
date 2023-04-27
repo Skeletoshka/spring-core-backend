@@ -3,6 +3,7 @@ package biz.spring.core.controller;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.CompanyDTO;
 import biz.spring.core.model.Company;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.CompanyService;
 import biz.spring.core.utils.GridDataOption;
@@ -44,8 +45,10 @@ public class CompanyController {
     @Operation(summary = "Возвращает список объектов \"Компания\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/company/getlist", method = RequestMethod.POST)
-    public List<CompanyView> getList(@RequestBody GridDataOptionCompany gridDataOption){
-        return companyService.getAll(gridDataOption);
+    public DataResponse<CompanyView> getList(@RequestBody GridDataOptionCompany gridDataOption){
+        List<CompanyView> result = companyService.getAll(gridDataOption);
+        Integer count = companyService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @Operation(summary = "Получение одной записи \"Компания\" по ее идентификатору",

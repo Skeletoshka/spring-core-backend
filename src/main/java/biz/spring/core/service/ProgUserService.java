@@ -46,8 +46,18 @@ public class ProgUserService extends BaseService<ProgUser>{
                 .forClass(ProgUserView.class, "m0")
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<ProgUserView>(mainSql)
+                .forClass(ProgUserView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public ProgUserView getOne(Integer id){

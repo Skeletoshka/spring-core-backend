@@ -4,6 +4,7 @@ import biz.spring.core.config.Config;
 import biz.spring.core.dto.ProgUserDTO;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.ProgUserRepository;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.ProgUserService;
 import biz.spring.core.utils.GridDataOption;
@@ -48,8 +49,10 @@ public class ProguserController {
     @RequestMapping(value = "/proguser/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Пользователь\"", description = "Возвращает список объектов " +
             "\"Пользователь\" согласно переданным параметрам")
-    public List<ProgUserView> getList(@RequestBody GridDataOptionProguser gridDataOption){
-        return progUserService.getAll(gridDataOption);
+    public DataResponse<ProgUserView> getList(@RequestBody GridDataOptionProguser gridDataOption){
+        List<ProgUserView> result = progUserService.getAll(gridDataOption);
+        Integer count = progUserService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @RequestMapping(value = "/proguser/get", method = RequestMethod.POST)

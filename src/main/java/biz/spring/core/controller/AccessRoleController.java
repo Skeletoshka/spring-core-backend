@@ -3,6 +3,7 @@ package biz.spring.core.controller;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.AccessRoleDTO;
 import biz.spring.core.model.AccessRole;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.AccessRoleService;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
@@ -42,8 +43,10 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    public List<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
-        return accessRoleService.getAll(gridDataOptionAccessRole);
+    public DataResponse<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
+        List<AccessRoleView> result = accessRoleService.getAll(gridDataOptionAccessRole);
+        Integer count = accessRoleService.getCount(gridDataOptionAccessRole);
+        return BaseService.buildResponse(result, gridDataOptionAccessRole, count);
     }
 
     @RequestMapping(value = "/accessrole/get", method = RequestMethod.POST)
