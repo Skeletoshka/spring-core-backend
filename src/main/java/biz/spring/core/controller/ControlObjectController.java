@@ -53,12 +53,19 @@ public class ControlObjectController {
         return BaseService.buildResponse(result, gridDataOption, count);
     }
 
-    @Operation(summary = "Обновляет права у \"Роль доступа\"",
-            description = "Обновляет права, доступные определенной роли. Сначала все права чистятся, " +
-                    "потом заново устанавливаются")
-    @RequestMapping(value = "/controlobjectrole/update", method = RequestMethod.POST)
-    public String updateControlObjectRole(@RequestBody ControlObjectRoleDTO dto){
-        controlObjectService.updateAccess(dto);
+    @Operation(summary = "Добавляет права у \"Роль доступа\"",
+            description = "Добавляет права, доступные определенной роли.")
+    @RequestMapping(value = "/controlobjectrole/bind", method = RequestMethod.POST)
+    public String bind(@RequestBody ControlObjectRoleDTO dto){
+        controlObjectService.insertAccess(dto);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Добавляет права у \"Роль доступа\"",
+            description = "Добавляет права, доступные определенной роли.")
+    @RequestMapping(value = "/controlobjectrole/unbind", method = RequestMethod.POST)
+    public String unbind(@RequestBody ControlObjectRoleDTO dto){
+        controlObjectService.deleteAccess(dto);
         return BaseService.STANDARD_SUCCESS;
     }
 

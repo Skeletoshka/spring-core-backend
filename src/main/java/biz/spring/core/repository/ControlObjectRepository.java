@@ -3,6 +3,7 @@ package biz.spring.core.repository;
 import biz.spring.core.model.AccessRole;
 import biz.spring.core.model.ControlObject;
 import biz.spring.core.utils.DatabaseUtils;
+import biz.spring.core.utils.OrmUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,32 @@ public class ControlObjectRepository implements TableRepository<ControlObject> {
         Map<String, Object> params = new HashMap<>();
         params.put("accessrole_id", roleId);
         for(Integer id: controlObjectIds){
-            params.put("controlobjectrole_id", DatabaseUtils.getSequenceNextValue("controlobjectrole_id_gen"));
+            if(!existRoleWithControlObject(roleId, id)) {
+                params.put("controlobjectrole_id", DatabaseUtils.getSequenceNextValue("controlobjectrole_id_gen"));
+                params.put("controlobject_id", id);
+                executeSql(sql, params);
+            }
+        }
+    }
+
+    public void unbindWithRole(Integer roleId, List<Integer> controlObjectIds){
+        String sql = "DELETE FROM controlobjectrole WHERE controlobject_id = :controlobject_id " +
+                "AND accessrole_id = :accessrole_id";
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessrole_id", roleId);
+        for(Integer id: controlObjectIds){
             params.put("controlobject_id", id);
             executeSql(sql, params);
         }
+    }
+
+    private boolean existRoleWithControlObject(Integer roleId, Integer controlObjectId){
+        String sql = "SELECT COUNT(*) FROM controlobjectrole cor " +
+                "WHERE COR.controlobject_id = :controlobject_id AND COR.accessrole_id = :accessrole_id";
+        Map<String, Object> params = new HashMap<>();
+        params.put("accessrole_id", roleId);
+        params.put("controlobject_id", controlObjectId);
+        return OrmUtils.getJDBC().queryForObject(sql, params, Integer.class) > 0;
     }
 
     @Override
