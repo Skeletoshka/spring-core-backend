@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.DirectionDTO;
 import biz.spring.core.model.dnk.Direction;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.dnk.DirectionService;
 import biz.spring.core.utils.GridDataOption;
@@ -44,8 +45,10 @@ public class DirectionController {
     @Operation(summary = "Возвращает список объектов \"Направление\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/direction/getlist", method = RequestMethod.POST)
-    public List<DirectionView> getList(@RequestBody GridDataOptionDirection gridDataOption){
-        return directionService.getAll(gridDataOption);
+    public DataResponse<DirectionView> getList(@RequestBody GridDataOptionDirection gridDataOption){
+        List<DirectionView> result = directionService.getAll(gridDataOption);
+        Integer count = directionService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @RequestMapping(value = "/direction/get", method = RequestMethod.POST)

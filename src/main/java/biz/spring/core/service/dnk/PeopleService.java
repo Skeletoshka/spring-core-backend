@@ -47,6 +47,18 @@ public class PeopleService extends BaseService<People> {
                 .execute();
     }
 
+    public Integer getCount(GridDataOption gridDataOption){
+        boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
+                && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<PeopleView>(mainSql)
+                .forClass(PeopleView.class, "m0")
+                .setParams(gridDataOption.buildParams())
+                .injectSqlIf(capClassFound, "/*CAPCLASS_PLACEHOLDER*/", "AND m0.capclass_id = :capClassId")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .build()
+                .count();
+    }
+
     public PeopleView getOne(Integer id){
         return new Query.QueryBuilder<PeopleView>(mainSqlForOne)
                 .forClass(PeopleView.class, "m0")

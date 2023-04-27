@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.PeopleDTO;
 import biz.spring.core.model.dnk.People;
+import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.dnk.PeopleService;
 import biz.spring.core.utils.GridDataOption;
@@ -41,13 +42,14 @@ public class PeopleController {
     @RequestMapping(value = "/people/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Человек\"",
             description = "Выводит список объектов \"Человек\" согласно переданным фильтрам")
-    public List<PeopleView> getList(@RequestBody GridDataOptionPeople gridDataOption){
+    public DataResponse<PeopleView> getList(@RequestBody GridDataOptionPeople gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName()));
         if(!capClassFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("capClassId", -1));
         }
         List<PeopleView> result = peopleService.getAll(gridDataOption);
-        return result;
+        Integer count = peopleService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @RequestMapping(value = "/people/get", method = RequestMethod.POST)

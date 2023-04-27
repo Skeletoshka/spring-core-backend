@@ -38,8 +38,19 @@ public class DirectionService extends BaseService<Direction> {
         return new Query.QueryBuilder<DirectionView>(mainSql)
                 .forClass(DirectionView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<DirectionView>(mainSql)
+                .forClass(DirectionView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setSearch(gridDataOption.getSearch())
+                .build()
+                .count();
     }
 
     public DirectionView getOne(Integer id){
