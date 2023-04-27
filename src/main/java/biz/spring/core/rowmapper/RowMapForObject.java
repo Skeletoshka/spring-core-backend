@@ -41,19 +41,7 @@ public class RowMapForObject implements RowMapper<Object> {
                     Method setMethod = Arrays.stream(obj.getClass().getMethods())
                             .filter(method -> method.getName().toLowerCase(Locale.ROOT).equals("set" + resultField.getName().toLowerCase(Locale.ROOT)))
                             .findFirst().orElseThrow();
-                    String columnTypeName = metadata.getColumnTypeName(j);
-                    switch (columnTypeName) {
-                        case "int4":
-                        case "serial":
-                            setMethod.invoke(obj, resultSet.getObject(j, Integer.class));
-                            break;
-                        case "varchar":
-                            setMethod.invoke(obj, resultSet.getString(j));
-                            break;
-                        case "date":
-                            setMethod.invoke(obj, resultSet.getDate(j));
-                            break;
-                    }
+                    setMethod.invoke(obj, resultSet.getObject(j));
                 }
             }
         } catch (Exception e) {
