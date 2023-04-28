@@ -46,6 +46,8 @@ public class RecreateDatabase {
     private ServiceRepository serviceRepository;
     @Autowired
     private RequestRepository requestRepository;
+    @Autowired
+    private RequestPosRepository requestPosRepository;
 
     public void recreate(){
         TableRepository[] repositories = {
@@ -69,7 +71,8 @@ public class RecreateDatabase {
                 blockRepository,
                 activityRepository,
                 serviceRepository,
-                requestRepository
+                requestRepository,
+                requestPosRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{
