@@ -24,8 +24,8 @@ public class RequestView {
     private String documentRealNumber;
 
     @Schema(description = "Дата документа")
-    @Column(name = "documentreal_date")
-    private Date documentRealDate;
+    @Column(name = "documentreal_datecreate")
+    private Date documentRealDateCreate;
 
     @Schema(description = "Ид пользователя")
     @Column(name = "proguser_id")
@@ -88,12 +88,12 @@ public class RequestView {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealDate() {
-        return documentRealDate;
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
     }
 
-    public void setDocumentRealDate(Date documentRealDate) {
-        this.documentRealDate = documentRealDate;
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
     }
 
     public Integer getProgUserId() {
