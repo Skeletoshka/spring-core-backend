@@ -4,11 +4,11 @@ SELECT m0.*,
        dt.documenttransit_name,
        pu.proguser_name
 FROM   news m0
-       INNER JOIN documentreal dr on dr.documentreal_id = m0.request_id
+       INNER JOIN documentreal dr on dr.documentreal_id = m0.news_id
        INNER JOIN documenttransit dt on dt.documenttransit_id = dr.documenttransit_id
        INNER JOIN proguser pu on pu.proguser_id = dr.proguser_id
        /*FROM_PLACEHOLDER*/
 WHERE  1=1
   /*WHERE_PLACEHOLDER*/
-/*LIMIT_PLACEHOLDER*/
 /*ORDERBY_PLACEHOLDER*/
+/*LIMIT_PLACEHOLDER*/

@@ -12,6 +12,9 @@ import javax.validation.constraints.Size;
 public class News {
 
     public static final int DOCUMENT_TYPE_ID = 3;
+    public static final int DIRTY = 1;
+    public static final int RELEASE = 2;
+    public static final int ARCHIVE = 3;
 
     @Id
     @Column(name = "news_id", nullable = false)

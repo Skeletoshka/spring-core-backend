@@ -24,10 +24,10 @@ public class NewsService extends BaseService<News> {
     @Autowired
     private NewsValidator newsValidator;
 
-    @Value("classpath:/script/dnk/activity/mainSql.sql")
+    @Value("classpath:/script/dnk/news/mainSql.sql")
     Resource mainSQL;
 
-    @Value("classpath:/script/dnk/activity/mainSqlForOne.sql")
+    @Value("classpath:/script/dnk/news/mainSqlForOne.sql")
     Resource mainSQLForOne;
 
     @PostConstruct

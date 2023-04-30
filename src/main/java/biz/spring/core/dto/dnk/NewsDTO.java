@@ -63,6 +63,7 @@ public class NewsDTO {
         entity.setDocumentRealNumber(this.documentRealNumber);
         entity.setDocumentTypeId(News.DOCUMENT_TYPE_ID);
         entity.setDocumentRealDateCreate(this.documentRealDateCreate);
+        entity.setDocumentTransitId(this.documentTransitId);
         return entity;
     }
 

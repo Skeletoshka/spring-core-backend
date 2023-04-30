@@ -4,6 +4,7 @@ import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.NewsDTO;
 import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.News;
+import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.DocumentRealService;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,6 +35,11 @@ public class NewsController {
     private NewsService newsService;
     @Autowired
     private DocumentRealService documentRealService;
+    @Autowired
+    private DocumentRealRepository documentRealRepository;
+
+    public NewsController() {
+    }
 
     public static class GridDataOptionNews extends GridDataOption {
         @Schema(description = "" +
@@ -77,10 +84,15 @@ public class NewsController {
         News result;
         DocumentReal documentReal;
         if(dto.getNewsId() == null){
+            dto.setDocumentRealDateCreate(new Date());
+            dto.setDocumentTransitId(News.DIRTY);
             documentReal = documentRealService.add(dto.toDocumentReal());
             dto.setNewsId(documentReal.getDocumentRealId());
             result = newsService.add(dto.toEntity());
         }else{
+            documentReal = documentRealRepository.get(dto.getNewsId());
+            dto.setDocumentRealDateCreate(documentReal.getDocumentRealDateCreate());
+            dto.setDocumentTransitId(documentReal.getDocumentTransitId());
             documentRealService.edit(dto.toDocumentReal());
             result = newsService.edit(dto.toEntity());
         }
@@ -92,6 +104,26 @@ public class NewsController {
     @RequestMapping(value = "/news/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids){
         newsService.delete(ids);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Устанавливает статус \"Опубликован\" объектам \"Новость\"",
+            description = "Устанавливает статус \"Опубликован\" записям с переданными идентификаторами")
+    @RequestMapping(value = "/news/setstatus/public", method = RequestMethod.POST)
+    public String setPublic(@RequestBody int[] ids){
+        for(int id: ids) {
+            documentRealService.setStatus(id, News.RELEASE);
+        }
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Устанавливает статус \"Архивирован\" объектам \"Новость\"",
+            description = "Устанавливает статус \"Архивирован\" записям с переданными идентификаторами")
+    @RequestMapping(value = "/news/setstatus/archive", method = RequestMethod.POST)
+    public String setArchive(@RequestBody int[] ids){
+        for(int id: ids) {
+            documentRealService.setStatus(id, News.ARCHIVE);
+        }
         return BaseService.STANDARD_SUCCESS;
     }
 
