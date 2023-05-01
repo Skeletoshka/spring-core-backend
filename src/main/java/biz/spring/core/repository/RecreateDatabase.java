@@ -32,7 +32,6 @@ public class RecreateDatabase {
 
     public void recreate(){
         TableRepository[] repositories = {
-                accessRoleRepository,
                 progUserRepsitory,
                 accessRoleRepository,
                 controlObjectRepository,
