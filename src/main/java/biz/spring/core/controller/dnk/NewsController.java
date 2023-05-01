@@ -38,9 +38,6 @@ public class NewsController {
     @Autowired
     private DocumentRealRepository documentRealRepository;
 
-    public NewsController() {
-    }
-
     public static class GridDataOptionNews extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
@@ -54,8 +51,11 @@ public class NewsController {
     @Operation(summary = "Возвращает список объектов \"Новость\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/news/getlist", method = RequestMethod.POST)
-    @CrossOrigin
     public DataResponse<NewsView> getList(@RequestBody GridDataOptionNews gridDataOption){
+        boolean statusFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "statusId".equals(nf.getName()));
+        if(!statusFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("statusId", -1));
+        }
         List<NewsView> result = newsService.getAll(gridDataOption);
         Integer count = newsService.getCount(gridDataOption);
         return BaseService.buildResponse(result, gridDataOption, count);

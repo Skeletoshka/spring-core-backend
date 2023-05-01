@@ -9,6 +9,7 @@ FROM   news m0
        INNER JOIN proguser pu on pu.proguser_id = dr.proguser_id
        /*FROM_PLACEHOLDER*/
 WHERE  1=1
+  /*STATUS_PLACEHOLDER*/
   /*WHERE_PLACEHOLDER*/
 /*ORDERBY_PLACEHOLDER*/
 /*LIMIT_PLACEHOLDER*/

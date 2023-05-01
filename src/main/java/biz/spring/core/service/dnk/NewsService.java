@@ -36,23 +36,28 @@ public class NewsService extends BaseService<News> {
     }
 
     public List<NewsView> getAll(GridDataOption gridDataOption){
+        boolean statusFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
+                "statusId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<NewsView>(mainSQL)
                 .forClass(NewsView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(statusFound, "/*STATUS_PLACEHOLDER*/", "AND dr.documenttransit_id = :statusId")
                 .build()
                 .execute();
     }
 
     public Integer getCount(GridDataOption gridDataOption){
+        boolean statusFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
+                "statusId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<NewsView>(mainSQL)
                 .forClass(NewsView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
-                .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(statusFound, "/*STATUS_PLACEHOLDER*/", "AND dr.documenttransit_id = :statusId")
                 .build()
                 .count();
     }
