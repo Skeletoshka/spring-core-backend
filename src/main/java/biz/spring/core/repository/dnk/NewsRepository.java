@@ -28,7 +28,7 @@ public class NewsRepository implements TableRepository<News> {
 
     @Override
     public void drop() {
-        String[] tables = {"activity"};
+        String[] tables = {"news"};
         drop(tables);
     }
 
