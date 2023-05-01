@@ -53,6 +53,24 @@ public class StudyProgramService extends BaseService<StudyProgram> {
                 .execute();
     }
 
+    public Integer getCount(GridDataOption gridDataOption) {
+        boolean directionFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "directionId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "teacherId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        boolean assistantFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> "assistantId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<StudyProgramView>(mainSql)
+                .forClass(StudyProgramView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND m0.direction_id = :directionId")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND m0.teacher_id = :teacherId")
+                .injectSqlIf(assistantFound, "/*ASSISTANT_PLACEHOLDER*/", "AND m0.assistant_id = :assistantId")
+                .setParams(gridDataOption.buildParams())
+                .build()
+                .count();
+    }
+
     public StudyProgramView getOne(Integer id){
         return new Query.QueryBuilder<StudyProgramView>(mainSqlForOne)
                 .forClass(StudyProgramView.class, "m0")
