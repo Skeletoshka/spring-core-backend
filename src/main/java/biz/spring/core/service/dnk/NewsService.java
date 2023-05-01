@@ -58,7 +58,7 @@ public class NewsService extends BaseService<News> {
     }
 
     public NewsView getOne(Integer id){
-        return new Query.QueryBuilder<NewsView>(mainSQL)
+        return new Query.QueryBuilder<NewsView>(mainSQLForOne)
                 .forClass(NewsView.class, "m0")
                 .build()
                 .executeOne(id);
