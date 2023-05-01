@@ -41,6 +41,11 @@ public class Query<T> {
     }
 
     public Integer count(){
+        for(Map.Entry<String, String> replacement:replace.entrySet()){
+            while (sql.contains(replacement.getKey())) {
+                sql = sql.replace(replacement.getKey(), replacement.getValue());
+            }
+        }
         sql = "SELECT COUNT(*) FROM (" + sql + ") as t";
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         OrmUtils.loggerSql(sql);
