@@ -4,9 +4,11 @@ import biz.spring.core.config.Config;
 import biz.spring.core.model.dnk.News;
 import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
+import biz.spring.core.service.dnk.ActivityService;
 import biz.spring.core.service.dnk.NewsService;
 import biz.spring.core.service.dnk.StudyProgramService;
 import biz.spring.core.utils.GridDataOption;
+import biz.spring.core.view.dnk.ActivityView;
 import biz.spring.core.view.dnk.NewsView;
 import biz.spring.core.view.dnk.StudyProgramView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name = "Контроллер для Новостей", description = "Контроллер для работы с таблицей \"Новость\"")
+@Tag(name = "Контроллер для не авторизованного пользователя",
+        description = "Контроллер для работы получения данных, доступных не авторизованному пользователю")
 @RequestMapping(value = "/security/v" + Config.CURRENT_VERSION + "/apps/dnk/document",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,6 +37,8 @@ public class DNKUnAuthorizationController {
     private NewsService newsService;
     @Autowired
     private StudyProgramService studyProgramService;
+    @Autowired
+    private ActivityService activityService;
 
     public static class GridDataOptionNews extends GridDataOption {
         @Schema(description = "" +
@@ -84,6 +89,26 @@ public class DNKUnAuthorizationController {
         }
         List<StudyProgramView> result = studyProgramService.getAll(gridDataOption);
         Integer count = studyProgramService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
+    }
+
+    public static class GridDataOptionActivity extends GridDataOption{
+        @Schema(description = "" +
+                "<ul>" +
+                "<li> companyId - ИД партнёра " +
+                "<li> directionId - ИД направления " +
+                "</ul>")
+        public List<NamedFilter> getNamedFilters() {
+            return super.getNamedFilters();
+        }
+    }
+
+    @Operation(summary = "Возвращает список объектов \"Активность\"",
+            description = "Вовзращает список объектов согласно переданным фильтрам")
+    @RequestMapping(value = "/activity/getlist", method = RequestMethod.POST)
+    public DataResponse<ActivityView> getList(@RequestBody GridDataOptionActivity gridDataOption){
+        List<ActivityView> result = activityService.getAll(gridDataOption);
+        Integer count = activityService.getCount(gridDataOption);
         return BaseService.buildResponse(result, gridDataOption, count);
     }
 
