@@ -34,22 +34,40 @@ public class AttendanceService extends BaseService<Attendance> {
     }
 
     public List<AttendanceView> getAll(GridDataOption gridDataOption){
+        boolean peopleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("peopleId") && !nf.getValue().equals(-1));
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean scheduleDateFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("scheduleDate") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AttendanceView>(mainSQL)
                 .forClass(AttendanceView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND m0.people_id = :peopleId")
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sh.studyprogram_id = :studyProgramId")
+                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.shedule_date = :scheduleDate")
                 .build()
                 .execute();
     }
 
     public Integer getCount(GridDataOption gridDataOption){
+        boolean peopleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("peopleId") && !nf.getValue().equals(-1));
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean scheduleDateFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("scheduleDate") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AttendanceView>(mainSQL)
                 .forClass(AttendanceView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND m0.people_id = :peopleId")
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sh.studyprogram_id = :studyProgramId")
+                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.shedule_date = :scheduleDate")
                 .build()
                 .count();
     }
