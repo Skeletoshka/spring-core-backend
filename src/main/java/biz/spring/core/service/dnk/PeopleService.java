@@ -28,7 +28,7 @@ public class PeopleService extends BaseService<People> {
         init(peopleRepository, peopleValidator);
     }
 
-    @Value("classpath:/script/dnk/people/mainSQL.sql")
+    @Value("classpath:/script/dnk/people/mainSql.sql")
     Resource mainSql;
 
     @Value("classpath:/script/dnk/people/mainSqlForOne.sql")
