@@ -1,4 +1,4 @@
-CREATE TABLE dbo.workgroup (
+CREATE TABLE workgroup (
 	workgroup_id INTEGER NOT NULL,
 	workgroup_name varchar(100) NOT NULL,
 	direction_id INTEGER NOT NULL,
