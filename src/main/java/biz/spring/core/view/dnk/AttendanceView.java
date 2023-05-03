@@ -23,6 +23,10 @@ public class AttendanceView {
     @Column(name = "studyprogram_name")
     private String studyProgramName;
 
+    @Schema(description = "Наименование учебной группы")
+    @Column(name = "workgroup_name")
+    private String workGroupName;
+
     @Schema(description = "ИД человека")
     @Column(name = "people_id")
     private Integer peopleId;
@@ -126,5 +130,13 @@ public class AttendanceView {
 
     public void setAttendancePresenceFlag(Integer attendancePresenceFlag) {
         this.attendancePresenceFlag = attendancePresenceFlag;
+    }
+
+    public String getWorkGroupName() {
+        return workGroupName;
+    }
+
+    public void setWorkGroupName(String workGroupName) {
+        this.workGroupName = workGroupName;
     }
 }

@@ -16,6 +16,9 @@ public class AttendanceDTO {
     @Schema(description = "Время занятия")
     private Date scheduleDate;
 
+    @Schema(description = "Наименование учебной группы")
+    private String workGroupName;
+
     @Schema(description = "Наименование программы обучения")
     private String studyProgramName;
 
@@ -129,5 +132,13 @@ public class AttendanceDTO {
 
     public void setPeopleMiddleName(String peopleMiddleName) {
         this.peopleMiddleName = peopleMiddleName;
+    }
+
+    public String getWorkGroupName() {
+        return workGroupName;
+    }
+
+    public void setWorkGroupName(String workGroupName) {
+        this.workGroupName = workGroupName;
     }
 }

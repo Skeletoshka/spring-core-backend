@@ -48,7 +48,7 @@ public class AttendanceService extends BaseService<Attendance> {
                 .setSearch(gridDataOption.getSearch())
                 .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND m0.people_id = :peopleId")
                 .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sh.studyprogram_id = :studyProgramId")
-                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.shedule_date = :scheduleDate")
+                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.schedule_date = :scheduleDate")
                 .build()
                 .execute();
     }
