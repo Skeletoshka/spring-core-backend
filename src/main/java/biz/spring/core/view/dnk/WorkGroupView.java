@@ -18,7 +18,7 @@ public class WorkGroupView {
     @Column(name = "direction_id")
     private Integer directionId;
 
-    @Schema(description = "ИД направления")
+    @Schema(description = "Наименование направления")
     @Column(name = "direction_name")
     private String directionName;
 

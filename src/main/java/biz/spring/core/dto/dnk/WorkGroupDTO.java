@@ -17,7 +17,7 @@ public class WorkGroupDTO {
     @Schema(description = "Описание учебной группы")
     private String workGroupDesc;
 
-    @Schema(description = "ИД направления")
+    @Schema(description = "Наименование направления")
     private String directionName;
 
     public WorkGroupDTO() {
