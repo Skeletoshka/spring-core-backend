@@ -17,6 +17,9 @@ public class WorkGroupDTO {
     @Schema(description = "Описание учебной группы")
     private String workGroupDesc;
 
+    @Schema(description = "ИД направления")
+    private String directionName;
+
     public WorkGroupDTO() {
     }
 
@@ -60,6 +63,14 @@ public class WorkGroupDTO {
 
     public void setWorkGroupDesc(String workGroupDesc) {
         this.workGroupDesc = workGroupDesc;
+    }
+
+    public String getDirectionName() {
+        return directionName;
+    }
+
+    public void setDirectionName(String directionName) {
+        this.directionName = directionName;
     }
 
     public WorkGroup toEntity() { return  toEntity(new WorkGroup()); }

@@ -18,6 +18,10 @@ public class WorkGroupView {
     @Column(name = "direction_id")
     private Integer directionId;
 
+    @Schema(description = "ИД направления")
+    @Column(name = "direction_name")
+    private String directionName;
+
     @Schema(description = "Описание учебной группы")
     @Column(name = "workgroup_desc")
     private String workGroupDesc;
@@ -65,5 +69,13 @@ public class WorkGroupView {
 
     public void setWorkGroupDesc(String workGroupDesc) {
         this.workGroupDesc = workGroupDesc;
+    }
+
+    public String getDirectionName() {
+        return directionName;
+    }
+
+    public void setDirectionName(String directionName) {
+        this.directionName = directionName;
     }
 }

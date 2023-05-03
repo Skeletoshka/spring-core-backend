@@ -33,14 +33,30 @@ public class WorkGroupService extends BaseService<WorkGroup> {
     public void init() { init(workGroupRepository, workGroupValidator); }
 
     public List<WorkGroupView> getAll(GridDataOption gridDataOption){
+        boolean directionFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("directionId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<WorkGroupView>(mainSql)
                 .forClass(WorkGroupView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND DIR.direction_id = :directionId")
                 .build()
                 .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        boolean directionFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("directionId") && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<WorkGroupView>(mainSql)
+                .forClass(WorkGroupView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(directionFound, "/*DIRECTION_PLACEHOLDER*/", "AND DIR.direction_id = :directionId")
+                .build()
+                .count();
     }
 
     public WorkGroupView getOne(Integer id){

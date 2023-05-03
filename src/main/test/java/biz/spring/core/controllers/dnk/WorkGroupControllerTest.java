@@ -37,6 +37,7 @@ public class WorkGroupControllerTest extends IntegratedTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"workGroupId\":9")))
                 .andExpect(content().string(containsString("\"workGroupName\":\"Тест1111\"")));
 
         this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/workgroup/get")
