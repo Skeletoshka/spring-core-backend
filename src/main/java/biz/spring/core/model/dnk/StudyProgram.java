@@ -23,7 +23,7 @@ public class StudyProgram {
     private String studyProgramName;
 
     @Column(name = "direction_id", nullable = false)
-    @NotNull(message = "Поле \"Наименование направления\" не может быть null")
+    @NotNull(message = "Поле \"ИД направления\" не может быть null")
     private Integer directionId;
 
     @Column(name = "teacher_id", nullable = false)

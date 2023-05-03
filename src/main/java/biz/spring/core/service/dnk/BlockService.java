@@ -8,6 +8,8 @@ import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.BlockValidator;
 import biz.spring.core.view.dnk.BlockView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,27 +23,25 @@ public class BlockService extends BaseService<Block> {
     @Autowired
     private BlockValidator blockValidator;
 
+    @Value("classpath:/script/dnk/block/mainSql.sql")
+    Resource mainSql;
+
+    @Value("classpath:/script/dnk/block/mainSqlForOne.sql")
+    Resource mainSqlForOne;
+
     @PostConstruct
     public void init(){
         init(blockRepository, blockValidator);
     }
 
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM block";
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM block " +
-            "WHERE block_id = :id";
-
-    public List<BlockView> getAll(GridDataOption gridDataOption) {
-        boolean findBlock = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "blockId".equals(nf.getName()) && !nf.getValue().equals(-1));
+    public List<BlockView> getAll(GridDataOption gridDataOption){
         return new Query.QueryBuilder<BlockView>(mainSql)
-                .setLimit(gridDataOption.buildPageRequest())
-                .setOrderBy("blockId")
-                .injectSqlIf(findBlock, "/*BLOCK PROGRAM_PLACEHOLDER*/", " AND block_id = :blockId")
                 .forClass(BlockView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
                 .build()
                 .execute();
     }

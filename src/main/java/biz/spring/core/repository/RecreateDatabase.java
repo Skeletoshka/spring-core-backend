@@ -51,6 +51,8 @@ public class RecreateDatabase {
     @Autowired
     private NewsRepository newsRepository;
     @Autowired
+    private WorkGroupRepository workGroupRepository;
+    @Autowired
     private AttendanceRepository attendanceRepository;
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -80,7 +82,8 @@ public class RecreateDatabase {
                 requestPosRepository,
                 newsRepository,
                 attendanceRepository,
-                scheduleRepository
+                scheduleRepository,
+                workGroupRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{
