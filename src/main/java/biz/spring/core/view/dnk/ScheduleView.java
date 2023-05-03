@@ -2,29 +2,37 @@ package biz.spring.core.view.dnk;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class ScheduleView {
 
     @Schema(description = "ИД расписания")
+    @Column(name = "schedule_id")
     private Integer scheduleId;
 
     @Schema(description = "ИД программы обучения")
+    @Column(name = "studyprogram_id")
     private Integer studyProgramId;
 
     @Schema(description = "Наименование программы обучения")
+    @Column(name = "studyprogram_name")
     private String studyProgramName;
 
     @Schema(description = "ИД учебной группы")
+    @Column(name = "workgroup_id")
     private Integer workGroupId;
 
     @Schema(description = "Наименование учебной группы")
+    @Column(name = "workgroup_name")
     private String workGroupName;
 
     @Schema(description = "Место проведения занятия расписания")
+    @Column(name = "schedule_place")
     private String schedulePlace;
 
     @Schema(description = "Дата проведения занятия")
+    @Column(name = "schedule_date")
     private Date scheduleDate;
 
     public ScheduleView() {
