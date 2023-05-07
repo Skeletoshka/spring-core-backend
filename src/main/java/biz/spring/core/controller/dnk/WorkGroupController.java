@@ -91,4 +91,53 @@ public class WorkGroupController {
         workGroupService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
     }
+
+    @Operation(summary = "Метод для связывания объекта \"Учебная группа\" с объектом \"Ученик\"",
+            description = "Создается запись в таблице связи группа-ученик")
+    @RequestMapping(value = "/workgroup/bind", method = RequestMethod.POST)
+    public String bind(@RequestBody PeopleGroup workGroupBind){
+        workGroupService.bindWithPeople(workGroupBind.workGroupId, workGroupBind.peopleId);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Метод для удаления связи объекта \"Учебная группа\" с объектом \"Ученик\"",
+            description = "Удаляется запись в таблице связи группа-ученик")
+    @RequestMapping(value = "/workgroup/unbind", method = RequestMethod.POST)
+    public String unbind(@RequestBody PeopleGroup workGroupBind){
+        workGroupService.unBindWithPeople(workGroupBind.workGroupId, workGroupBind.peopleId);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    public static class PeopleGroup{
+
+        @Schema(description = "ИД учебной группы")
+        private Integer workGroupId;
+
+        @Schema(description = "ИД человека")
+        private Integer peopleId;
+
+        public PeopleGroup() {
+        }
+
+        public PeopleGroup(Integer workGroupId, Integer peopleId) {
+            this.workGroupId = workGroupId;
+            this.peopleId = peopleId;
+        }
+
+        public Integer getWorkGroupId() {
+            return workGroupId;
+        }
+
+        public void setWorkGroupId(Integer workGroupId) {
+            this.workGroupId = workGroupId;
+        }
+
+        public Integer getPeopleId() {
+            return peopleId;
+        }
+
+        public void setPeopleId(Integer peopleId) {
+            this.peopleId = peopleId;
+        }
+    }
 }

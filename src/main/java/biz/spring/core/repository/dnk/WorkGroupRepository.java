@@ -13,6 +13,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class WorkGroupRepository implements TableRepository<WorkGroup> {
@@ -20,6 +22,24 @@ public class WorkGroupRepository implements TableRepository<WorkGroup> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void bindWithPeople(Integer workGroupId, Integer peopleId){
+        String sql = "INSERT INTO peoplegroup (peoplegroup_id, people_id, workgroup_id) " +
+                "VALUES (:peoplegroup_id, :people_id, :workgroup_id)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("peoplegroup_id", DatabaseUtils.getSequenceNextValue("peoplegroup_id_gen"));
+        params.put("people_id", peopleId);
+        params.put("workGroupId", workGroupId);
+        executeSql(sql, params);
+    }
+
+    public void unBindWithPeople(Integer workGroupId, Integer peopleId){
+        String sql = "DELETE FROM peoplegroup WHERE  people_id = :people_id AND workgroup_id = :workgroup_id";
+        Map<String, Object> params = new HashMap<>();
+        params.put("people_id", peopleId);
+        params.put("workGroupId", workGroupId);
+        executeSql(sql, params);
+    }
 
     @Override
     public void create(){
@@ -32,7 +52,7 @@ public class WorkGroupRepository implements TableRepository<WorkGroup> {
 
     @Override
     public void drop(){
-        String[] tables = {"workgroup"};
+        String[] tables = {"workgroup", "peoplegroup"};
         drop(tables);
     }
 

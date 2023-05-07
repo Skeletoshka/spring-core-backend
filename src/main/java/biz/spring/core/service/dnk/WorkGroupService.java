@@ -65,4 +65,12 @@ public class WorkGroupService extends BaseService<WorkGroup> {
                 .build()
                 .executeOne(id);
     }
+
+    public void bindWithPeople(Integer workGroupId, Integer peopleId){
+        workGroupRepository.bindWithPeople(workGroupId, peopleId);
+    }
+
+    public void unBindWithPeople(Integer workGroupId, Integer peopleId){
+        workGroupRepository.unBindWithPeople(workGroupId, peopleId);
+    }
 }
