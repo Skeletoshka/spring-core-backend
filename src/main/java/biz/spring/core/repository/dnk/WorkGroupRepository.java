@@ -29,7 +29,7 @@ public class WorkGroupRepository implements TableRepository<WorkGroup> {
         Map<String, Object> params = new HashMap<>();
         params.put("peoplegroup_id", DatabaseUtils.getSequenceNextValue("peoplegroup_id_gen"));
         params.put("people_id", peopleId);
-        params.put("workGroupId", workGroupId);
+        params.put("workgroup_id", workGroupId);
         executeSql(sql, params);
     }
 
@@ -37,7 +37,7 @@ public class WorkGroupRepository implements TableRepository<WorkGroup> {
         String sql = "DELETE FROM peoplegroup WHERE  people_id = :people_id AND workgroup_id = :workgroup_id";
         Map<String, Object> params = new HashMap<>();
         params.put("people_id", peopleId);
-        params.put("workGroupId", workGroupId);
+        params.put("workgroup_id", workGroupId);
         executeSql(sql, params);
     }
 
