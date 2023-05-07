@@ -30,6 +30,7 @@ public class PeopleController {
         @Schema(description = "" +
                 "<ul>" +
                     "<li>capClassId - Классификатор" +
+                    "<li>workGroupId - Учебная группа" +
                 "</ul>")
         public List<NamedFilter> getNamedFilters() {
             return super.getNamedFilters();
@@ -46,6 +47,10 @@ public class PeopleController {
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName()));
         if(!capClassFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("capClassId", -1));
+        }
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "workGroupId".equals(nf.getName()));
+        if(!workGroupFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("workGroupId", -1));
         }
         List<PeopleView> result = peopleService.getAll(gridDataOption);
         Integer count = peopleService.getCount(gridDataOption);

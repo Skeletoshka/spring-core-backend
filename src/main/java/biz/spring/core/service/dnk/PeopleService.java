@@ -36,12 +36,15 @@ public class PeopleService extends BaseService<People> {
 
     public List<PeopleView> getAll(GridDataOption gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
-         && !nf.getValue().equals(-1));
+                && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "workGroupId".equals(nf.getName())
+                && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<PeopleView>(mainSql)
                 .forClass(PeopleView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .setLimit(gridDataOption.buildPageRequest())
                 .injectSqlIf(capClassFound, "/*CAPCLASS_PLACEHOLDER*/", "AND m0.capclass_id = :capClassId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND pg.workgroup_id = :workGroupId")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
                 .execute();
@@ -50,10 +53,13 @@ public class PeopleService extends BaseService<People> {
     public Integer getCount(GridDataOption gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
                 && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "workGroupId".equals(nf.getName())
+                && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<PeopleView>(mainSql)
                 .forClass(PeopleView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .injectSqlIf(capClassFound, "/*CAPCLASS_PLACEHOLDER*/", "AND m0.capclass_id = :capClassId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND pg.workgroup_id = :workGroupId")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
                 .count();
