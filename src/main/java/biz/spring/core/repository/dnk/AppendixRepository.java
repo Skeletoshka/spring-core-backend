@@ -46,7 +46,7 @@ public class AppendixRepository implements TableRepository<Appendix> {
                 new Appendix(3, "Отчетный материал 3", "Отчетный материал 3.txt")
         };
         insert(Arrays.asList(appendixs));
-        DatabaseUtils.setSequenceValue("appendix_id_gen", appendixs.length+1);
+        //DatabaseUtils.setSequenceValue("appendix_id_gen", appendixs.length+1);
 
     }
 

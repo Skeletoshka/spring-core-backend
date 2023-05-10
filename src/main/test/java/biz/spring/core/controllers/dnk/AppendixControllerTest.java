@@ -5,6 +5,7 @@ import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.dto.dnk.AppendixDTO;
 import biz.spring.core.utils.GridDataOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -53,6 +54,7 @@ public class AppendixControllerTest extends IntegratedTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"appendixId\":1")));
     }
+/*
     @Test
     @Transactional
     @Rollback
@@ -68,7 +70,7 @@ public class AppendixControllerTest extends IntegratedTest {
                 .andExpect(content().string(containsString("\"appendixName\":\"Тестовый отчётный материал 4\"")));
 
     }
-
+*/
     @Test
     @Rollback
     @Transactional

@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.AppendixDTO;
 import biz.spring.core.model.dnk.Appendix;
+import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.repository.dnk.AppendixRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.DocumentRealService;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,8 @@ public class AppendixController {
     private AppendixRepository appendixRepository;
     @Autowired
     private DocumentRealService documentRealService;
+    @Autowired
+    private DocumentRealRepository documentRealRepository;
     @Autowired
     private EMSService emsService;
 
