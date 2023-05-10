@@ -1,7 +1,6 @@
 package biz.spring.core.repository.dnk;
-
-import biz.spring.core.config.JdbcConnection;
 import biz.spring.core.model.dnk.Appendix;
+
 import biz.spring.core.repository.TableRepository;
 import biz.spring.core.utils.DatabaseUtils;
 import org.slf4j.Logger;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 
 @Repository
 public class AppendixRepository implements TableRepository<Appendix> {
+
     private static Logger logger = LoggerFactory.getLogger(AppendixRepository.class);
 
     @Autowired
@@ -24,7 +24,7 @@ public class AppendixRepository implements TableRepository<Appendix> {
 
     @Override
     public void create() {
-        Resource resource = new ClassPathResource("sql/200300-appendix.sql");
+        Resource resource = new ClassPathResource("sql/dnk/200300-appendix.sql");
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         databasePopulator.setSqlScriptEncoding("UTF-8");
         databasePopulator.execute(jdbcTemplate.getDataSource());
@@ -33,19 +33,21 @@ public class AppendixRepository implements TableRepository<Appendix> {
 
     @Override
     public void drop() {
-        String[] tables = {"appendix"};
+        String[] tables = {"appendix", "material"};
         drop(tables);
     }
+
 
     @Override
     public void load(){
         Appendix[] appendixs = {
-                new Appendix(1, "Отчетный материал 1", ".", 1, 1),
-                new Appendix(2, "Отчетный материал 2", "..", 2, 2),
-                new Appendix(3, "Отчетный материал 3", "..", 3, 3)
+                new Appendix(1, "Отчетный материал 1", "Отчетный материал 1.txt"),
+                new Appendix(2, "Отчетный материал 2", "Отчетный материал 2.txt"),
+                new Appendix(3, "Отчетный материал 3", "Отчетный материал 3.txt")
         };
         insert(Arrays.asList(appendixs));
         DatabaseUtils.setSequenceValue("appendix_id_gen", appendixs.length+1);
+
     }
 
 }

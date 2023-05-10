@@ -29,10 +29,10 @@ public class BlockController {
     private BlockService blockService;
 
 
-    @RequestMapping(value = "/block/get", method = RequestMethod.POST)
     @Operation(summary = "Возвращает объект \"Блоки\"",
             description = "Возвращает объект \"Блоки\" по его идентификатору. При отсутствии идентификатора - " +
                     "возвращается объект с полями по умолчанию")
+    @RequestMapping(value = "/block/get", method = RequestMethod.POST)
     public BlockDTO get(@RequestBody(required = false) Integer id){
         if(id == null){
             return new BlockDTO();
@@ -43,9 +43,9 @@ public class BlockController {
             return dto;
         }
     }
-    @RequestMapping(value = "/block/save", method = RequestMethod.POST)
     @Operation(summary = "Метод для сохранения объекта \"Блоки\"",
             description = "Запись с заполненным идентификатором обновляется, а с пустым вставляется")
+    @RequestMapping(value = "/block/save", method = RequestMethod.POST)
     public BlockView save(@RequestBody BlockDTO blockDTO){
         Block block;
         if(blockDTO.getBlockId()==null){
@@ -56,9 +56,9 @@ public class BlockController {
         return blockService.getOne(block.getBlockId());
     }
 
-    @RequestMapping(value = "/block/delete", method = RequestMethod.POST)
     @Operation(summary = "Метод для удаления объекта \"Блоки\"",
             description = "Удаляются записи с переданными идентификаторами")
+    @RequestMapping(value = "/block/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids){
         blockService.delete(ids);
         return BaseService.STANDARD_SUCCESS;

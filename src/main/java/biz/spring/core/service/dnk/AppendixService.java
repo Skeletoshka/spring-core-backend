@@ -8,6 +8,8 @@ import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.AppendixValidator;
 import biz.spring.core.view.dnk.AppendixView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import biz.spring.core.repository.dnk.AppendixRepository;
 
@@ -26,22 +28,18 @@ public class AppendixService extends BaseService<Appendix> {
     @PostConstruct
     public void init() { init(appendixRepository, appendixValidator); }
 
-    private final String mainSql = "" +
-            "SELECT * " +
-            "FROM appendix";
+    @Value("classpath:/script/dnk/appendix/mainSql.sql")
+    Resource mainSql;
 
-    private final String mainSqlForOne = "" +
-            "SELECT * " +
-            "FROM appendix " +
-            "WHERE appendix_id = :id";
+    @Value("classpath:/script/dnk/appendix/mainSqlForOne.sql")
+    Resource mainSqlForOne;
 
     public List<AppendixView> getAll(GridDataOption gridDataOption){
         boolean findAppendix = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "appendixId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AppendixView>(mainSql)
+                .forClass(AppendixView.class, "m0")
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
-                .injectSqlIf(findAppendix, "/*APPENDIX_PLACEHOLDER*/", " AND appendix_id = :appendixId")
-                .forClass(AppendixView.class, "m0")
                 .build()
                 .execute();
     }
@@ -53,4 +51,17 @@ public class AppendixService extends BaseService<Appendix> {
                 .executeOne(id);
     }
 
+    public Integer getCount(GridDataOption gridDataOption){
+        boolean blockFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
+                "blockId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<AppendixView>(mainSql)
+                .forClass(AppendixView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(blockFound, "/*BLOCK_PLACEHOLDER*/", "AND m0.block_id = :blockId")
+                .setParams(gridDataOption.buildParams())
+                .build()
+                .count();
+    }
 }

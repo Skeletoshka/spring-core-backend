@@ -17,27 +17,15 @@ public class AppendixView {
     @Schema(description = "Путь вложения")
     private String appendixPath;
 
-    @Column(name = "block_id")
-    @Schema(description = "ИД блока")
-    private Integer blockId;
-
-    @Column(name = "people_id")
-    @Schema(description = "ИД человека")
-    private Integer peopleId;
-
     public AppendixView(){
     }
 
     public AppendixView(Integer appendixId,
                        String appendixName,
-                       String appendixPath,
-                       Integer blockId,
-                       Integer peopleId) {
+                       String appendixPath) {
         this.appendixId = appendixId;
         this.appendixName = appendixName;
         this.appendixPath = appendixPath;
-        this.blockId = blockId;
-        this.peopleId = peopleId;
     }
 
     public Integer getAppendixId() {
@@ -62,21 +50,5 @@ public class AppendixView {
 
     public void setAppendixPath(String appendixPath) {
         this.appendixPath = appendixPath;
-    }
-
-    public Integer getBlockId() {
-        return blockId;
-    }
-
-    public void setBlockId(Integer blockId) {
-        this.blockId = blockId;
-    }
-
-    public Integer getPeopleId() {
-        return peopleId;
-    }
-
-    public void setPeopleId(Integer peopleId) {
-        this.peopleId = peopleId;
     }
 }

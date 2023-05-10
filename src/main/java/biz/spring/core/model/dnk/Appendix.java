@@ -26,27 +26,15 @@ public class Appendix {
     @Size(max = 100, message = "Поле \"Ссылка вложения\" не может иметь больше {max} символов")
     private String appendixPath;
 
-    @Column(name = "block_id", nullable = false)
-    @NotNull(message = "Поле \"ИД блока\" не может быть NULL")
-    private Integer blockId;
-
-    @Column(name = "people_id", nullable = false)
-    @NotNull(message = "Поле \"ИД человека\" не может быть NULL")
-    private Integer peopleId;
-
     public Appendix() {
     }
 
     public Appendix(Integer appendixId,
                     String appendixName,
-                    String appendixPath,
-                    Integer blockId,
-                    Integer peopleId) {
+                    String appendixPath) {
         this.appendixId = appendixId;
         this.appendixName = appendixName;
         this.appendixPath = appendixPath;
-        this.blockId = blockId;
-        this.peopleId = peopleId;
     }
 
     public Integer getAppendixId() {
@@ -71,21 +59,5 @@ public class Appendix {
 
     public void setAppendixPath(String appendixPath) {
         this.appendixPath = appendixPath;
-    }
-
-    public Integer getBlockId() {
-        return blockId;
-    }
-
-    public void setBlockId(Integer blockId) {
-        this.blockId = blockId;
-    }
-
-    public Integer getPeopleId() {
-        return peopleId;
-    }
-
-    public void setPeopleId(Integer peopleId) {
-        this.peopleId = peopleId;
     }
 }

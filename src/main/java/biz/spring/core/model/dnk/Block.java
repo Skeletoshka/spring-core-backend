@@ -32,11 +32,11 @@ public class Block {
     private Integer blockNum;
 
     @Column(name = "block_visible", nullable = false)
-    @NotNull(message = "\"Поле \\\"Отображение блока\\\" не может быть null, ну пчел, ты...\"")
+    @NotNull(message = "\"Поле \\\"Отображение блока\\\" не может быть NULL\"")
     private Integer blockVisible;
 
     @Column(name = "capclass_id", nullable = false)
-    @NotNull(message = "\"Поле \\\"Копатыч класс\\\" не может быть null\"")
+    @NotNull(message = "\"Поле \\\"Классификатор блока\\\" не может быть null\"")
     private Integer capclassId;
 
     @Column(name = "block_desc", nullable = false)

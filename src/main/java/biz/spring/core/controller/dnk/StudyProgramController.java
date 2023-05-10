@@ -55,10 +55,10 @@ public class StudyProgramController {
         }
     }
 
-    @RequestMapping(value = "/studyprogram/getlist", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения списка объектов \"Программа обучения\"",
         description = "Возвращает список объектов \"Программа обучения\" согласно переданным фильтрам")
-    public List<StudyProgramView> getList(@RequestBody StudyProgramController.GridDataOptionStudyProgram gridDataOption){
+    @RequestMapping(value = "/studyprogram/getlist", method = RequestMethod.POST)
+    public List<StudyProgramView> getList(@RequestBody GridDataOptionStudyProgram gridDataOption){
         boolean directionFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "directionId".equals(nf.getName()));
         if(!directionFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("directionId", -1));
@@ -74,10 +74,10 @@ public class StudyProgramController {
         return studyProgramService.getAll(gridDataOption);
     }
 
-    @RequestMapping(value = "/studyprogram/get", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения объекта \"Программа обучения\" по его идентификатору",
         description = "Возвращает объект \"Программа обучения\" по его идентификатору." +
                 " Если идентификатор пуст, возращает объект по умолчанию")
+    @RequestMapping(value = "/studyprogram/get", method = RequestMethod.POST)
     public StudyProgramDTO get(@RequestBody(required = false ) Integer id){
         if (id == null){
             return new StudyProgramDTO();
