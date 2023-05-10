@@ -3,7 +3,6 @@ package biz.spring.core.repository.dnk;
 
 import biz.spring.core.model.dnk.StudyProgram;
 import biz.spring.core.repository.TableRepository;
-import biz.spring.core.utils.DatabaseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

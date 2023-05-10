@@ -38,7 +38,7 @@ public class StudyCaseRepository implements TableRepository<StudyCase> {
 
     public void load() {
         StudyCase[] studyCases = {
-                new StudyCase(1, 1, "Теории заговора", "Слава очень долго подозревал, что за ним следят..", 1, 1),
+                new StudyCase(1, 1, "Теории заговора", "Тестовый кейс", 1, 1),
                 new StudyCase(2, 1, "Оглавление", "Тут был хороший текст", 2, 1),
                 new StudyCase(3, 1, "Мне лень придумывать название", "Высокоинтеллектуальный текст", 3, 1)
         };

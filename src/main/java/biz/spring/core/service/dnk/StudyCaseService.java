@@ -7,6 +7,7 @@ import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.StudyCaseValidator;
 import biz.spring.core.view.dnk.StudyCaseView;
+import biz.spring.core.view.dnk.WorkGroupView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -28,12 +29,41 @@ public class StudyCaseService extends BaseService<StudyCase> {
 
     @Value("classpath:/script/dnk/studycase/mainSqlForOne.sql")
     Resource mainSqlForOne;
+    @Value("classpath:/script/dnk/studycase/mainSql.sql")
+    Resource mainSql;
 
     public StudyCaseView getOne(Integer id){
         return new Query.QueryBuilder<StudyCaseView>(mainSqlForOne)
                 .forClass(StudyCaseView.class, "m0")
                 .build()
                 .executeOne(id);
+    }
+
+    public List<StudyCaseView> getAll(GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<StudyCaseView>(mainSql)
+                .forClass(StudyCaseView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyprogramId")
+                .build()
+                .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<StudyCaseView>(mainSql)
+                .forClass(StudyCaseView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyprogramId")
+                .build()
+                .count();
     }
 
 }
