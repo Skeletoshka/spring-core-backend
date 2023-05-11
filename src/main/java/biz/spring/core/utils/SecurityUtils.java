@@ -32,5 +32,7 @@ public class SecurityUtils {
         }).flatMap(List::stream).collect(Collectors.toList());
         controlObjectRepository.insert(controlObjectApplication.stream().filter(
                 controlObject -> controlObjects.stream().noneMatch(controlObject::equals)).collect(Collectors.toList()));
+        controlObjectRepository.update(controlObjectApplication.stream().filter(
+                controlObject -> controlObjects.stream().anyMatch(controlObject::equals)).collect(Collectors.toList()));
     }
 }

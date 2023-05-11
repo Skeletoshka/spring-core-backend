@@ -66,7 +66,7 @@ public class ControlObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ControlObject that = (ControlObject) o;
-        return controlObjectUrl.equals(that.controlObjectUrl) &&
+        return controlObjectUrl.equals(that.controlObjectUrl) ||
                 Objects.equals(controlObjectName, that.controlObjectName);
     }
 

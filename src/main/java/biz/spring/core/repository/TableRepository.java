@@ -85,6 +85,10 @@ public interface TableRepository<T> {
         objects.forEach(this::insert);
     }
 
+    default void update(List<T> objects){
+        objects.forEach(this::update);
+    }
+
     default Integer update(T object){
         NamedParameterJdbcTemplate jdbc = OrmUtils.getJDBC();
         TableMetadata tableMetadata = metaDataMap.get(OrmUtils.getTableName(this.getClass()).toLowerCase(Locale.ROOT));
