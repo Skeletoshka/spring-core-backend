@@ -5,6 +5,7 @@ import biz.spring.core.dto.ProgUserDTO;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.response.DataResponse;
+import biz.spring.core.security.JwtUtils;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.ProgUserService;
 import biz.spring.core.utils.GridDataOption;
@@ -34,6 +35,8 @@ public class ProguserController {
 
     @Autowired
     private ProgUserService progUserService;
+    @Autowired
+    private ProgUserRepository progUserRepository;
     @Autowired
     PasswordEncoder encoder;
 
@@ -78,11 +81,11 @@ public class ProguserController {
         dto.setProgUserPassword(encoder.encode(dto.getProgUserPassword()));
         if(dto.getProgUserId()==null){
             result = progUserService.add(dto.toEntity());
-            progUserService.updateRoles(result.getProgUserId(), dto.getAccessRoleViews());
+            progUserRepository.createToken(result.getProgUserId(), JwtUtils.createToken());
         }else{
             result = progUserService.edit(dto.toEntity());
-            progUserService.updateRoles(result.getProgUserId(), dto.getAccessRoleViews());
         }
+        progUserService.updateRoles(result.getProgUserId(), dto.getAccessRoleViews());
         return progUserService.getOne(result.getProgUserId());
     }
 
