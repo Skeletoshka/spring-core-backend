@@ -14,8 +14,7 @@ public class EMSService {
     private String path;
 
     public String upload(MultipartFile saveFile){
-        try{
-            BufferedInputStream buff = new BufferedInputStream(saveFile.getInputStream());
+        try(BufferedInputStream buff = new BufferedInputStream(saveFile.getInputStream())){
             String fileName = Arrays.hashCode(saveFile.getBytes())  + ".txt";
             File file = new File(path + File.separator + fileName);
             java.nio.file.Files.copy(buff, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
