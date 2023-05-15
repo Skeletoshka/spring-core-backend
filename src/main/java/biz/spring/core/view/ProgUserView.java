@@ -30,6 +30,18 @@ public class ProgUserView {
     @Schema(description = "ИД человека")
     private Integer peopleId;
 
+    @Column(name = "people_name")
+    @Schema(description = "Имя человека")
+    private String peopleName;
+
+    @Column(name = "people_lastname")
+    @Schema(description = "Фамилия человека")
+    private String peopleLastName;
+
+    @Column(name = "people_middlename")
+    @Schema(description = "Отчество человека")
+    private String peopleMiddleName;
+
     public ProgUserView() {
     }
 
@@ -93,5 +105,29 @@ public class ProgUserView {
 
     public void setPeopleId(Integer peopleId) {
         this.peopleId = peopleId;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
+    }
+
+    public String getPeopleLastName() {
+        return peopleLastName;
+    }
+
+    public void setPeopleLastName(String peopleLastName) {
+        this.peopleLastName = peopleLastName;
+    }
+
+    public String getPeopleMiddleName() {
+        return peopleMiddleName;
+    }
+
+    public void setPeopleMiddleName(String peopleMiddleName) {
+        this.peopleMiddleName = peopleMiddleName;
     }
 }

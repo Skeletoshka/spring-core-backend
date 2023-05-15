@@ -30,6 +30,15 @@ public class ProgUserDTO {
     @Schema(description = "Список ролей пользователя")
     private List<AccessRoleView> accessRoleViews;
 
+    @Schema(description = "Имя")
+    private String peopleName;
+
+    @Schema(description = "Фамилия")
+    private String peopleLastName;
+
+    @Schema(description = "Отчество")
+    private String peopleMiddleName;
+
     public ProgUserDTO() {
     }
 
@@ -115,5 +124,29 @@ public class ProgUserDTO {
         entity.setProgUserPassword(this.progUserPassword);
         entity.setProgUserActive(this.progUserActive);
         return entity;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
+    }
+
+    public String getPeopleLastName() {
+        return peopleLastName;
+    }
+
+    public void setPeopleLastName(String peopleLastName) {
+        this.peopleLastName = peopleLastName;
+    }
+
+    public String getPeopleMiddleName() {
+        return peopleMiddleName;
+    }
+
+    public void setPeopleMiddleName(String peopleMiddleName) {
+        this.peopleMiddleName = peopleMiddleName;
     }
 }
