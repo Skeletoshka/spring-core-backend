@@ -42,7 +42,7 @@ public class ServiceController {
 
     @Operation(summary = "Возвращает список объектов \"Услуга\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
-    @RequestMapping(value = "/activity/getlist", method = RequestMethod.POST)
+    @RequestMapping(value = "/service/getlist", method = RequestMethod.POST)
     public DataResponse<ServiceView> getList(@RequestBody GridDataOptionService gridDataOption){
         List<ServiceView> result = serviceService.getAll(gridDataOption);
         Integer count = serviceService.getCount(gridDataOption);

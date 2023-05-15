@@ -6,6 +6,8 @@ import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.StudyProgram;
 import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.repository.dnk.StudyProgramRepository;
+import biz.spring.core.response.DataResponse;
+import biz.spring.core.service.BaseService;
 import biz.spring.core.service.DocumentRealService;
 import biz.spring.core.service.dnk.StudyProgramService;
 import biz.spring.core.utils.GridDataOption;
@@ -58,7 +60,7 @@ public class StudyProgramController {
     @Operation(summary = "Метод для получения списка объектов \"Программа обучения\"",
         description = "Возвращает список объектов \"Программа обучения\" согласно переданным фильтрам")
     @RequestMapping(value = "/studyprogram/getlist", method = RequestMethod.POST)
-    public List<StudyProgramView> getList(@RequestBody GridDataOptionStudyProgram gridDataOption){
+    public DataResponse<StudyProgramView> getList(@RequestBody GridDataOptionStudyProgram gridDataOption){
         boolean directionFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "directionId".equals(nf.getName()));
         if(!directionFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("directionId", -1));
@@ -71,7 +73,9 @@ public class StudyProgramController {
         if(!assistantFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("assistantId", -1));
         }
-        return studyProgramService.getAll(gridDataOption);
+        List<StudyProgramView> result = studyProgramService.getAll(gridDataOption);
+        Integer count = studyProgramService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @Operation(summary = "Метод для получения объекта \"Программа обучения\" по его идентификатору",

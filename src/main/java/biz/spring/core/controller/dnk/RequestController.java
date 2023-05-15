@@ -4,6 +4,7 @@ import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.RequestDTO;
 import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.Request;
+import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.DocumentRealService;
@@ -37,6 +38,8 @@ public class RequestController {
 
     @Autowired
     private DocumentRealService documentRealService;
+    @Autowired
+    private DocumentRealRepository documentRealRepository;
 
     public static class GridDataOptionRequest extends GridDataOption {
         @Schema(description = "" +
@@ -84,6 +87,9 @@ public class RequestController {
             dto.setRequestId(documentReal.getDocumentRealId());
             result = requestService.add(dto.toEntity());
         }else{
+            documentReal = documentRealRepository.get(dto.getRequestId());
+            dto.setDocumentRealDateCreate(documentReal.getDocumentRealDateCreate());
+            dto.setDocumentTransitId(documentReal.getDocumentTransitId());
             documentRealService.edit(dto.toDocumentReal());
             result = requestService.edit(dto.toEntity());
         }

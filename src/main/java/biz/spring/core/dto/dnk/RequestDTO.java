@@ -21,7 +21,7 @@ public class RequestDTO {
     private String documentRealNumber;
 
     @Schema(description = "Дата документа")
-    private Date documentRealDate;
+    private Date documentRealDateCreate;
 
     @Schema(description = "Ид пользователя")
     private Integer progUserId;
@@ -101,12 +101,12 @@ public class RequestDTO {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealDate() {
-        return documentRealDate;
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
     }
 
-    public void setDocumentRealDate(Date documentRealDate) {
-        this.documentRealDate = documentRealDate;
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
     }
 
     public Integer getProgUserId() {
