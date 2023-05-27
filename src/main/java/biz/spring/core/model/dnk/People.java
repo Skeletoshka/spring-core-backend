@@ -54,6 +54,9 @@ public class People {
     @Column(name = "people_datedelete", nullable = false)
     private Date peopleDateDelete;
 
+    @Column(name = "company_id")
+    private Integer companyId;
+
     public People() {
     }
 
@@ -66,7 +69,8 @@ public class People {
                       String peopleEmail,
                       String peoplePhone,
                       Integer peopleDeleteFlag,
-                      Date peopleDateDelete
+                      Date peopleDateDelete,
+                      Integer companyId
                       ) {
         this.peopleId = peopleId;
         this.peopleName= peopleName;
@@ -78,7 +82,7 @@ public class People {
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
         this.peopleDateDelete = peopleDateDelete;
-        
+        this.companyId = companyId;
     }
 
     public Integer getPeopleId() {
@@ -152,5 +156,13 @@ public class People {
 
     public void setPeopleDateDelete(Date peopleDateDelete) {
         this.peopleDateDelete = peopleDateDelete;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }

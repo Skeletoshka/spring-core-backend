@@ -47,11 +47,11 @@ public class PeopleRepository implements TableRepository<People> {
     public void load(){
         People[] people = {
                 new People(1, "Иван", "Иванов", "Иванович",
-                        new Date(), 1, "test@mail.ru", "89999999999", 0, null),
+                        new Date(), 1, "test@mail.ru", "89999999999", 0, null, null),
                 new People(2, "Петр", "Петров", "Петрович",
-                        new Date(), 2, "test123@mail.ru", "89999999999", 0, null),
+                        new Date(), 2, "test123@mail.ru", "89999999999", 0, null, null),
                 new People(3, "Салимов", "Сергей", "Пушкович",
-                        new Date(), 1, "test321@mail.ru", "89999999999", 1, new Date())
+                        new Date(), 1, "test321@mail.ru", "89999999999", 1, new Date(), null)
         };
         insert(Arrays.asList(people));
         DatabaseUtils.setSequenceValue("people_id_gen", people.length+1);

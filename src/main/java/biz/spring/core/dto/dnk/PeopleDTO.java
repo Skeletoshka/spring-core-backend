@@ -40,6 +40,12 @@ public class PeopleDTO {
     @Schema(description = "Дата удаления")
     private Date peopleDateDelete;
 
+    @Schema(description = "ИД компании")
+    private Integer companyId;
+
+    @Schema(description = "Наименование компании")
+    private Integer companyName;
+
     public PeopleDTO() {
     }
 
@@ -52,7 +58,8 @@ public class PeopleDTO {
                   String peopleEmail,
                   String peoplePhone,
                   Integer peopleDeleteFlag,
-                  Date peopleDateDelete
+                  Date peopleDateDelete,
+                  Integer companyId
     ) {
         this.peopleId = peopleId;
         this.peopleName= peopleName;
@@ -64,7 +71,7 @@ public class PeopleDTO {
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
         this.peopleDateDelete = peopleDateDelete;
-
+        this.companyId = companyId;
     }
     public void setPeopleName(String peopleName) {
         this.peopleName = peopleName;
@@ -162,6 +169,23 @@ public class PeopleDTO {
         people.setPeoplePhone(this.peoplePhone);
         people.setPeopleDeleteFlag(this.peopleDeleteFlag);
         people.setPeopleDateDelete(this.peopleDateDelete);
+        people.setCompanyId(this.companyId);
         return people;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public Integer getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(Integer companyName) {
+        this.companyName = companyName;
     }
 }

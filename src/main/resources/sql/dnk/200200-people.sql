@@ -9,6 +9,7 @@ CREATE TABLE people (
 	people_phone VARCHAR(50) NULL,
 	people_deleteflag INTEGER NOT NULL,
 	people_datedelete DATE NULL,
+	company_id INTEGER,
 	CONSTRAINT people_pk PRIMARY KEY (people_id)
 );
 CREATE SEQUENCE people_id_gen

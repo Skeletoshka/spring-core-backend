@@ -53,6 +53,14 @@ public class PeopleView {
     @Schema(description = "Дата удаления человека")
     private Date peopleDateDelete;
 
+    @Column(name = "company_id")
+    @Schema(description = "ИД компании")
+    private Integer companyId;
+
+    @Column(name = "company_name")
+    @Schema(description = "Наименование компании")
+    private Integer companyName;
+
     public PeopleView() {
     }
 
@@ -65,7 +73,8 @@ public class PeopleView {
                   String peopleEmail,
                   String peoplePhone,
                   Integer peopleDeleteFlag,
-                  Date peopleDateDelete
+                  Date peopleDateDelete,
+                  Integer companyId
     ) {
         this.peopleId = peopleId;
         this.peopleName= peopleName;
@@ -77,7 +86,7 @@ public class PeopleView {
         this.peoplePhone = peoplePhone;
         this.peopleDeleteFlag = peopleDeleteFlag;
         this.peopleDateDelete = peopleDateDelete;
-
+        this.companyId = companyId;
     }
 
     public Integer getPeopleId() {
@@ -157,6 +166,22 @@ public class PeopleView {
 
     public void setCapClassName(String capClassName) {
         this.capClassName = capClassName;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public Integer getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(Integer companyName) {
+        this.companyName = companyName;
     }
 }
 
