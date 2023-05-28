@@ -37,7 +37,7 @@ public class Block {
 
     @Column(name = "capclass_id", nullable = false)
     @NotNull(message = "\"Поле \\\"Классификатор блока\\\" не может быть null\"")
-    private Integer capclassId;
+    private Integer capClassId;
 
     @Column(name = "block_desc", nullable = false)
     @Size(max = 255, message = "\"Поле \\\"Описание блока\\\" не может быть более {max} символов\")")
@@ -52,14 +52,14 @@ public class Block {
                  Integer studyCaseId,
                  Integer blockNum,
                  Integer blockVisible,
-                 Integer capclassId,
+                 Integer capClassId,
                  String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
         this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
-        this.capclassId = capclassId;
+        this.capClassId = capClassId;
         this.blockDesc = blockDesc;
     }
 
@@ -103,12 +103,12 @@ public class Block {
         this.blockVisible = blockVisible;
     }
 
-    public Integer getCapclassId() {
-        return capclassId;
+    public Integer getCapClassId() {
+        return capClassId;
     }
 
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
     }
 
     public String getBlockDesc() {

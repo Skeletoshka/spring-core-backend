@@ -21,7 +21,7 @@ public class BlockDTO {
     private Integer blockVisible;
 
     @Schema(description = "ИД классификатора")
-    private Integer capclassId;
+    private Integer capClassId;
 
     @Schema(description = "Описание блока")
     private String blockDesc;
@@ -34,14 +34,14 @@ public class BlockDTO {
                     Integer studyCaseId,
                     Integer blockNum,
                     Integer blockVisible,
-                    Integer capclassId,
+                    Integer capClassId,
                     String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
         this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
-        this.capclassId = capclassId;
+        this.capClassId = capClassId;
         this.blockDesc = blockDesc;
     }
 
@@ -85,12 +85,12 @@ public class BlockDTO {
         this.blockVisible = blockVisible;
     }
 
-    public Integer getCapclassId() {
-        return capclassId;
+    public Integer getCapClassId() {
+        return capClassId;
     }
 
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
     }
 
     public String getBlockDesc() {
@@ -109,7 +109,7 @@ public class BlockDTO {
         entity.setStudyCaseId(this.studyCaseId);
         entity.setBlockNum(this.blockNum);
         entity.setBlockVisible(this.blockVisible);
-        entity.setCapclassId(this.capclassId);
+        entity.setCapClassId(this.capClassId);
         return entity;
     }
 }

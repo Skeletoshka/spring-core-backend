@@ -28,7 +28,7 @@ public class BlockView {
 
     @Schema(description = "ИД классификатора")
     @Column(name = "capclass_id")
-    private Integer capclassId;
+    private Integer capClassId;
 
     @Schema(description = "Описание блока")
     @Column(name = "block_desc")
@@ -42,14 +42,14 @@ public class BlockView {
                      Integer studyCaseId,
                      Integer blockNum,
                      Integer blockVisible,
-                     Integer capclassId,
+                     Integer capClassId,
                      String blockDesc){
         this.blockId = blockId;
         this.blockName = blockName;
         this.studyCaseId = studyCaseId;
         this.blockNum = blockNum;
         this.blockVisible = blockVisible;
-        this.capclassId = capclassId;
+        this.capClassId = capClassId;
         this.blockDesc = blockDesc;
     }
 
@@ -93,12 +93,12 @@ public class BlockView {
         this.blockVisible = blockVisible;
     }
 
-    public Integer getCapclassId() {
-        return capclassId;
+    public Integer getCapClassId() {
+        return capClassId;
     }
 
-    public void setCapclassId(Integer capclassId) {
-        this.capclassId = capclassId;
+    public void setCapClassId(Integer capClassId) {
+        this.capClassId = capClassId;
     }
 
     public String getBlockDesc() {
