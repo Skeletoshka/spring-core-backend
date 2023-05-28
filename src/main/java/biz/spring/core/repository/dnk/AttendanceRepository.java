@@ -13,6 +13,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class AttendanceRepository implements TableRepository<Attendance> {
@@ -20,6 +22,22 @@ public class AttendanceRepository implements TableRepository<Attendance> {
     private static Logger logger = LoggerFactory.getLogger(AttendanceRepository.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void deleteAttendances(Integer scheduleId){
+        String sql = "DELETE FROM attendance WHERE schedule_id = :schedule_id";
+        executeSql(sql, "schedule_id", scheduleId);
+    }
+
+    public void saveAttendance(Integer scheduleId, Integer peopleId, Integer attendancePresenceFlag){
+        String sql = "INSERT INTO attendance (attendance_id, schedule_id, people_id, attendance_presenceflag) VALUES " +
+                "(:attendance_id, :schedule_id, :people_id, :attendance_presenceflag)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("attendance_id", DatabaseUtils.getSequenceNextValue("attendance_id_gen"));
+        params.put("people_id", peopleId);
+        params.put("schedule_id", scheduleId);
+        params.put("attendance_presenceflag", attendancePresenceFlag);
+        executeSql(sql, params);
+    }
 
     @Override
     public void create() {

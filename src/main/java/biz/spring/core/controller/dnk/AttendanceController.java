@@ -37,8 +37,8 @@ public class AttendanceController {
         @Schema(description = "" +
                 "<ul>" +
                 "<li> peopleId - ИД человека " +
-                "<li> studyProgramId - ИД программы обучения " +
-                "<li> scheduleDate - Дата и время программы обучения " +
+                "<li> scheduleId - ИД занятия " +
+                "<li> workGroupId - ИД группы" +
                 "</ul>")
         public List<NamedFilter> getNamedFilters() {
             return super.getNamedFilters();
@@ -53,13 +53,13 @@ public class AttendanceController {
         if(!peopleFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("peopleId", -1));
         }
-        boolean studyProgramFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("studyProgramId"));
-        if(!studyProgramFound){
-            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("studyProgramId", -1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("workGroupId"));
+        if(!workGroupFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("workGroupId", -1));
         }
-        boolean scheduleDateFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("scheduleDate"));
-        if(!scheduleDateFound){
-            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("scheduleDate", -1));
+        boolean scheduleId = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("scheduleId"));
+        if(!scheduleId){
+            throw new RuntimeException("Требуется обязательный фильтр по занятию");
         }
         List<AttendanceView> result = attendanceService.getAll(gridDataOption);
         Integer count = attendanceService.getCount(gridDataOption);
@@ -69,37 +69,42 @@ public class AttendanceController {
     @Operation(summary = "Сохраняет объект \"Посещаемость\"",
             description = "Сохраняет объект в базу данных. " +
                     "Если идентификатор пуст, то объект вставляется, иначе обновляется")
-    @RequestMapping(value = "/attendance/get", method = RequestMethod.POST)
-    public AttendanceDTO get(@RequestBody(required = false) Integer id){
-        if(id == null){
-            return new AttendanceDTO();
-        }else{
-            AttendanceDTO dto = new AttendanceDTO();
-            AttendanceView view = attendanceService.getOne(id);
-            BeanUtils.copyProperties(view, dto);
-            return dto;
-        }
-    }
-
-    @Operation(summary = "Сохраняет объект \"Посещаемость\"",
-            description = "Сохраняет объект в базу данных. " +
-                    "Если идентификатор пуст, то объект вставляется, иначе обновляется")
     @RequestMapping(value = "/attendance/save", method = RequestMethod.POST)
-    public AttendanceView save(@RequestBody AttendanceDTO dto){
-        Attendance result;
-        if(dto.getAttendanceId() == null){
-            result = attendanceService.add(dto.toEntity());
-        }else{
-            result = attendanceService.edit(dto.toEntity());
-        }
-        return attendanceService.getOne(result.getAttendanceId());
+    public String save(@RequestBody AttendanceSaveDTO dto){
+        attendanceService.saveAttendance(dto.scheduleId, dto.attendances);
+        return BaseService.STANDARD_SUCCESS;
     }
 
-    @Operation(summary = "Удаляет объекты \"Посещаемость\"",
-            description = "Удаляет объекты с переданными идентификаторами")
-    @RequestMapping(value = "/attendance/delete", method = RequestMethod.POST)
-    public String delete(@RequestBody int[] ids){
-        attendanceService.delete(ids);
-        return BaseService.STANDARD_SUCCESS;
+    private static class AttendanceSaveDTO{
+        @Schema(description = "ИД занятия")
+        private Integer scheduleId;
+
+        @Schema(description = "Посещаемость занятия")
+        private List<AttendanceDTO> attendances;
+
+        public AttendanceSaveDTO() {
+        }
+
+        public AttendanceSaveDTO(Integer scheduleId,
+                                 List<AttendanceDTO> attendances) {
+            this.scheduleId = scheduleId;
+            this.attendances = attendances;
+        }
+
+        public Integer getScheduleId() {
+            return scheduleId;
+        }
+
+        public void setScheduleId(Integer scheduleId) {
+            this.scheduleId = scheduleId;
+        }
+
+        public List<AttendanceDTO> getAttendances() {
+            return attendances;
+        }
+
+        public void setAttendances(List<AttendanceDTO> attendances) {
+            this.attendances = attendances;
+        }
     }
 }

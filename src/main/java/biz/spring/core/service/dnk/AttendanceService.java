@@ -1,5 +1,6 @@
 package biz.spring.core.service.dnk;
 
+import biz.spring.core.dto.dnk.AttendanceDTO;
 import biz.spring.core.model.dnk.Attendance;
 import biz.spring.core.repository.dnk.AttendanceRepository;
 import biz.spring.core.service.BaseService;
@@ -36,19 +37,19 @@ public class AttendanceService extends BaseService<Attendance> {
     public List<AttendanceView> getAll(GridDataOption gridDataOption){
         boolean peopleFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> nf.getName().equals("peopleId") && !nf.getValue().equals(-1));
-        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
-                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
-        boolean scheduleDateFound = gridDataOption.getNamedFilters().stream()
-                .anyMatch(nf -> nf.getName().equals("scheduleDate") && !nf.getValue().equals(-1));
+        boolean scheduleId = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("scheduleId") && !nf.getValue().equals(-1));
+        boolean workGroupId = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AttendanceView>(mainSQL)
                 .forClass(AttendanceView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
-                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND m0.people_id = :peopleId")
-                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sh.studyprogram_id = :studyProgramId")
-                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.schedule_date = :scheduleDate")
+                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND p.people_id = :peopleId")
+                .injectSqlIf(scheduleId, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.schedule_id = :scheduleId")
+                .injectSqlIf(workGroupId, "/*WORKGROUP_PLACEHOLDER*/", "AND wg.workgroup_id = :workGroupId")
                 .build()
                 .execute();
     }
@@ -56,18 +57,18 @@ public class AttendanceService extends BaseService<Attendance> {
     public Integer getCount(GridDataOption gridDataOption){
         boolean peopleFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> nf.getName().equals("peopleId") && !nf.getValue().equals(-1));
-        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
-                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
-        boolean scheduleDateFound = gridDataOption.getNamedFilters().stream()
-                .anyMatch(nf -> nf.getName().equals("scheduleDate") && !nf.getValue().equals(-1));
+        boolean scheduleId = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("scheduleId") && !nf.getValue().equals(-1));
+        boolean workGroupId = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AttendanceView>(mainSQL)
                 .forClass(AttendanceView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
-                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND m0.people_id = :peopleId")
-                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sh.studyprogram_id = :studyProgramId")
-                .injectSqlIf(scheduleDateFound, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.shedule_date = :scheduleDate")
+                .injectSqlIf(peopleFound, "/*PEOPLE_PLACEHOLDER*/", "AND p.people_id = :peopleId")
+                .injectSqlIf(scheduleId, "/*SCHEDULE_PLACEHOLDER*/", "AND sh.schedule_id = :scheduleId")
+                .injectSqlIf(workGroupId, "/*WORKGROUP_PLACEHOLDER*/", "AND wg.workgroup_id = :workGroupId")
                 .build()
                 .count();
     }
@@ -78,4 +79,15 @@ public class AttendanceService extends BaseService<Attendance> {
                 .build()
                 .executeOne(id);
     }
+
+    /**Метод сохранения посещаемости
+     * @param scheduleId занятие
+     * @param dtos посещаемость занятия учениками. В учет идет 2 поля - peopleId, attendancePresenceFlag*/
+    public void saveAttendance(Integer scheduleId, List<AttendanceDTO> dtos){
+        attendanceRepository.deleteAttendances(scheduleId);
+        dtos.stream().forEach(dto -> {
+            attendanceRepository.saveAttendance(scheduleId, dto.getPeopleId(), dto.getAttendancePresenceFlag());
+        });
+    }
+
 }
