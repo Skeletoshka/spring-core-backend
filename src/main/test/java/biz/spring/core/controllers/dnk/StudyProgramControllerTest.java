@@ -84,7 +84,7 @@ public class StudyProgramControllerTest extends IntegratedTest {
     }
 
     private void load(){
-        documentTypeRepository.insert(new DocumentType(StudyProgram.DOCUMENT_ID, "Программа обучения"));
+        documentTypeRepository.update(new DocumentType(StudyProgram.DOCUMENT_ID, "Программа обучения"));
     }
 }
 

@@ -3,10 +3,13 @@ package biz.spring.core.controllers.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.controllers.IntegratedTest;
 import biz.spring.core.dto.dnk.AppendixDTO;
+import biz.spring.core.model.ProgUser;
+import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.utils.GridDataOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.Rollback;
@@ -21,15 +24,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AppendixControllerTest extends IntegratedTest {
 
+    @Autowired
+    private ProgUserRepository progUserRepository;
+
     @Test
     @Rollback
     @Transactional
     public void getListTest() throws Exception {
+        progUserRepository.insert(new ProgUser(1, "Test", "Test", "Test", 1, 1));
 
         GridDataOption gridDataOption = new GridDataOption.Builder()
                 .setRowCount(10)
                 .setPage(1)
-                .setParam("appendixId", 1)
                 .setOrderBy("appendixId")
                 .build();
 
