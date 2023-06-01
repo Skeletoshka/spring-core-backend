@@ -1,7 +1,10 @@
 package biz.spring.core.dto.dnk;
 
+import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.Appendix;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Date;
 
 public class AppendixDTO {
 
@@ -13,6 +16,16 @@ public class AppendixDTO {
 
     @Schema(description = "Путь вложения")
     private String appendixPath;
+
+    @Schema(description = "Дата создания")
+    private Date documentRealDateCreate;
+
+    @Schema(description = "Дата модификации")
+    private Date documentRealDateModify;
+
+    @Schema(description = "Имя пользователя")
+    private String progUserName;
+
     public AppendixDTO(){
     }
 
@@ -35,6 +48,15 @@ public class AppendixDTO {
         return appendix;
     }
 
+    public DocumentReal toDocumentReal(){
+        return toDocumentReal(new DocumentReal());
+    }
+
+    public DocumentReal toDocumentReal(DocumentReal entity){
+        entity.setDocumentRealId(this.appendixId);
+        entity.setDocumentRealNumber(String.valueOf(this.appendixId));
+        return entity;
+    }
     public Integer getAppendixId() {
         return appendixId;
     }
@@ -57,5 +79,29 @@ public class AppendixDTO {
 
     public void setAppendixPath(String appendixPath) {
         this.appendixPath = appendixPath;
+    }
+
+    public Date getDocumentRealDateCreate() {
+        return documentRealDateCreate;
+    }
+
+    public void setDocumentRealDateCreate(Date documentRealDateCreate) {
+        this.documentRealDateCreate = documentRealDateCreate;
+    }
+
+    public Date getDocumentRealDateModify() {
+        return documentRealDateModify;
+    }
+
+    public void setDocumentRealDateModify(Date documentRealDateModify) {
+        this.documentRealDateModify = documentRealDateModify;
+    }
+
+    public String getProgUserName() {
+        return progUserName;
+    }
+
+    public void setProgUserName(String progUserName) {
+        this.progUserName = progUserName;
     }
 }

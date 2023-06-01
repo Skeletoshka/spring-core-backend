@@ -2,6 +2,7 @@ package biz.spring.core.controller.dnk;
 
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.AppendixDTO;
+import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.Appendix;
 import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.repository.dnk.AppendixRepository;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -94,9 +96,14 @@ public class AppendixController {
     @RequestMapping(value = "/appendix/save", method = RequestMethod.POST)
     public AppendixView save(@RequestBody AppendixDTO appendixDTO) {
         Appendix appendix;
+        DocumentReal documentReal;
         if (appendixDTO.getAppendixId() == null) {
+            documentReal = appendixDTO.toDocumentReal();
+            documentRealService.add(documentReal);
             appendix = appendixService.add(appendixDTO.toEntity());
         } else {
+            documentReal = appendixDTO.toDocumentReal();
+            documentRealService.edit(documentReal);
             appendix = appendixService.edit(appendixDTO.toEntity());
         }
         return appendixService.getOne(appendix.getAppendixId());
@@ -107,6 +114,7 @@ public class AppendixController {
     @RequestMapping(value = "/appendix/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids) {
         appendixService.delete(ids);
+        documentRealService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
     }
 
@@ -114,15 +122,47 @@ public class AppendixController {
         description = "Загружается вложение..")
     @RequestMapping(value = "/appendix/upload", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @CrossOrigin
-    public AppendixDTO uploadFile (@RequestParam MultipartFile appendix) {
-        if (appendix.isEmpty()) {
+    public AppendixView uploadFile (@RequestParam MultipartFile multipartFile,
+                                    @RequestParam(name = "type") Integer documentTypeId) {
+        if (multipartFile.isEmpty()) {
             throw new RuntimeException("Выбранный файл не может быть загружен");
         }
-        AppendixDTO dto = new AppendixDTO();
-        dto.setAppendixName(emsService.upload(appendix));
-        logger.info(String.format("Имя файла '%s' загружено успешно.", appendix.getOriginalFilename()));
-        return dto;
+        AppendixDTO appendixDTO = new AppendixDTO();
+        appendixDTO.setAppendixName(emsService.upload(multipartFile));
+        appendixDTO.setAppendixPath(emsService.getPath() + File.separator + appendixDTO.getAppendixName());
+        DocumentReal documentReal = appendixDTO.toDocumentReal();
+        documentReal.setDocumentTypeId(documentTypeId);
+        documentReal = documentRealService.add(documentReal);
+        appendixDTO.setAppendixId(documentReal.getDocumentRealId());
+        Appendix appendix = appendixService.add(appendixDTO.toEntity());
+        logger.info(String.format("Имя файла '%s' загружено успешно.", multipartFile.getOriginalFilename()));
+        return appendixService.getOne(appendix.getAppendixId());
+    }
+
+    @Operation(summary = "Метод для получения ссылки для скачивания \"Вложения\"",
+            description = "Возвращает ссылку для скачивания")
+    @RequestMapping(value = "/appendix/download", method = RequestMethod.POST)
+    public Answer download(@RequestBody int id){
+        return new Answer(emsService.download(id));
+    }
+
+    private static class Answer{
+        private String url;
+
+        public Answer() {
+        }
+
+        public Answer(String url) {
+            this.url = url;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 
 }
