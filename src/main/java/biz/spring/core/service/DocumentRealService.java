@@ -10,7 +10,6 @@ import biz.spring.core.security.AuthenticationBean;
 import biz.spring.core.security.UserDetailsImpl;
 import biz.spring.core.validator.DocumentRealValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -53,13 +52,18 @@ public class DocumentRealService extends BaseService<DocumentReal>{
     @Override
     protected void beforeValidate(DocumentReal documentReal){
         UserDetailsImpl userDetails = (UserDetailsImpl) authenticationBean.getCurrentUserDetails();
+        boolean insertFlag = documentReal.getDocumentRealId() == null;
         if(documentReal.getDocumentTransitId()!=null) {
             DocumentTransit documentTransit = documentTransitRepository.get(documentReal.getDocumentTransitId());
             checkAccess(documentReal, documentTransit);
         }
+        if(insertFlag){
+            documentReal.setProgUserId(userDetails.getProgUserId());
+            documentReal.setDocumentRealDateCreate(new Date());
+        }else{
+            documentReal.setDocumentRealDateModify(new Date());
+        }
         DocumentType documentType = documentTypeRepository.get(documentReal.getDocumentTypeId());
         documentReal.setDocumentRealName(documentType.getDocumentTypeName() + " №" + documentReal.getDocumentRealNumber());
-        documentReal.setProgUserId(userDetails.getProgUserId());
-        documentReal.setDocumentRealDateModify(new Date());
     }
 }
