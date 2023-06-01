@@ -48,7 +48,7 @@ public class StudyCaseService extends BaseService<StudyCase> {
                 .setLimit(gridDataOption.buildPageRequest())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
-                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyprogramId")
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyProgramId")
                 .build()
                 .execute();
     }
@@ -61,7 +61,7 @@ public class StudyCaseService extends BaseService<StudyCase> {
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
-                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyprogramId")
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND SP.studyprogram_id = :studyProgramId")
                 .build()
                 .count();
     }
