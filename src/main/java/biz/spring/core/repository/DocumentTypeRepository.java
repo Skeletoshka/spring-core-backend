@@ -39,7 +39,9 @@ public class DocumentTypeRepository implements TableRepository<DocumentType>{
 
     @Override
     public void load() {
-        DocumentType[] documentTypes = {};
+        DocumentType[] documentTypes = {
+                new DocumentType(1, "Тест")
+        };
         insert(Arrays.asList(documentTypes));
         DatabaseUtils.setSequenceValue("documenttype_id_gen", documentTypes.length+1);
     }
