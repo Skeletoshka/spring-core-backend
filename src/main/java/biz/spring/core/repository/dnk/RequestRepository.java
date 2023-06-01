@@ -39,9 +39,9 @@ public class RequestRepository implements TableRepository<Request> {
     @Override
     public void load() {
         Request[] requests = new Request[]{
-                new Request(1, "Заявка на добавление ученика"),
-                new Request(2, "Заявка на партнёрство"),
-                new Request(3, "Тестовая заявка")
+                new Request(1, "Заявка на добавление ученика", 1),
+                new Request(2, "Заявка на партнёрство", 3),
+                new Request(3, "Тестовая заявка", 1)
         };
         insert(Arrays.asList(requests));
     }

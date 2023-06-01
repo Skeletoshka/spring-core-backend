@@ -47,8 +47,6 @@ public class RecreateDatabase {
     @Autowired
     private RequestRepository requestRepository;
     @Autowired
-    private RequestPosRepository requestPosRepository;
-    @Autowired
     private NewsRepository newsRepository;
     @Autowired
     private WorkGroupRepository workGroupRepository;
@@ -81,7 +79,6 @@ public class RecreateDatabase {
                 activityRepository,
                 serviceRepository,
                 requestRepository,
-                requestPosRepository,
                 newsRepository,
                 attendanceRepository,
                 scheduleRepository,

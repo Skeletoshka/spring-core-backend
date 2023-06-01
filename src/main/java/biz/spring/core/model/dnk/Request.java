@@ -12,23 +12,33 @@ import javax.validation.constraints.Size;
 public class Request {
 
     public static final int DOCUMENT_STATUS = 2;
+    public static final int DOCUMENT_DRAFT = 4;
+    public static final int DOCUMENT_SEND = 5;
+    public static final int DOCUMENT_SUBMIT = 6;
+    public static final int DOCUMENT_REJECTION = 7;
 
     @Id
     @Column(name = "request_id", nullable = false)
     private Integer requestId;
 
-    @Column(name = "request_name", nullable = false)
-    @NotNull(message = "Поле \"Имя заявки\" не может быть пустым")
-    @Size(max = 255, message = "Поле \"Имя заявки\" не может иметь более {max} символов")
-    private String requestName;
+    @Column(name = "request_text", nullable = false)
+    @NotNull(message = "Поле \"Текст заявки\" не может быть пустым")
+    @Size(max = 255, message = "Поле \"Текст заявки\" не может иметь более {max} символов")
+    private String requestText;
+
+    @Column(name = "service_id", nullable = false)
+    @NotNull(message = "Поле \"ИД услуги\" не может быть пустым")
+    private Integer serviceId;
 
     public Request() {
     }
 
     public Request(Integer requestId,
-                   String requestName) {
+                   String requestText,
+                   Integer serviceId) {
         this.requestId = requestId;
-        this.requestName = requestName;
+        this.requestText = requestText;
+        this.serviceId = serviceId;
     }
 
     public Integer getRequestId() {
@@ -39,11 +49,19 @@ public class Request {
         this.requestId = requestId;
     }
 
-    public String getRequestName() {
-        return requestName;
+    public String getRequestText() {
+        return requestText;
     }
 
-    public void setRequestName(String requestName) {
-        this.requestName = requestName;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 }

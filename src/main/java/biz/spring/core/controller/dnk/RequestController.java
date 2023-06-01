@@ -3,6 +3,7 @@ package biz.spring.core.controller.dnk;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.dnk.RequestDTO;
 import biz.spring.core.model.DocumentReal;
+import biz.spring.core.model.dnk.News;
 import biz.spring.core.model.dnk.Request;
 import biz.spring.core.repository.DocumentRealRepository;
 import biz.spring.core.response.DataResponse;
@@ -83,7 +84,9 @@ public class RequestController {
         Request result;
         DocumentReal documentReal;
         if(dto.getRequestId() == null){
-            documentReal = documentRealService.add(dto.toDocumentReal());
+            DocumentReal dr = dto.toDocumentReal();
+            dr.setDocumentTransitId(Request.DOCUMENT_DRAFT);
+            documentReal = documentRealService.add(dr);
             dto.setRequestId(documentReal.getDocumentRealId());
             result = requestService.add(dto.toEntity());
         }else{
@@ -101,6 +104,37 @@ public class RequestController {
     @RequestMapping(value = "/request/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids){
         requestService.delete(ids);
+        documentRealService.delete(ids);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Устанавливает статус \"Отправлен\" объектам \"Заявка\"",
+            description = "Устанавливает статус \"Отправлен\" записям с переданными идентификаторами")
+    @RequestMapping(value = "/request/setstatus/send", method = RequestMethod.POST)
+    public String setSend(@RequestBody int[] ids){
+        for(int id: ids) {
+            documentRealService.setStatus(id, Request.DOCUMENT_SEND);
+        }
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Устанавливает статус \"Принят\" объектам \"Заявка\"",
+            description = "Устанавливает статус \"Принят\" записям с переданными идентификаторами")
+    @RequestMapping(value = "/request/setstatus/submit", method = RequestMethod.POST)
+    public String setSubmit(@RequestBody int[] ids){
+        for(int id: ids) {
+            documentRealService.setStatus(id, Request.DOCUMENT_SUBMIT);
+        }
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Устанавливает статус \"Отказано\" объектам \"Заявка\"",
+            description = "Устанавливает статус \"Отказано\" записям с переданными идентификаторами")
+    @RequestMapping(value = "/request/setstatus/reject", method = RequestMethod.POST)
+    public String setReject(@RequestBody int[] ids){
+        for(int id: ids) {
+            documentRealService.setStatus(id, Request.DOCUMENT_REJECTION);
+        }
         return BaseService.STANDARD_SUCCESS;
     }
 

@@ -12,8 +12,8 @@ public class RequestView {
     private Integer requestId;
 
     @Schema(description = "Имя заявки")
-    @Column(name = "request_name")
-    private String requestName;
+    @Column(name = "request_text")
+    private String requestText;
 
     @Schema(description = "Имя документа")
     @Column(name = "documentreal_name")
@@ -33,7 +33,7 @@ public class RequestView {
 
     @Schema(description = "Имя пользователя")
     @Column(name = "proguser_name")
-    private Integer progUserName;
+    private String progUserName;
 
     @Schema(description = "ИД статуса заявки")
     @Column(name = "documenttransit_id")
@@ -47,13 +47,21 @@ public class RequestView {
     @Column(name = "documenttransit_color")
     private Integer documentTransitColor;
 
+    @Schema(description = "Имя услуги")
+    @Column(name = "service_name")
+    private String serviceName;
+
+    @Schema(description = "ИД услуги")
+    @Column(name = "service_id")
+    private Integer serviceId;
+
     public RequestView() {
     }
 
     public RequestView(Integer requestId,
-                       String requestName) {
+                       String requestText) {
         this.requestId = requestId;
-        this.requestName = requestName;
+        this.requestText = requestText;
     }
 
     public Integer getRequestId() {
@@ -64,12 +72,12 @@ public class RequestView {
         this.requestId = requestId;
     }
 
-    public String getRequestName() {
-        return requestName;
+    public String getRequestText() {
+        return requestText;
     }
 
-    public void setRequestName(String requestName) {
-        this.requestName = requestName;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
     }
 
     public String getDocumentRealName() {
@@ -104,11 +112,11 @@ public class RequestView {
         this.progUserId = progUserId;
     }
 
-    public Integer getProgUserName() {
+    public String getProgUserName() {
         return progUserName;
     }
 
-    public void setProgUserName(Integer progUserName) {
+    public void setProgUserName(String progUserName) {
         this.progUserName = progUserName;
     }
 
@@ -134,5 +142,21 @@ public class RequestView {
 
     public void setDocumentTransitColor(Integer documentTransitColor) {
         this.documentTransitColor = documentTransitColor;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 }

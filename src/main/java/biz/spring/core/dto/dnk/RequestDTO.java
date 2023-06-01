@@ -11,8 +11,8 @@ public class RequestDTO {
     @Schema(description = "ИД заявки")
     private Integer requestId;
 
-    @Schema(description = "Имя заявки")
-    private String requestName;
+    @Schema(description = "Текст заявки")
+    private String requestText;
 
     @Schema(description = "Имя документа")
     private String documentRealName;
@@ -38,13 +38,19 @@ public class RequestDTO {
     @Schema(description = "Цвет статуса заявки")
     private Integer documentTransitColor;
 
+    @Schema(description = "Имя услуги")
+    private String serviceName;
+
+    @Schema(description = "ИД услуги")
+    private Integer serviceId;
+
     public RequestDTO() {
     }
 
     public RequestDTO(Integer requestId,
-                      String requestName) {
+                      String requestText) {
         this.requestId = requestId;
-        this.requestName = requestName;
+        this.requestText = requestText;
     }
 
     public Request toEntity(){
@@ -53,7 +59,8 @@ public class RequestDTO {
 
     public Request toEntity(Request entity){
         entity.setRequestId(this.requestId);
-        entity.setRequestName(this.requestName);
+        entity.setRequestText(this.requestText);
+        entity.setServiceId(this.serviceId);
         return entity;
     }
 
@@ -63,7 +70,7 @@ public class RequestDTO {
 
     public DocumentReal toDocumentReal(DocumentReal documentReal){
         documentReal.setDocumentRealId(this.requestId);
-        documentReal.setDocumentRealNumber(this.requestName);
+        documentReal.setDocumentRealNumber(String.valueOf(this.requestId));
         documentReal.setDocumentTransitId(this.documentTransitId);
         documentReal.setDocumentTypeId(Request.DOCUMENT_STATUS);
         return documentReal;
@@ -77,12 +84,12 @@ public class RequestDTO {
         this.requestId = requestId;
     }
 
-    public String getRequestName() {
-        return requestName;
+    public String getRequestText() {
+        return requestText;
     }
 
-    public void setRequestName(String requestName) {
-        this.requestName = requestName;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
     }
 
     public String getDocumentRealName() {
@@ -147,5 +154,21 @@ public class RequestDTO {
 
     public void setDocumentTransitColor(Integer documentTransitColor) {
         this.documentTransitColor = documentTransitColor;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
     }
 }
