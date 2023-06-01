@@ -60,9 +60,8 @@ public class DocumentRealService extends BaseService<DocumentReal>{
         if(insertFlag){
             documentReal.setProgUserId(userDetails.getProgUserId());
             documentReal.setDocumentRealDateCreate(new Date());
-        }else{
-            documentReal.setDocumentRealDateModify(new Date());
         }
+        documentReal.setDocumentRealDateModify(new Date());
         DocumentType documentType = documentTypeRepository.get(documentReal.getDocumentTypeId());
         documentReal.setDocumentRealName(documentType.getDocumentTypeName() + " №" + documentReal.getDocumentRealNumber());
     }
