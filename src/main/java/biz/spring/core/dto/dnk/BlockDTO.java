@@ -106,6 +106,7 @@ public class BlockDTO {
     public Block toEntity(Block entity){
         entity.setBlockId(this.blockId);
         entity.setBlockName(this.blockName);
+        entity.setBlockDesc(this.blockDesc);
         entity.setStudyCaseId(this.studyCaseId);
         entity.setBlockNum(this.blockNum);
         entity.setBlockVisible(this.blockVisible);
