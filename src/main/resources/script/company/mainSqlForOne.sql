@@ -5,7 +5,4 @@ SELECT m0.*,
        t.town_id,
        s.street_id
 FROM   company m0
-       INNER JOIN address a ON m0.address_id = a.address_id
-       INNER JOIN town t on t.town_id = a.town_id
-       INNER JOIN street s on a.street_id = s.street_id
 WHERE  m0.company_id = :id
