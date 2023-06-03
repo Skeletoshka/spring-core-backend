@@ -59,7 +59,7 @@ public class PeopleView {
 
     @Column(name = "company_name")
     @Schema(description = "Наименование компании")
-    private Integer companyName;
+    private String companyName;
 
     @Column(name = "parent_name")
     @Schema(description = "Имя родителя")
@@ -188,11 +188,11 @@ public class PeopleView {
         this.companyId = companyId;
     }
 
-    public Integer getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(Integer companyName) {
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 

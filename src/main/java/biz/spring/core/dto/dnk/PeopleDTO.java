@@ -44,7 +44,7 @@ public class PeopleDTO {
     private Integer companyId;
 
     @Schema(description = "Наименование компании")
-    private Integer companyName;
+    private String companyName;
 
     public PeopleDTO() {
     }
@@ -181,11 +181,11 @@ public class PeopleDTO {
         this.companyId = companyId;
     }
 
-    public Integer getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(Integer companyName) {
+    public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 }
