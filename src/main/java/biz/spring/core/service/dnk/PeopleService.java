@@ -71,4 +71,8 @@ public class PeopleService extends BaseService<People> {
                 .build()
                 .executeOne(id);
     }
+
+    public void bindFamily(Integer parentId, Integer childId){
+        peopleRepository.bindFamily(parentId, childId);
+    }
 }

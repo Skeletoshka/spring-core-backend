@@ -1,6 +1,7 @@
 package biz.spring.core.controller.dnk;
 
 import biz.spring.core.config.Config;
+import biz.spring.core.dto.dnk.FamilyDTO;
 import biz.spring.core.dto.dnk.PeopleDTO;
 import biz.spring.core.model.dnk.People;
 import biz.spring.core.response.DataResponse;
@@ -98,6 +99,22 @@ public class PeopleController {
             description = "Удаляет список объектов \"Человек\" согласно переданным идентификаторам")
     public String delete(@RequestBody int[] ids){
         peopleService.delete(ids);
+        return BaseService.STANDARD_SUCCESS;
+    }
+
+    @Operation(summary = "Метод для создания объекта \"Семья\"",
+            description = "Связывает родителя и ребенка, образуя запись в таблице \"Семья\"")
+    @RequestMapping(value = "/people/bind", method = RequestMethod.POST)
+    public String bind(@RequestBody FamilyDTO dto){
+        PeopleView peopleView = peopleService.getOne(dto.getParentId());
+        if(!peopleView.getCapClassId().equals(People.PARENT_ID)){
+            throw new RuntimeException("Не верно выбран родитель");
+        }
+        peopleView = peopleService.getOne(dto.getChildId());
+        if(!peopleView.getCapClassId().equals(People.CHILD_ID)){
+            throw new RuntimeException("Не верно выбран ребёнок");
+        }
+        peopleService.bindFamily(dto.getParentId(), dto.getChildId());
         return BaseService.STANDARD_SUCCESS;
     }
 }

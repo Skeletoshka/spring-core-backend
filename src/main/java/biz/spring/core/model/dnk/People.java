@@ -12,6 +12,9 @@ import java.util.Date;
 @Table(name = "people")
 public class People {
 
+    public static int CHILD_ID = 4;
+    public static int PARENT_ID = 8;
+
     @Id
     @Column(name = "people_id", nullable = false)
     private Integer peopleId;

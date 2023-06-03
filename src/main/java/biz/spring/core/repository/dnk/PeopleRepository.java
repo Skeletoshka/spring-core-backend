@@ -14,10 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -27,6 +24,15 @@ public class PeopleRepository implements TableRepository<People> {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public void bindFamily(Integer parentId, Integer childId){
+        String sql = "INSERT INTO \"family\" (family_id, parent_id, child_id) VALUES (:family_id, :parent_id, :child_id)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("parent_id", parentId);
+        params.put("child_id", childId);
+        params.put("family_id", DatabaseUtils.getSequenceNextValue("family_id_gen"));
+        executeSql(sql, params);
+    }
 
     @Override
     public void create(){

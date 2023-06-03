@@ -61,6 +61,18 @@ public class PeopleView {
     @Schema(description = "Наименование компании")
     private Integer companyName;
 
+    @Column(name = "parent_name")
+    @Schema(description = "Имя родителя")
+    private String parentName;
+
+    @Column(name = "parent_lastname")
+    @Schema(description = "Фамилия родителя")
+    private String parentLastName;
+
+    @Column(name = "parent_middlename")
+    @Schema(description = "Отчество родителя")
+    private String parentMiddleName;
+
     public PeopleView() {
     }
 
@@ -182,6 +194,30 @@ public class PeopleView {
 
     public void setCompanyName(Integer companyName) {
         this.companyName = companyName;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentLastName() {
+        return parentLastName;
+    }
+
+    public void setParentLastName(String parentLastName) {
+        this.parentLastName = parentLastName;
+    }
+
+    public String getParentMiddleName() {
+        return parentMiddleName;
+    }
+
+    public void setParentMiddleName(String parentMiddleName) {
+        this.parentMiddleName = parentMiddleName;
     }
 }
 
