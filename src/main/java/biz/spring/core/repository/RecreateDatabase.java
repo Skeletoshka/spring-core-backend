@@ -29,6 +29,10 @@ public class RecreateDatabase {
     private CompanyRepository companyRepository;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private AppendixRepository appendixRepository;
+    @Autowired
+    private ContractRepository contractRepository;
 
     @Autowired
     private StudyProgramRepository studyProgramRepository;
@@ -66,6 +70,8 @@ public class RecreateDatabase {
                 capClassRepository,
                 capClassTypeRepository,
                 companyRepository,
+                addressRepository,
+                contractRepository,
                 addressRepository,
                 capClassTypeRepository,
                 documentRealRepository,

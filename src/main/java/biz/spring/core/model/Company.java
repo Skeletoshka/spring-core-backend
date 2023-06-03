@@ -34,6 +34,10 @@ public class Company {
     @Size(max = 50, message = "Поле \"Электронный адрес\" не может быть более {max} символов")
     private String companyEmail;
 
+    @Column(name = "contract_id", nullable = false)
+    @NotNull(message = "Поле \"Договор\" не может быть пустым")
+    private Integer contractId;
+
     public Company() {
     }
 
@@ -42,13 +46,15 @@ public class Company {
                    Integer progUserId,
                    Integer addressId,
                    String companyTelephone,
-                   String companyEmail) {
+                   String companyEmail,
+                   Integer contractId) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.progUserId = progUserId;
         this.addressId = addressId;
         this.companyTelephone = companyTelephone;
         this.companyEmail = companyEmail;
+        this.contractId = contractId;
     }
 
     public Integer getCompanyId() {
@@ -97,5 +103,13 @@ public class Company {
 
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
+    }
+
+    public Integer getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Integer contractId) {
+        this.contractId = contractId;
     }
 }

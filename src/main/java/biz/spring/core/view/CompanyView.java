@@ -30,6 +30,10 @@ public class CompanyView {
     @Column(name = "company_email")
     private String companyEmail;
 
+    @Schema(name = "ИД договора")
+    @Column(name = "contract_id")
+    private Integer contractId;
+
     public CompanyView() {
     }
 
@@ -38,13 +42,15 @@ public class CompanyView {
                        Integer progUserId,
                        Integer addressId,
                        String companyTelephone,
-                       String companyEmail) {
+                       String companyEmail,
+                       Integer contractId) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.progUserId = progUserId;
         this.addressId = addressId;
         this.companyTelephone = companyTelephone;
         this.companyEmail = companyEmail;
+        this.contractId = contractId;
     }
 
     public Integer getCompanyId() {
@@ -93,5 +99,13 @@ public class CompanyView {
 
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
+    }
+
+    public Integer getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Integer contractId) {
+        this.contractId = contractId;
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @Tag(name = "Контроллер для документов", description = "Контроллер для работы с документами")
-@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/documents",
+@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/document",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Transactional
