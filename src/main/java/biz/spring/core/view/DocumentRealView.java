@@ -39,6 +39,14 @@ public class DocumentRealView {
     @Schema(description = "ИД пользователя")
     private Integer progUserId;
 
+    @Column(name = "documenttype_name")
+    @Schema(description = "Имя типа документа")
+    private String documentTypeName;
+
+    @Column(name = "proguser_name")
+    @Schema(description = "Имя пользователя")
+    private String progUserName;
+
     public DocumentRealView() {
     }
 
@@ -122,5 +130,21 @@ public class DocumentRealView {
 
     public void setProgUserId(Integer progUserId) {
         this.progUserId = progUserId;
+    }
+
+    public String getDocumentTypeName() {
+        return documentTypeName;
+    }
+
+    public void setDocumentTypeName(String documentTypeName) {
+        this.documentTypeName = documentTypeName;
+    }
+
+    public String getProgUserName() {
+        return progUserName;
+    }
+
+    public void setProgUserName(String progUserName) {
+        this.progUserName = progUserName;
     }
 }

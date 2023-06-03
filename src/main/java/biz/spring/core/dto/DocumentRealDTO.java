@@ -1,7 +1,9 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.DocumentReal;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class DocumentRealDTO {
@@ -10,7 +12,7 @@ public class DocumentRealDTO {
     private Integer documentRealId;
 
     @Schema(description = "Типа документа")
-    private Integer documentId;
+    private Integer documentTypeId;
 
     @Schema(description = "Статус документа")
     private Integer documentTransitId;
@@ -30,11 +32,17 @@ public class DocumentRealDTO {
     @Schema(description = "ИД пользователя")
     private Integer progUserId;
 
+    @Schema(description = "Имя типа документа")
+    private String documentTypeName;
+
+    @Schema(description = "Имя пользователя")
+    private String progUserName;
+
     public DocumentRealDTO() {
     }
 
     public DocumentRealDTO(Integer documentRealId,
-                           Integer documentId,
+                           Integer documentTypeId,
                            Integer documentTransitId,
                            String documentRealName,
                            String documentRealNumber,
@@ -42,13 +50,25 @@ public class DocumentRealDTO {
                            Date documentRealDateModify,
                            Integer progUserId) {
         this.documentRealId = documentRealId;
-        this.documentId = documentId;
+        this.documentTypeId = documentTypeId;
         this.documentTransitId = documentTransitId;
         this.documentRealName = documentRealName;
         this.documentRealNumber = documentRealNumber;
         this.documentRealDateCreate = documentRealDateCreate;
         this.documentRealDateModify = documentRealDateModify;
         this.progUserId = progUserId;
+    }
+
+    public DocumentReal toEntity(){
+        return toEntity(new DocumentReal());
+    }
+
+    public DocumentReal toEntity(DocumentReal entity){
+        entity.setDocumentTypeId(this.documentTypeId);
+        entity.setDocumentRealId(this.documentRealId);
+        entity.setDocumentRealNumber(this.documentRealNumber);
+        entity.setDocumentTransitId(this.documentTransitId);
+        return entity;
     }
 
     public Integer getDocumentRealId() {
@@ -59,12 +79,12 @@ public class DocumentRealDTO {
         this.documentRealId = documentRealId;
     }
 
-    public Integer getDocumentId() {
-        return documentId;
+    public Integer getDocumentTypeId() {
+        return documentTypeId;
     }
 
-    public void setDocumentId(Integer documentId) {
-        this.documentId = documentId;
+    public void setDocumentTypeId(Integer documentTypeId) {
+        this.documentTypeId = documentTypeId;
     }
 
     public Integer getDocumentTransitId() {
@@ -113,5 +133,21 @@ public class DocumentRealDTO {
 
     public void setProgUserId(Integer progUserId) {
         this.progUserId = progUserId;
+    }
+
+    public String getDocumentTypeName() {
+        return documentTypeName;
+    }
+
+    public void setDocumentTypeName(String documentTypeName) {
+        this.documentTypeName = documentTypeName;
+    }
+
+    public String getProgUserName() {
+        return progUserName;
+    }
+
+    public void setProgUserName(String progUserName) {
+        this.progUserName = progUserName;
     }
 }
