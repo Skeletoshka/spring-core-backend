@@ -10,7 +10,7 @@ import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.dnk.PeopleView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.junit.jupiter.api.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@Tag(value = "Контроллер для пользователей")
+@Tag(name = "Контроллер для \"Человек\"", description = "Контроллер для работы с таблицей \"Человек\"")
 @RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/dnk/objects",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)

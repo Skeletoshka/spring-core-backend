@@ -113,6 +113,7 @@ public class AppendixController {
             description = "Удаляются записи с переданными идентификаторами")
     @RequestMapping(value = "/appendix/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids) {
+        appendixService.deleteFiles(ids);
         appendixService.delete(ids);
         documentRealService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
@@ -123,13 +124,19 @@ public class AppendixController {
     @RequestMapping(value = "/appendix/upload", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public AppendixView uploadFile (@RequestParam MultipartFile multipartFile,
-                                    @RequestParam(name = "type") Integer documentTypeId) {
+                                    @RequestParam(name = "type") Integer documentTypeId,
+                                    @RequestParam(name = "file_name", required = false) String fileName) {
         if (multipartFile.isEmpty()) {
             throw new RuntimeException("Выбранный файл не может быть загружен");
         }
         AppendixDTO appendixDTO = new AppendixDTO();
-        appendixDTO.setAppendixName(emsService.upload(multipartFile));
-        appendixDTO.setAppendixPath(emsService.getPath() + File.separator + appendixDTO.getAppendixName());
+        String name = emsService.upload(multipartFile);
+        if (fileName != null && fileName.lastIndexOf(".") == -1){
+            fileName = fileName.concat(multipartFile.getOriginalFilename()
+                    .substring(multipartFile.getOriginalFilename().lastIndexOf(".")));
+        }
+        appendixDTO.setAppendixName(fileName==null?name:fileName);
+        appendixDTO.setAppendixPath(emsService.getPath() + File.separator + name);
         DocumentReal documentReal = appendixDTO.toDocumentReal();
         documentReal.setDocumentTypeId(documentTypeId);
         documentReal = documentRealService.add(documentReal);

@@ -25,6 +25,9 @@ public class AppendixService extends BaseService<Appendix> {
     @Autowired
     private AppendixValidator appendixValidator;
 
+    @Autowired
+    private EMSService emsService;
+
     @PostConstruct
     public void init() { init(appendixRepository, appendixValidator); }
 
@@ -63,5 +66,12 @@ public class AppendixService extends BaseService<Appendix> {
                 .setParams(gridDataOption.buildParams())
                 .build()
                 .count();
+    }
+
+    public void deleteFiles(int[] ids){
+        for(Integer id: ids){
+            Appendix appendix = appendixRepository.get(id);
+            emsService.delete(appendix.getAppendixPath());
+        }
     }
 }

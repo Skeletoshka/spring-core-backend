@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Tag(name = "Контроллер для активностей", description = "Контроллер для работы с таблицей \"Услуги\"")
+@Tag(name = "Контроллер для Услуг", description = "Контроллер для работы с таблицей \"Услуги\"")
 @RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/dnk/refbooks",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
