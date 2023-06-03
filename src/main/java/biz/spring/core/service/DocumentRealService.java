@@ -8,12 +8,20 @@ import biz.spring.core.repository.DocumentTransitRepository;
 import biz.spring.core.repository.DocumentTypeRepository;
 import biz.spring.core.security.AuthenticationBean;
 import biz.spring.core.security.UserDetailsImpl;
+import biz.spring.core.utils.GridDataOption;
+import biz.spring.core.utils.Query;
 import biz.spring.core.validator.DocumentRealValidator;
+import biz.spring.core.view.CapClassView;
+import biz.spring.core.view.DocumentRealView;
+import biz.spring.core.view.ProgUserView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class DocumentRealService extends BaseService<DocumentReal>{
@@ -28,11 +36,46 @@ public class DocumentRealService extends BaseService<DocumentReal>{
     private DocumentTypeRepository documentTypeRepository;
     @Autowired
     private AuthenticationBean authenticationBean;
+    @Value("classpath:/script/documentreal/mainSql.sql")
+    Resource mainSQL;
+    @Value("classpath:/script/documentreal/mainSqlForOne.sql")
+    Resource mainSQLForOne;
 
     @Override
     @PostConstruct
     protected void init() {
         super.init(documentRealRepository, documentRealValidator);
+    }
+
+    public List<DocumentRealView> getAll(GridDataOption gridDataOption){
+        boolean documentTypeFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
+                "documentTypeId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<DocumentRealView>(mainSQL)
+                .forClass(DocumentRealView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .injectSqlIf(documentTypeFound, "/*DOCUMENTTYPE_PLACEHOLDER*/", "AND m0.documenttype_id = :documentTypeId")
+                .build()
+                .execute();
+    }
+
+    public Integer getCount(GridDataOption gridDataOption){
+        boolean documentTypeFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
+                "documentTypeId".equals(nf.getName()) && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<DocumentRealView>(mainSQL)
+                .forClass(DocumentRealView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .injectSqlIf(documentTypeFound, "/*DOCUMENTTYPE_PLACEHOLDER*/", "AND m0.documenttype_id = :documentTypeId")
+                .build()
+                .count();
+    }
+
+    public DocumentRealView getOne(Integer id){
+        return new Query.QueryBuilder<DocumentRealView>(mainSQLForOne)
+                .forClass(DocumentRealView.class, "m0")
+                .build()
+                .executeOne(id);
     }
 
     public void setStatus(Integer documentRealId, Integer statusId){
