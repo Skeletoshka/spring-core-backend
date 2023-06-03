@@ -16,7 +16,6 @@ public class Activity {
     private Integer activityId;
 
     @Column(name = "address_id", nullable = false)
-    @NotNull(message = "Поле \"Адрес\" не может быть пустым")
     private Integer addressId;
 
     @Column(name = "direction_id", nullable = false)
