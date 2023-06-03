@@ -3,28 +3,39 @@ package biz.spring.core.dto;
 import biz.spring.core.model.Company;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.Date;
+
 public class CompanyDTO {
 
-    @Schema(name = "ИД компании")
+    @Schema(description = "ИД компании")
     private Integer companyId;
 
-    @Schema(name = "Наименование компании")
+    @Schema(description = "Наименование компании")
     private String companyName;
 
-    @Schema(name = "ИД пользователя")
+    @Schema(description = "ИД пользователя")
     private Integer progUserId;
 
-    @Schema(name = "ИД адреса")
+    @Schema(description = "ИД адреса")
     private Integer addressId;
 
-    @Schema(name = "Контактный телефон")
+    @Schema(description = "Контактный телефон")
     private String companyTelephone;
 
-    @Schema(name = "Электронная почта")
+    @Schema(description = "Электронная почта")
     private String companyEmail;
 
-    @Schema(name = "ИД договора")
+    @Schema(description = "ИД договора")
     private Integer contractId;
+
+    @Schema(description = "Дата договора")
+    private Date contractDate;
+
+    @Schema(description = "Имя договора")
+    private String documentRealName;
+
+    @Schema(description = "Имя пользователя")
+    private String progUserName;
 
     public CompanyDTO() {
     }
@@ -114,5 +125,29 @@ public class CompanyDTO {
         company.setProgUserId(this.progUserId);
         company.setContractId(this.contractId);
         return company;
+    }
+
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getDocumentRealName() {
+        return documentRealName;
+    }
+
+    public void setDocumentRealName(String documentRealName) {
+        this.documentRealName = documentRealName;
+    }
+
+    public String getProgUserName() {
+        return progUserName;
+    }
+
+    public void setProgUserName(String progUserName) {
+        this.progUserName = progUserName;
     }
 }
