@@ -54,14 +54,11 @@ public class AppendixService extends BaseService<Appendix> {
     }
 
     public Integer getCount(GridDataOption gridDataOption){
-        boolean blockFound = gridDataOption.getNamedFilters().stream().anyMatch(nf ->
-                "blockId".equals(nf.getName()) && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AppendixView>(mainSql)
                 .forClass(AppendixView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setParams(gridDataOption.buildParams())
                 .setSearch(gridDataOption.getSearch())
-                .injectSqlIf(blockFound, "/*BLOCK_PLACEHOLDER*/", "AND m0.block_id = :blockId")
                 .setParams(gridDataOption.buildParams())
                 .build()
                 .count();

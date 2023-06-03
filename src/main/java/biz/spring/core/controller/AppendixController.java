@@ -34,7 +34,7 @@ import java.util.List;
 @RestController
 @Tag(name = "Контроллер для вложения",
         description = "Контроллер для взаимодействия с объектом \"Вложения\"")
-@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/dnk/objects",
+@RequestMapping(value = "/v" + Config.CURRENT_VERSION + "/apps/objects",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @Transactional
@@ -56,7 +56,6 @@ public class AppendixController {
     static class GridDataOptionAppendix extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
-                "<li>blockId - Блок" +
                 "</ul>")
         public List<NamedFilter> getNamedFilters() {
             return super.getNamedFilters();
@@ -67,10 +66,6 @@ public class AppendixController {
             description = "Возвращает список объектов \"Вложения\" согласно переданному фильтру")
     @RequestMapping(value = "/appendix/getlist", method = RequestMethod.POST)
     public DataResponse<AppendixView> getList(@RequestBody GridDataOptionAppendix gridDataOption) {
-        boolean blockFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "blockId".equals(nf.getName()));
-        if (!blockFound) {
-            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("blockId", -1));
-        }
         List<AppendixView> result = appendixService.getAll(gridDataOption);
         Integer count = appendixService.getCount(gridDataOption);
         return BaseService.buildResponse(result, gridDataOption, count);
