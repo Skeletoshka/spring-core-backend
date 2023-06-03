@@ -54,8 +54,6 @@ public class RecreateDatabase {
     private AttendanceRepository attendanceRepository;
     @Autowired
     private ScheduleRepository scheduleRepository;
-    @Autowired
-    private AppendixRepository appendixRepository;
 
     public void recreate(){
         TableRepository[] repositories = {
@@ -82,8 +80,7 @@ public class RecreateDatabase {
                 newsRepository,
                 attendanceRepository,
                 scheduleRepository,
-                workGroupRepository,
-                appendixRepository
+                workGroupRepository
                 //TODO регистрация репозитория. Строго в порядке создания таблиц
         };
         Arrays.stream(repositories).forEach(repo->{
