@@ -94,7 +94,10 @@ public class AppendixController {
         DocumentReal documentReal;
         if (appendixDTO.getAppendixId() == null) {
             documentReal = appendixDTO.toDocumentReal();
-            documentRealService.add(documentReal);
+            documentReal = documentRealService.add(documentReal);
+            appendixDTO.setAppendixName(appendixDTO.getAppendixName()
+                    .concat(appendixDTO.getAppendixPath().substring(appendixDTO.getAppendixPath().lastIndexOf("."))));
+            appendixDTO.setAppendixId(documentReal.getDocumentRealId());
             appendix = appendixService.add(appendixDTO.toEntity());
         } else {
             documentReal = appendixDTO.toDocumentReal();
@@ -118,27 +121,13 @@ public class AppendixController {
         description = "Загружается вложение..")
     @RequestMapping(value = "/appendix/upload", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public AppendixView uploadFile (@RequestParam MultipartFile multipartFile,
-                                    @RequestParam(name = "type") Integer documentTypeId,
-                                    @RequestParam(name = "file_name", required = false) String fileName) {
+    public Answer uploadFile (@RequestParam MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
             throw new RuntimeException("Выбранный файл не может быть загружен");
         }
-        AppendixDTO appendixDTO = new AppendixDTO();
         String name = emsService.upload(multipartFile);
-        if (fileName != null && fileName.lastIndexOf(".") == -1){
-            fileName = fileName.concat(multipartFile.getOriginalFilename()
-                    .substring(multipartFile.getOriginalFilename().lastIndexOf(".")));
-        }
-        appendixDTO.setAppendixName(fileName==null?name:fileName);
-        appendixDTO.setAppendixPath(emsService.getPath() + File.separator + name);
-        DocumentReal documentReal = appendixDTO.toDocumentReal();
-        documentReal.setDocumentTypeId(documentTypeId);
-        documentReal = documentRealService.add(documentReal);
-        appendixDTO.setAppendixId(documentReal.getDocumentRealId());
-        Appendix appendix = appendixService.add(appendixDTO.toEntity());
         logger.info(String.format("Имя файла '%s' загружено успешно.", multipartFile.getOriginalFilename()));
-        return appendixService.getOne(appendix.getAppendixId());
+        return new Answer(emsService.getPath().concat(File.separator + name));
     }
 
     @Operation(summary = "Метод для получения ссылки для скачивания \"Вложения\"",

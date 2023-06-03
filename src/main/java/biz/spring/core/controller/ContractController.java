@@ -3,9 +3,12 @@ package biz.spring.core.controller;
 import biz.spring.core.config.Config;
 import biz.spring.core.dto.ContractDTO;
 import biz.spring.core.model.Contract;
+import biz.spring.core.model.DocumentReal;
 import biz.spring.core.response.DataResponse;
+import biz.spring.core.service.AppendixService;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.ContractService;
+import biz.spring.core.service.DocumentRealService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.ContractView;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +45,10 @@ public class ContractController {
 
     @Autowired
     private ContractService contractService;
+    @Autowired
+    private DocumentRealService documentRealService;
+    @Autowired
+    private AppendixService appendixService;
 
     @Operation(summary = "Возвращает список объектов \"Договор\"",
             description = "Вовзращает список объектов согласно переданным фильтрам")
@@ -73,8 +80,14 @@ public class ContractController {
     public ContractView save(@RequestBody ContractDTO dto){
         Contract result;
         if(dto.getContractId() == null){
+            DocumentReal documentReal = documentRealService.add(dto.toDocumentReal());
+            dto.setContractId(documentReal.getDocumentRealId());
+            appendixService.add(dto.toAppendix());
             result = contractService.add(dto.toEntity());
         }else{
+            DocumentReal documentReal = documentRealService.edit(dto.toDocumentReal());
+            dto.setContractId(documentReal.getDocumentRealId());
+            appendixService.edit(dto.toAppendix());
             result = contractService.edit(dto.toEntity());
         }
         return contractService.getOne(result.getContractId());
@@ -85,6 +98,9 @@ public class ContractController {
     @RequestMapping(value = "/contract/delete", method = RequestMethod.POST)
     public String delete(@RequestBody int[] ids){
         contractService.delete(ids);
+        appendixService.deleteFiles(ids);
+        appendixService.delete(ids);
+        documentRealService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
     }
 }

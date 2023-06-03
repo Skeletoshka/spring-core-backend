@@ -1,6 +1,8 @@
 package biz.spring.core.dto;
 
+import biz.spring.core.model.Appendix;
 import biz.spring.core.model.Contract;
+import biz.spring.core.model.DocumentReal;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -13,16 +15,22 @@ public class ContractDTO {
     private Date contractDate;
 
     @Schema(name = "Номер договора")
-    private Date documentRealNumber;
+    private String documentRealNumber;
 
     @Schema(name = "Имя договора")
-    private Date documentRealName;
+    private String documentRealName;
 
     @Schema(name = "ИД типа документа")
     private Integer documentTypeId;
 
     @Schema(name = "Наименование типа документа")
     private String documentTypeName;
+
+    @Schema(name = "Имя документа")
+    private String appendixName;
+
+    @Schema(name = "Путь к документу")
+    private String appendixPath;
 
     public ContractDTO() {
     }
@@ -31,6 +39,28 @@ public class ContractDTO {
                        Date contractDate) {
         this.contractId = contractId;
         this.contractDate = contractDate;
+    }
+
+    public Appendix toAppendix(){
+        return toAppendix(new Appendix());
+    }
+
+    public Appendix toAppendix(Appendix appendix){
+        appendix.setAppendixId(this.contractId);
+        appendix.setAppendixName(this.appendixName.concat(this.appendixPath.substring(this.appendixPath.lastIndexOf("."))));
+        appendix.setAppendixPath(this.appendixPath);
+        return appendix;
+    }
+
+    public DocumentReal toDocumentReal(){
+        return toDocumentReal(new DocumentReal());
+    }
+
+    public DocumentReal toDocumentReal(DocumentReal entity){
+        entity.setDocumentRealId(this.contractId);
+        entity.setDocumentRealNumber(this.documentRealNumber);
+        entity.setDocumentTypeId(this.documentTypeId);
+        return entity;
     }
 
     public Contract toEntity(){
@@ -59,19 +89,19 @@ public class ContractDTO {
         this.contractDate = contractDate;
     }
 
-    public Date getDocumentRealNumber() {
+    public String getDocumentRealNumber() {
         return documentRealNumber;
     }
 
-    public void setDocumentRealNumber(Date documentRealNumber) {
+    public void setDocumentRealNumber(String documentRealNumber) {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealName() {
+    public String getDocumentRealName() {
         return documentRealName;
     }
 
-    public void setDocumentRealName(Date documentRealName) {
+    public void setDocumentRealName(String documentRealName) {
         this.documentRealName = documentRealName;
     }
 
@@ -89,5 +119,21 @@ public class ContractDTO {
 
     public void setDocumentTypeName(String documentTypeName) {
         this.documentTypeName = documentTypeName;
+    }
+
+    public String getAppendixName() {
+        return appendixName;
+    }
+
+    public void setAppendixName(String appendixName) {
+        this.appendixName = appendixName;
+    }
+
+    public String getAppendixPath() {
+        return appendixPath;
+    }
+
+    public void setAppendixPath(String appendixPath) {
+        this.appendixPath = appendixPath;
     }
 }

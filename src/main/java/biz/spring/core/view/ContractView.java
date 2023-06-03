@@ -8,7 +8,7 @@ import java.util.Date;
 public class ContractView {
 
     @Schema(name = "ИД договора")
-    @Column(name = "contractId")
+    @Column(name = "contract_id")
     private Integer contractId;
 
     @Column(name = "contract_date")
@@ -17,11 +17,11 @@ public class ContractView {
 
     @Schema(name = "Номер договора")
     @Column(name = "documentreal_number")
-    private Date documentRealNumber;
+    private String documentRealNumber;
 
     @Schema(name = "Имя договора")
     @Column(name = "documentreal_name")
-    private Date documentRealName;
+    private String documentRealName;
 
     @Schema(name = "ИД типа документа")
     @Column(name = "documenttype_id")
@@ -30,6 +30,14 @@ public class ContractView {
     @Schema(name = "Наименование типа документа")
     @Column(name = "documenttype_name")
     private String documentTypeName;
+
+    @Schema(name = "Путь к документу")
+    @Column(name = "appendix_path")
+    private String appendixPath;
+
+    @Schema(name = "Имя документа")
+    @Column(name = "appendix_name")
+    private String appendixName;
 
     public ContractView() {
     }
@@ -56,19 +64,19 @@ public class ContractView {
         this.contractDate = contractDate;
     }
 
-    public Date getDocumentRealNumber() {
+    public String getDocumentRealNumber() {
         return documentRealNumber;
     }
 
-    public void setDocumentRealNumber(Date documentRealNumber) {
+    public void setDocumentRealNumber(String documentRealNumber) {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Date getDocumentRealName() {
+    public String getDocumentRealName() {
         return documentRealName;
     }
 
-    public void setDocumentRealName(Date documentRealName) {
+    public void setDocumentRealName(String documentRealName) {
         this.documentRealName = documentRealName;
     }
 
@@ -86,5 +94,21 @@ public class ContractView {
 
     public void setDocumentTypeName(String documentTypeName) {
         this.documentTypeName = documentTypeName;
+    }
+
+    public String getAppendixPath() {
+        return appendixPath;
+    }
+
+    public void setAppendixPath(String appendixPath) {
+        this.appendixPath = appendixPath;
+    }
+
+    public String getAppendixName() {
+        return appendixName;
+    }
+
+    public void setAppendixName(String appendixName) {
+        this.appendixName = appendixName;
     }
 }

@@ -26,6 +26,9 @@ public class AppendixDTO {
     @Schema(description = "Имя пользователя")
     private String progUserName;
 
+    @Schema(description = "ИД типа документа")
+    private Integer documentTypeId;
+
     public AppendixDTO(){
     }
 
@@ -55,6 +58,7 @@ public class AppendixDTO {
     public DocumentReal toDocumentReal(DocumentReal entity){
         entity.setDocumentRealId(this.appendixId);
         entity.setDocumentRealNumber(String.valueOf(this.appendixId));
+        entity.setDocumentTypeId(this.documentTypeId);
         return entity;
     }
     public Integer getAppendixId() {
@@ -103,5 +107,13 @@ public class AppendixDTO {
 
     public void setProgUserName(String progUserName) {
         this.progUserName = progUserName;
+    }
+
+    public Integer getDocumentTypeId() {
+        return documentTypeId;
+    }
+
+    public void setDocumentTypeId(Integer documentTypeId) {
+        this.documentTypeId = documentTypeId;
     }
 }
