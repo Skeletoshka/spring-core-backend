@@ -1,6 +1,6 @@
 package biz.spring.core.validator;
 
-import biz.spring.core.model.dnk.Appendix;
+import biz.spring.core.model.Appendix;
 import biz.spring.core.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

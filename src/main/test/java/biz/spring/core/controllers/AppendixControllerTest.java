@@ -2,7 +2,7 @@ package biz.spring.core.controllers;
 
 import biz.spring.core.config.Config;
 import biz.spring.core.controllers.IntegratedTest;
-import biz.spring.core.dto.dnk.AppendixDTO;
+import biz.spring.core.dto.AppendixDTO;
 import biz.spring.core.model.ProgUser;
 import biz.spring.core.repository.ProgUserRepository;
 import biz.spring.core.utils.GridDataOption;

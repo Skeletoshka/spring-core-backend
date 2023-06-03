@@ -1,7 +1,7 @@
 package biz.spring.core.dto;
 
 import biz.spring.core.model.DocumentReal;
-import biz.spring.core.model.dnk.Appendix;
+import biz.spring.core.model.Appendix;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;

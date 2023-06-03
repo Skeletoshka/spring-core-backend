@@ -1,17 +1,17 @@
 package biz.spring.core.controller;
 
 import biz.spring.core.config.Config;
-import biz.spring.core.dto.dnk.AppendixDTO;
+import biz.spring.core.dto.AppendixDTO;
 import biz.spring.core.model.DocumentReal;
-import biz.spring.core.model.dnk.Appendix;
+import biz.spring.core.model.Appendix;
 import biz.spring.core.repository.DocumentRealRepository;
-import biz.spring.core.repository.dnk.AppendixRepository;
+import biz.spring.core.repository.AppendixRepository;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.DocumentRealService;
-import biz.spring.core.service.dnk.AppendixService;
-import biz.spring.core.service.dnk.EMSService;
+import biz.spring.core.service.AppendixService;
+import biz.spring.core.service.EMSService;
 import biz.spring.core.utils.GridDataOption;
-import biz.spring.core.view.dnk.AppendixView;
+import biz.spring.core.view.AppendixView;
 import biz.spring.core.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
