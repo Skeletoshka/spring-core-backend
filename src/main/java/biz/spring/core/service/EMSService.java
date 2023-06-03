@@ -1,6 +1,6 @@
 package biz.spring.core.service;
 
-import biz.spring.core.repository.dnk.AppendixRepository;
+import biz.spring.core.repository.AppendixRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -39,10 +39,10 @@ public class CompanyRepository implements TableRepository<Company>{
     @Override
     public void load() {
         Company[] companies = new Company[]{
-                new Company(1, "Лучшие штучки", 1, 1, "89999999999", null),
-                new Company(2, "Игрушки для детишек", 1, 1, null, null),
-                new Company(3, "Лучшие игрушки", 1, 1, "89999999999", null),
-                new Company(4, "Детские игрушки", 1, 1, "89999999999", null),
+                new Company(1, "Лучшие штучки", 1, 1, "89999999999", null, 1),
+                new Company(2, "Игрушки для детишек", 1, 1, null, null, 2),
+                new Company(3, "Лучшие игрушки", 1, 1, "89999999999", null, 3),
+                new Company(4, "Детские игрушки", 1, 1, "89999999999", null, 4),
         };
         insert(Arrays.asList(companies));
         DatabaseUtils.setSequenceValue("company_id_gen", companies.length+1);

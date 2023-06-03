@@ -39,7 +39,7 @@ public class AppendixControllerTest extends IntegratedTest {
                 .setOrderBy("appendixId")
                 .build();
 
-        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/appendix/getlist")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/document/appendix/getlist")
                         .content(new ObjectMapper().writeValueAsString(gridDataOption))
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -52,7 +52,7 @@ public class AppendixControllerTest extends IntegratedTest {
     @Rollback
     @Transactional
     public void getTest() throws Exception {
-        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/appendix/get")
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/document/appendix/get")
                         .content("1")
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -88,7 +88,7 @@ public class AppendixControllerTest extends IntegratedTest {
                 MediaType.APPLICATION_OCTET_STREAM_VALUE,
                 "Тестовый текст".getBytes()
         );
-        this.mockMvc.perform(multipart("/v" + Config.CURRENT_VERSION + "/apps/dnk/objects/appendix/upload")
+        this.mockMvc.perform(multipart("/v" + Config.CURRENT_VERSION + "/apps/document/appendix/upload")
                         .file(file)
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(status().isOk());

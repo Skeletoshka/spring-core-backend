@@ -23,6 +23,9 @@ public class CompanyDTO {
     @Schema(name = "Электронная почта")
     private String companyEmail;
 
+    @Schema(name = "ИД договора")
+    private Integer contractId;
+
     public CompanyDTO() {
     }
 
@@ -31,13 +34,15 @@ public class CompanyDTO {
                       Integer progUserId,
                       Integer addressId,
                       String companyTelephone,
-                      String companyEmail) {
+                      String companyEmail,
+                      Integer contractId) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.progUserId = progUserId;
         this.addressId = addressId;
         this.companyTelephone = companyTelephone;
         this.companyEmail = companyEmail;
+        this.contractId = contractId;
     }
 
     public Integer getCompanyId() {
@@ -88,6 +93,14 @@ public class CompanyDTO {
         this.companyEmail = companyEmail;
     }
 
+    public Integer getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Integer contractId) {
+        this.contractId = contractId;
+    }
+
     public Company toEntity(){
         return toEntity(new Company());
     }
@@ -99,6 +112,7 @@ public class CompanyDTO {
         company.setCompanyEmail(this.companyEmail);
         company.setAddressId(this.addressId);
         company.setProgUserId(this.progUserId);
+        company.setContractId(this.contractId);
         return company;
     }
 }

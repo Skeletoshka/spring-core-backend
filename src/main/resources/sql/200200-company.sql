@@ -5,6 +5,7 @@ CREATE TABLE company (
     address_id INTEGER NOT NULL,
     company_telephone VARCHAR(50) NULL,
     company_email VARCHAR(255) NULL,
+    contract_id INTEGER NOT NULL,
     CONSTRAINT company_pk PRIMARY KEY (company_id)
 );
 
