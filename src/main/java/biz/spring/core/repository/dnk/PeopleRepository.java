@@ -45,7 +45,7 @@ public class PeopleRepository implements TableRepository<People> {
 
     @Override
     public void drop(){
-        String[] tables = {"people"};
+        String[] tables = {"people", "family"};
         drop(tables);
     }
 

@@ -19,3 +19,11 @@ CREATE SEQUENCE people_id_gen
 	START 1
 	CACHE 1
 	NO CYCLE;
+
+CREATE TABLE "family" (
+	family_id int4 NOT NULL,
+	parent_id int4 NOT NULL,
+	child_id int4 NOT NULL,
+	CONSTRAINT family_pk PRIMARY KEY (family_id),
+	CONSTRAINT family_un UNIQUE (parent_id, child_id)
+);
