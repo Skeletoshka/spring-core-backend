@@ -3,36 +3,49 @@ package biz.spring.core.view;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 public class CompanyView {
 
-    @Schema(name = "ИД компании")
+    @Schema(description = "ИД компании")
     @Column(name = "company_id")
     private Integer companyId;
 
-    @Schema(name = "Наименование компании")
+    @Schema(description = "Наименование компании")
     @Column(name = "company_name")
     private String companyName;
 
-    @Schema(name = "ИД пользователя")
+    @Schema(description = "ИД пользователя")
     @Column(name = "proguser_id")
     private Integer progUserId;
 
-    @Schema(name = "ИД адреса")
+    @Schema(description = "Имя пользователя")
+    @Column(name = "proguser_name")
+    private String progUserName;
+
+    @Schema(description = "ИД адреса")
     @Column(name = "address_id")
     private Integer addressId;
 
-    @Schema(name = "Контактный телефон")
+    @Schema(description = "Контактный телефон")
     @Column(name = "company_telephone")
     private String companyTelephone;
 
-    @Schema(name = "Электронная почта")
+    @Schema(description = "Электронная почта")
     @Column(name = "company_email")
     private String companyEmail;
 
-    @Schema(name = "ИД договора")
+    @Schema(description = "ИД договора")
     @Column(name = "contract_id")
     private Integer contractId;
+
+    @Schema(description = "Дата договора")
+    @Column(name = "contract_date")
+    private Date contractDate;
+
+    @Schema(description = "Имя договора")
+    @Column(name = "documentreal_name")
+    private String documentRealName;
 
     public CompanyView() {
     }
@@ -107,5 +120,29 @@ public class CompanyView {
 
     public void setContractId(Integer contractId) {
         this.contractId = contractId;
+    }
+
+    public String getProgUserName() {
+        return progUserName;
+    }
+
+    public void setProgUserName(String progUserName) {
+        this.progUserName = progUserName;
+    }
+
+    public Date getContractDate() {
+        return contractDate;
+    }
+
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
+    }
+
+    public String getDocumentRealName() {
+        return documentRealName;
+    }
+
+    public void setDocumentRealName(String documentRealName) {
+        this.documentRealName = documentRealName;
     }
 }
