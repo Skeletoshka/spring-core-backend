@@ -19,7 +19,7 @@ FROM   people m0
        LEFT JOIN documentreal DR ON con.contract_id = DR.documentreal_id
        /*FROM_PLACEHOLDER*/
 WHERE  1=1
-  /*CAPCLASS_PLACEHOLDER*/
+       AND m0.capclass_id = :capClassId
   /*WORKGROUP_PLACEHOLDER*/
   /*WHERE_PLACEHOLDER*/
 /*ORDERBY_PLACEHOLDER*/

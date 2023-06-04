@@ -35,7 +35,7 @@ public class AttendanceRepository implements TableRepository<Attendance> {
         params.put("attendance_id", DatabaseUtils.getSequenceNextValue("attendance_id_gen"));
         params.put("people_id", peopleId);
         params.put("schedule_id", scheduleId);
-        params.put("attendance_presenceflag", attendancePresenceFlag);
+        params.put("attendance_presenceflag", attendancePresenceFlag==null?0:attendancePresenceFlag);
         executeSql(sql, params);
     }
 

@@ -93,7 +93,6 @@ public class PeopleService extends BaseService<People> {
         return new Query.QueryBuilder<ReportView>(reportSql)
                 .forClass(ReportView.class, "m0")
                 .setParams(gridDataOption.buildParams())
-                .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
                 .build()
                 .count();
