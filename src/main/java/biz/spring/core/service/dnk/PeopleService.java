@@ -7,6 +7,7 @@ import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.PeopleValidator;
 import biz.spring.core.view.dnk.PeopleView;
+import biz.spring.core.view.dnk.ReportView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -33,6 +34,8 @@ public class PeopleService extends BaseService<People> {
 
     @Value("classpath:/script/dnk/people/mainSqlForOne.sql")
     Resource mainSqlForOne;
+    @Value("classpath:/script/dnk/people/reportSql.sql")
+    Resource reportSql;
 
     public List<PeopleView> getAll(GridDataOption gridDataOption){
         boolean capClassFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> "capClassId".equals(nf.getName())
@@ -74,5 +77,25 @@ public class PeopleService extends BaseService<People> {
 
     public void bindFamily(Integer parentId, Integer childId){
         peopleRepository.bindFamily(parentId, childId);
+    }
+
+    public List<ReportView> getReport(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<ReportView>(reportSql)
+                .forClass(ReportView.class, "m0")
+                .setParams(gridDataOption.buildParams())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setOrderBy(gridDataOption.getOrderBy())
+                .build()
+                .execute();
+    }
+
+    public Integer getReportCount(GridDataOption gridDataOption){
+        return new Query.QueryBuilder<ReportView>(reportSql)
+                .forClass(ReportView.class, "m0")
+                .setParams(gridDataOption.buildParams())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setOrderBy(gridDataOption.getOrderBy())
+                .build()
+                .count();
     }
 }

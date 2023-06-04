@@ -9,6 +9,7 @@ import biz.spring.core.service.BaseService;
 import biz.spring.core.service.dnk.PeopleService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.view.dnk.PeopleView;
+import biz.spring.core.view.dnk.ReportView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -116,5 +117,23 @@ public class PeopleController {
         }
         peopleService.bindFamily(dto.getParentId(), dto.getChildId());
         return BaseService.STANDARD_SUCCESS;
+    }
+
+    public static class GridDataOptionReport extends GridDataOption{
+        @Schema(description = "" +
+                "<ul>" +
+                "</ul>")
+        public List<NamedFilter> getNamedFilters() {
+            return super.getNamedFilters();
+        }
+    }
+
+    @RequestMapping(value = "/report/getlist", method = RequestMethod.POST)
+    @Operation(summary = "Метод для получения отчета",
+            description = "Выводит отчет согласно переданным фильтрам")
+    public DataResponse<ReportView> getReport(@RequestBody GridDataOptionReport gridDataOption){
+        List<ReportView> result = peopleService.getReport(gridDataOption);
+        Integer count = peopleService.getReportCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 }
