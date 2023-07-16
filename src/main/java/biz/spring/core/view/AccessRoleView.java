@@ -18,7 +18,21 @@ public class AccessRoleView {
     @Schema(description = "Полное наименование роли")
     private String accessRoleFullName;
 
+    @Column(name = "accessrole_visible")
+    @Schema(description = "Видимость роли")
+    private Integer accessRoleVisible;
+
     public AccessRoleView() {
+    }
+
+    public AccessRoleView(Integer accessRoleId,
+                          String accessRoleName,
+                          String accessRoleFullName,
+                          Integer accessRoleVisible) {
+        this.accessRoleId = accessRoleId;
+        this.accessRoleName = accessRoleName;
+        this.accessRoleFullName = accessRoleFullName;
+        this.accessRoleVisible = accessRoleVisible;
     }
 
     public AccessRoleView(Integer accessRoleId,
@@ -51,5 +65,13 @@ public class AccessRoleView {
 
     public void setAccessRoleFullName(String accessRoleFullName) {
         this.accessRoleFullName = accessRoleFullName;
+    }
+
+    public Integer getAccessRoleVisible() {
+        return accessRoleVisible;
+    }
+
+    public void setAccessRoleVisible(Integer accessRoleVisible) {
+        this.accessRoleVisible = accessRoleVisible;
     }
 }

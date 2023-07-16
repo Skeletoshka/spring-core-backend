@@ -14,15 +14,20 @@ public class AccessRoleDTO {
     @Schema(description = "Полное наименование роли")
     private String accessRoleFullName;
 
+    @Schema(description = "Видимость роли")
+    private Integer accessRoleVisible;
+
     public AccessRoleDTO() {
     }
 
     public AccessRoleDTO(Integer accessRoleId,
-                          String accessRoleName,
-                          String accessRoleFullName) {
+                         String accessRoleName,
+                         String accessRoleFullName,
+                         Integer accessRoleVisible) {
         this.accessRoleId = accessRoleId;
         this.accessRoleName = accessRoleName;
         this.accessRoleFullName = accessRoleFullName;
+        this.accessRoleVisible = accessRoleVisible;
     }
 
     public Integer getAccessRoleId() {
@@ -57,6 +62,15 @@ public class AccessRoleDTO {
         accessRole.setAccessRoleId(this.accessRoleId);
         accessRole.setAccessRoleName(this.accessRoleName);
         accessRole.setAccessRoleFullName(this.accessRoleFullName);
+        accessRole.setAccessRoleVisible(this.accessRoleVisible);
         return accessRole;
+    }
+
+    public Integer getAccessRoleVisible() {
+        return accessRoleVisible;
+    }
+
+    public void setAccessRoleVisible(Integer accessRoleVisible) {
+        this.accessRoleVisible = accessRoleVisible;
     }
 }

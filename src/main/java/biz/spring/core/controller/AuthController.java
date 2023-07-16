@@ -111,7 +111,7 @@ public class AuthController {
     @RequestMapping(value = "/getroles", method = RequestMethod.POST)
     @Operation(summary = "Метод для получения ролей", description = "Возвращает доступные роли пользователя для регистрации в системе")
     private List<AccessRoleView> getRoles(){
-        return accessRoleRepository.getAll().stream().map(role -> {
+        return accessRoleRepository.getAll().stream().filter(role -> role.getAccessRoleVisible().equals(1)).map(role -> {
             AccessRoleView view = new AccessRoleView();
             BeanUtils.copyProperties(role, view);
             return view;
