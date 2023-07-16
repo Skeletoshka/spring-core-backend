@@ -2,6 +2,7 @@ package biz.spring.core.dto.dnk;
 
 import biz.spring.core.model.DocumentReal;
 import biz.spring.core.model.dnk.News;
+import biz.spring.core.utils.DatabaseUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -60,7 +61,7 @@ public class NewsDTO {
 
     public DocumentReal toDocumentReal(DocumentReal entity){
         entity.setDocumentRealId(this.newsId);
-        entity.setDocumentRealNumber(this.documentRealNumber);
+        entity.setDocumentRealNumber(this.documentRealNumber==null?String.valueOf(DatabaseUtils.getSequenceNextValue("documentreal_id_gen")):this.documentRealNumber);
         entity.setDocumentTypeId(News.DOCUMENT_TYPE_ID);
         entity.setDocumentRealDateCreate(this.documentRealDateCreate);
         entity.setDocumentTransitId(this.documentTransitId);

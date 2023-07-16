@@ -73,6 +73,7 @@ public class RecreateDatabase {
                 addressRepository,
                 contractRepository,
                 addressRepository,
+                appendixRepository,
                 capClassTypeRepository,
                 documentRealRepository,
                 studyProgramRepository,
