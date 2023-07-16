@@ -49,9 +49,9 @@ public class AccessRoleRepository implements TableRepository<AccessRole>{
     @Override
     public void load(){
         AccessRole[] accessRoles = {
-                new AccessRole(1, "SYSDBA", "Системный администратор"),
-                new AccessRole(2, "TEST1", "Тестовый пользователь 1"),
-                new AccessRole(3, "Test2", "Тестовый пользователь 2")
+                new AccessRole(1, "SYSDBA", "Системный администратор", 0),
+                new AccessRole(2, "TEST1", "Тестовый пользователь 1", 1),
+                new AccessRole(3, "Test2", "Тестовый пользователь 2", 1)
         };
         insert(Arrays.asList(accessRoles));
         DatabaseUtils.setSequenceValue("accessrole_id_gen", accessRoles.length+1);

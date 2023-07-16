@@ -35,20 +35,28 @@ public class AccessRoleService extends BaseService<AccessRole> {
     Resource mainSqlForOne;
 
     public List<AccessRoleView> getAll(GridDataOption gridDataOption){
+        boolean visibleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("accessRoleVisible") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AccessRoleView>(mainSQL)
                 .forClass(AccessRoleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setSearch(gridDataOption.getSearch())
+                .setParams(gridDataOption.buildParams())
+                .injectSqlIf(visibleFound, "/*VISIBLE_PLACEHOLDER*/", "AND m0.accessrole_visible = :accessRoleVisible")
                 .build()
                 .execute();
     }
 
     public Integer getCount(GridDataOption gridDataOption){
+        boolean visibleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("accessRoleVisible") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<AccessRoleView>(mainSQL)
                 .forClass(AccessRoleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
                 .setSearch(gridDataOption.getSearch())
+                .setParams(gridDataOption.buildParams())
+                .injectSqlIf(visibleFound, "/*VISIBLE_PLACEHOLDER*/", "AND m0.accessrole_visible = :accessRoleVisible")
                 .build()
                 .count();
     }

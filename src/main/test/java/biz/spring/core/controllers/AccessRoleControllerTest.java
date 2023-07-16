@@ -36,6 +36,22 @@ public class AccessRoleControllerTest extends IntegratedTest{
                 .andExpect(content().string(containsString("\"accessRoleId\":1")))
                 .andExpect(content().string(containsString("\"accessRoleId\":2")))
                 .andExpect(content().string(containsString("\"accessRoleId\":3")));
+
+        gridDataOption = new GridDataOption.Builder()
+                .setOrderBy("accessRoleId")
+                .setParam("accessRoleVisible", 1)
+                .setRowCount(10)
+                .build();
+
+        this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/accessrole/getlist")
+                        .content(new ObjectMapper().writeValueAsString(gridDataOption))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                //.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("\"accessRoleId\":1"))))
+                .andExpect(content().string(containsString("\"accessRoleId\":2")))
+                .andExpect(content().string(containsString("\"accessRoleId\":3")));
     }
 
     @Test
@@ -57,7 +73,7 @@ public class AccessRoleControllerTest extends IntegratedTest{
     @Transactional
     @Rollback
     public void saveTest() throws Exception{
-        AccessRoleDTO dto = new AccessRoleDTO(null, "TestRole", "Тестовая роль");
+        AccessRoleDTO dto = new AccessRoleDTO(null, "TestRole", "Тестовая роль", 1);
         this.mockMvc.perform(post("/v" + Config.CURRENT_VERSION + "/apps/refbooks/accessrole/save")
                         .content(new ObjectMapper().writeValueAsString(dto))
                         .contentType(MediaType.APPLICATION_JSON)

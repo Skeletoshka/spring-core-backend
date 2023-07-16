@@ -31,6 +31,7 @@ public class AccessRoleController {
     static class GridDataOptionAccessRole extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
+                    "<li> accessRoleVisible - видимость роли" +
                 "<ul>")
         public List<NamedFilter> getNamedFilters(){
             return super.getNamedFilters();
@@ -43,10 +44,14 @@ public class AccessRoleController {
     @Operation(summary = "Возвращает список объектов \"Роль\"",
                     description = "Вовзращает список объектов согласно переданным фильтрам")
     @RequestMapping(value = "/accessrole/getlist", method = RequestMethod.POST)
-    public DataResponse<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOptionAccessRole){
-        List<AccessRoleView> result = accessRoleService.getAll(gridDataOptionAccessRole);
-        Integer count = accessRoleService.getCount(gridDataOptionAccessRole);
-        return BaseService.buildResponse(result, gridDataOptionAccessRole, count);
+    public DataResponse<AccessRoleView> getList(@RequestBody GridDataOptionAccessRole gridDataOption){
+        boolean visibleFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("accessRoleVisible"));
+        if(!visibleFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("accessRoleVisible", -1));
+        }
+        List<AccessRoleView> result = accessRoleService.getAll(gridDataOption);
+        Integer count = accessRoleService.getCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 
     @RequestMapping(value = "/accessrole/get", method = RequestMethod.POST)

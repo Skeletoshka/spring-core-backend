@@ -24,15 +24,21 @@ public class AccessRole {
     @Size(max = 100, message = "Поле \"Полное наименование роли\" не может иметь более {max} символов")
     private String accessRoleFullName;
 
+    @Column(name = "accessrole_visible")
+    @NotNull(message = "Поле \"Видимость роли\" не может быть пустым")
+    private Integer accessRoleVisible;
+
     public AccessRole() {
     }
 
     public AccessRole(Integer accessRoleId,
                       String accessRoleName,
-                      String accessRoleFullName) {
+                      String accessRoleFullName,
+                      Integer accessRoleVisible) {
         this.accessRoleId = accessRoleId;
         this.accessRoleName = accessRoleName;
         this.accessRoleFullName = accessRoleFullName;
+        this.accessRoleVisible = accessRoleVisible;
     }
 
     public Integer getAccessRoleId() {
@@ -57,5 +63,13 @@ public class AccessRole {
 
     public void setAccessRoleFullName(String accessRoleFullName) {
         this.accessRoleFullName = accessRoleFullName;
+    }
+
+    public Integer getAccessRoleVisible() {
+        return accessRoleVisible;
+    }
+
+    public void setAccessRoleVisible(Integer accessRoleVisible) {
+        this.accessRoleVisible = accessRoleVisible;
     }
 }
