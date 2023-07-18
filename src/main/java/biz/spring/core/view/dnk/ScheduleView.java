@@ -35,6 +35,18 @@ public class ScheduleView {
     @Column(name = "schedule_date")
     private Date scheduleDate;
 
+    @Schema(description = "Имя преподавателя")
+    @Column(name = "people_name")
+    private String peopleName;
+
+    @Schema(description = "Фамилия преподавателя")
+    @Column(name = "people_lastname")
+    private String peopleLastName;
+
+    @Schema(description = "Отчество преподавателя")
+    @Column(name = "people_middlename")
+    private String peopleMiddleName;
+
     public ScheduleView() {
     }
 
@@ -104,5 +116,29 @@ public class ScheduleView {
 
     public void setScheduleDate(Date scheduleDate) {
         this.scheduleDate = scheduleDate;
+    }
+
+    public String getPeopleName() {
+        return peopleName;
+    }
+
+    public void setPeopleName(String peopleName) {
+        this.peopleName = peopleName;
+    }
+
+    public String getPeopleLastName() {
+        return peopleLastName;
+    }
+
+    public void setPeopleLastName(String peopleLastName) {
+        this.peopleLastName = peopleLastName;
+    }
+
+    public String getPeopleMiddleName() {
+        return peopleMiddleName;
+    }
+
+    public void setPeopleMiddleName(String peopleMiddleName) {
+        this.peopleMiddleName = peopleMiddleName;
     }
 }
