@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -36,8 +37,11 @@ public class ScheduleController {
     public static class GridDataOptionSchedule extends GridDataOption {
         @Schema(description = "" +
                 "<ul>" +
-                "<li> studyProgramId - ИД программы обучения " +
-                "<li> workGroupId - ИД учебной группы " +
+                    "<li> studyProgramId - ИД программы обучения " +
+                    "<li> workGroupId - ИД учебной группы " +
+                    "<li> dateRange - массив дат, [dateStart, dateEnd]" +
+                    "<li> classroom - аудитория " +
+                    "<li> teacherId - Преподаватель " +
                 "</ul>")
         public List<NamedFilter> getNamedFilters() {
             return super.getNamedFilters();
@@ -55,6 +59,27 @@ public class ScheduleController {
         boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("workGroupId"));
         if(!workGroupFound){
             gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("workGroupId", -1));
+        }
+        boolean dateRangeFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("dateRange"));
+        if(!dateRangeFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateRange", -1));
+        }else {
+            List<Long> dateRange = (List<Long>) gridDataOption.getNamedFilters()
+                    .stream()
+                    .filter(nf -> nf.getName().equals("dateRange"))
+                    .findFirst()
+                    .orElseThrow()
+                    .getValue();
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateStart", new Date(dateRange.get(0))));
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateEnd", new Date(dateRange.get(1))));
+        }
+        boolean classRoomFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("classroom"));
+        if(!classRoomFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("classroom", -1));
+        }
+        boolean teacherFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("teacherId"));
+        if(!teacherFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("teacherId", -1));
         }
         List<ScheduleView> result = scheduleService.getAll(gridDataOption);
         Integer count = scheduleService.getCount(gridDataOption);

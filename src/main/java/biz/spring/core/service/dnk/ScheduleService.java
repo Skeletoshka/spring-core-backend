@@ -39,6 +39,12 @@ public class ScheduleService extends BaseService<Schedule> {
                 .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
         boolean workGroupFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean dateRangeFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("dateRange") && !nf.getValue().equals(-1));
+        boolean classRoomFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("classroom") && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("teacherId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<ScheduleView>(mainSQL)
                 .forClass(ScheduleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
@@ -47,6 +53,9 @@ public class ScheduleService extends BaseService<Schedule> {
                 .setSearch(gridDataOption.getSearch())
                 .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND m0.studyprogram_id = :studyProgramId")
                 .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND m0.workgroup_id = :workGroupId")
+                .injectSqlIf(dateRangeFound, "/*DATERANGE_PLACEHOLDER*/", "AND m0.schedule_date BETWEEN :dateStart AND :dateEnd")
+                .injectSqlIf(classRoomFound, "/*CLASSROOM_PLACEHOLDER*/", "AND m0.schedule_place = :classroom")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND sp.teacher_id = :teacherId")
                 .build()
                 .execute();
     }
@@ -56,6 +65,12 @@ public class ScheduleService extends BaseService<Schedule> {
                 .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
         boolean workGroupFound = gridDataOption.getNamedFilters().stream()
                 .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean dateRangeFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("dateRange") && !nf.getValue().equals(-1));
+        boolean classRoomFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("classroom") && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("teacherId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<ScheduleView>(mainSQL)
                 .forClass(ScheduleView.class, "m0")
                 .setOrderBy(gridDataOption.getOrderBy())
@@ -63,6 +78,9 @@ public class ScheduleService extends BaseService<Schedule> {
                 .setSearch(gridDataOption.getSearch())
                 .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND m0.studyprogram_id = :studyProgramId")
                 .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND m0.workgroup_id = :workGroupId")
+                .injectSqlIf(dateRangeFound, "/*DATERANGE_PLACEHOLDER*/", "AND m0.schedule_date BETWEEN :dateStart AND :dateEnd")
+                .injectSqlIf(classRoomFound, "/*CLASSROOM_PLACEHOLDER*/", "AND m0.schedule_place = :classroom")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND sp.teacher_id = :teacherId")
                 .build()
                 .count();
     }
