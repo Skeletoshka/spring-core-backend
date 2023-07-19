@@ -80,20 +80,38 @@ public class PeopleService extends BaseService<People> {
     }
 
     public List<ReportView> getReport(GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean companyFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("companyId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<ReportView>(reportSql)
                 .forClass(ReportView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .setLimit(gridDataOption.buildPageRequest())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND TT.studyprogram_id = :studyProgramId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND WG.workgroup_id = :workGroupId")
+                .injectSqlIf(companyFound, "/*COMPANY_PLACEHOLDER*/", "AND CP.company_id = :companyId")
                 .build()
                 .execute();
     }
 
     public Integer getReportCount(GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean companyFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("companyId") && !nf.getValue().equals(-1));
         return new Query.QueryBuilder<ReportView>(reportSql)
                 .forClass(ReportView.class, "m0")
                 .setParams(gridDataOption.buildParams())
                 .setOrderBy(gridDataOption.getOrderBy())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND TT.studyprogram_id = :studyProgramId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND WG.workgroup_id = :workGroupId")
+                .injectSqlIf(companyFound, "/*COMPANY_PLACEHOLDER*/", "AND CP.company_id = :companyId")
                 .build()
                 .count();
     }

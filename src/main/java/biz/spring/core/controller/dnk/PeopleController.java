@@ -122,6 +122,9 @@ public class PeopleController {
     public static class GridDataOptionReport extends GridDataOption{
         @Schema(description = "" +
                 "<ul>" +
+                    "<li> studyProgramId - программа обучения" +
+                    "<li> workGroupId - группа" +
+                    "<li> companyId - образовательная организация" +
                 "</ul>")
         public List<NamedFilter> getNamedFilters() {
             return super.getNamedFilters();
@@ -132,6 +135,18 @@ public class PeopleController {
     @Operation(summary = "Метод для получения отчета",
             description = "Выводит отчет согласно переданным фильтрам")
     public DataResponse<ReportView> getReport(@RequestBody GridDataOptionReport gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("studyProgramId"));
+        if(!studyProgramFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("studyProgramId", -1));
+        }
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("workGroupId"));
+        if(!workGroupFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("workGroupId", -1));
+        }
+        boolean companyFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("companyId"));
+        if(!companyFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("companyId", -1));
+        }
         List<ReportView> result = peopleService.getReport(gridDataOption);
         Integer count = peopleService.getReportCount(gridDataOption);
         return BaseService.buildResponse(result, gridDataOption, count);
