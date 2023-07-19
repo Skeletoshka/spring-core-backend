@@ -7,6 +7,8 @@ import biz.spring.core.response.DataResponse;
 import biz.spring.core.service.BaseService;
 import biz.spring.core.service.dnk.ScheduleService;
 import biz.spring.core.utils.GridDataOption;
+import biz.spring.core.view.dnk.AttendanceReportView;
+import biz.spring.core.view.dnk.ReportView;
 import biz.spring.core.view.dnk.ScheduleView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -121,5 +123,57 @@ public class ScheduleController {
     public String delete(@RequestBody int[] ids){
         scheduleService.delete(ids);
         return BaseService.STANDARD_SUCCESS;
+    }
+
+    public static class GridDataOptionReport extends GridDataOption{
+        @Schema(description = "" +
+                "<ul>" +
+                    "<li> studyProgramId - программа обучения" +
+                    "<li> workGroupId - группа" +
+                    "<li> studentId - ученик" +
+                    "<li> teacherId - учитель" +
+                    "<li> dateRange - период занятий" +
+                "</ul>")
+        public List<NamedFilter> getNamedFilters() {
+            return super.getNamedFilters();
+        }
+    }
+
+    @RequestMapping(value = "/report/attendance/getlist", method = RequestMethod.POST)
+    @Operation(summary = "Метод для получения отчета по посещаемости",
+            description = "Выводит отчет по посещаемости согласно переданным фильтрам")
+    public DataResponse<AttendanceReportView> getAttendanceReport(@RequestBody GridDataOptionReport gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("studyProgramId"));
+        if(!studyProgramFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("studyProgramId", -1));
+        }
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("workGroupId"));
+        if(!workGroupFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("workGroupId", -1));
+        }
+        boolean studentFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("studentId"));
+        if(!studentFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("studentId", -1));
+        }
+        boolean teacherFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("teacherId"));
+        if(!teacherFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("teacherId", -1));
+        }
+        boolean dateFound = gridDataOption.getNamedFilters().stream().anyMatch(nf -> nf.getName().equals("dateRange"));
+        if(!dateFound){
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateRange", -1));
+        }else{
+            List<Long> dateRange = (List<Long>) gridDataOption.getNamedFilters()
+                    .stream()
+                    .filter(nf -> nf.getName().equals("dateRange"))
+                    .findFirst()
+                    .orElseThrow()
+                    .getValue();
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateStart", new Date(dateRange.get(0))));
+            gridDataOption.getNamedFilters().add(new GridDataOption.NamedFilter("dateEnd", new Date(dateRange.get(1))));
+        }
+        List<AttendanceReportView> result = scheduleService.getReport(gridDataOption);
+        Integer count = scheduleService.getReportCount(gridDataOption);
+        return BaseService.buildResponse(result, gridDataOption, count);
     }
 }

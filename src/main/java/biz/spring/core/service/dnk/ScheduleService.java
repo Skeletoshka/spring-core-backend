@@ -6,6 +6,7 @@ import biz.spring.core.service.BaseService;
 import biz.spring.core.utils.GridDataOption;
 import biz.spring.core.utils.Query;
 import biz.spring.core.validator.dnk.ScheduleValidator;
+import biz.spring.core.view.dnk.AttendanceReportView;
 import biz.spring.core.view.dnk.ScheduleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class ScheduleService extends BaseService<Schedule> {
 
     @Value("classpath:/script/dnk/schedule/mainSqlForOne.sql")
     Resource mainSQLForOne;
+
+    @Value("classpath:/script/dnk/schedule/report.sql")
+    Resource reportSQL;
 
     @PostConstruct
     protected void init() {
@@ -90,6 +94,57 @@ public class ScheduleService extends BaseService<Schedule> {
                 .forClass(ScheduleView.class, "m0")
                 .build()
                 .executeOne(id);
+    }
+
+    public List<AttendanceReportView> getReport (GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean dateRangeFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("dateRange") && !nf.getValue().equals(-1));
+        boolean peopleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studentId") && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("teacherId") && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<AttendanceReportView>(reportSQL)
+                .forClass(AttendanceReportView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setLimit(gridDataOption.buildPageRequest())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sp.studyprogram_id = :studyProgramId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND s.workgroup_id = :workGroupId")
+                .injectSqlIf(dateRangeFound, "/*DATERANGE_PLACEHOLDER*/", "AND s.schedule_date BETWEEN :dateStart AND :dateEnd")
+                .injectSqlIf(peopleFound, "/*STUDENT_PLACEHOLDER*/", "AND p.people_id = :studentId")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND sp.teacher_id = :teacherId")
+                .build()
+                .execute();
+    }
+
+    public Integer getReportCount (GridDataOption gridDataOption){
+        boolean studyProgramFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studyProgramId") && !nf.getValue().equals(-1));
+        boolean workGroupFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("workGroupId") && !nf.getValue().equals(-1));
+        boolean dateRangeFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("dateRange") && !nf.getValue().equals(-1));
+        boolean peopleFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("studentId") && !nf.getValue().equals(-1));
+        boolean teacherFound = gridDataOption.getNamedFilters().stream()
+                .anyMatch(nf -> nf.getName().equals("teacherId") && !nf.getValue().equals(-1));
+        return new Query.QueryBuilder<AttendanceReportView>(reportSQL)
+                .forClass(AttendanceReportView.class, "m0")
+                .setOrderBy(gridDataOption.getOrderBy())
+                .setParams(gridDataOption.buildParams())
+                .setSearch(gridDataOption.getSearch())
+                .injectSqlIf(studyProgramFound, "/*STUDYPROGRAM_PLACEHOLDER*/", "AND sp.studyprogram_id = :studyProgramId")
+                .injectSqlIf(workGroupFound, "/*WORKGROUP_PLACEHOLDER*/", "AND s.workgroup_id = :workGroupId")
+                .injectSqlIf(dateRangeFound, "/*DATERANGE_PLACEHOLDER*/", "AND s.schedule_date BETWEEN :dateStart AND :dateEnd")
+                .injectSqlIf(peopleFound, "/*STUDENT_PLACEHOLDER*/", "AND p.people_id = :studentId")
+                .injectSqlIf(teacherFound, "/*TEACHER_PLACEHOLDER*/", "AND sp.teacher_id = :teacherId")
+                .build()
+                .count();
     }
 
 }
