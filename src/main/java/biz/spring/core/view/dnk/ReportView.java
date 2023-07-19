@@ -7,17 +7,9 @@ import java.util.Date;
 
 public class ReportView {
 
-    @Column(name = "studyprogram_id")
-    @Schema(description = "ИД программы обучения")
-    private Integer studyProgramId;
-
     @Column(name = "studyprogram_name")
     @Schema(description = "Наименование программы обучения")
     private String studyProgramName;
-
-    @Column(name = "workgroup_id")
-    @Schema(description = "ИД учебной группы")
-    private Integer workGroupId;
 
     @Column(name = "workgroup_name")
     @Schema(description = "Наименование учебной группы")
@@ -59,17 +51,9 @@ public class ReportView {
     @Schema(description = "Номер договора")
     private String documentRealNumber;
 
-    @Column(name = "contract_id")
-    @Schema(description = "ИД договора")
-    private Integer contractId;
-
     @Column(name = "contract_date")
     @Schema(description = "Дата договора")
     private Date contractDate;
-
-    @Column(name = "parent_id")
-    @Schema(description = "ИД родителя")
-    private Integer parentId;
 
     @Column(name = "parent_name")
     @Schema(description = "Имя родителя")
@@ -94,9 +78,7 @@ public class ReportView {
     public ReportView() {
     }
 
-    public ReportView(Integer studyProgramId,
-                      String studyProgramName,
-                      Integer workGroupId,
+    public ReportView(String studyProgramName,
                       String workGroupName,
                       String peopleName,
                       String peopleLastName,
@@ -107,15 +89,12 @@ public class ReportView {
                       String companyName,
                       String studentClass,
                       String documentRealNumber,
-                      Integer contractId,
                       Date contractDate,
                       String parentName,
                       String parentLastName,
                       String parentMiddleName,
                       String parentEmail) {
-        this.studyProgramId = studyProgramId;
         this.studyProgramName = studyProgramName;
-        this.workGroupId = workGroupId;
         this.workGroupName = workGroupName;
         this.peopleName = peopleName;
         this.peopleLastName = peopleLastName;
@@ -126,20 +105,11 @@ public class ReportView {
         this.companyName = companyName;
         this.studentClass = studentClass;
         this.documentRealNumber = documentRealNumber;
-        this.contractId = contractId;
         this.contractDate = contractDate;
         this.parentName = parentName;
         this.parentLastName = parentLastName;
         this.parentMiddleName = parentMiddleName;
         this.parentEmail = parentEmail;
-    }
-
-    public Integer getStudyProgramId() {
-        return studyProgramId;
-    }
-
-    public void setStudyProgramId(Integer studyProgramId) {
-        this.studyProgramId = studyProgramId;
     }
 
     public String getStudyProgramName() {
@@ -148,14 +118,6 @@ public class ReportView {
 
     public void setStudyProgramName(String studyProgramName) {
         this.studyProgramName = studyProgramName;
-    }
-
-    public Integer getWorkGroupId() {
-        return workGroupId;
-    }
-
-    public void setWorkGroupId(Integer workGroupId) {
-        this.workGroupId = workGroupId;
     }
 
     public String getWorkGroupName() {
@@ -238,14 +200,6 @@ public class ReportView {
         this.documentRealNumber = documentRealNumber;
     }
 
-    public Integer getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Integer contractId) {
-        this.contractId = contractId;
-    }
-
     public Date getContractDate() {
         return contractDate;
     }
@@ -292,13 +246,5 @@ public class ReportView {
 
     public void setRowId(Long rowId) {
         this.rowId = rowId;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
     }
 }
